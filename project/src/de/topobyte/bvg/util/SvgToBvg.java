@@ -74,7 +74,7 @@ public class SvgToBvg implements ShapeSink
 	}
 
 	@Override
-	public void fill(Shape shape, Color color)
+	public void fill(Shape shape, Color color) throws IOException
 	{
 		Path path = SwingUtil.createPath(shape);
 
@@ -84,6 +84,7 @@ public class SvgToBvg implements ShapeSink
 
 	@Override
 	public void stroke(Shape shape, Color color, LineStyle lineStyle)
+			throws IOException
 	{
 		Path path = SwingUtil.createPath(shape);
 

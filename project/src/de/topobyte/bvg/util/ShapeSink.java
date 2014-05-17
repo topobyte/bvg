@@ -18,6 +18,7 @@
 package de.topobyte.bvg.util;
 
 import java.awt.Shape;
+import java.io.IOException;
 
 import de.topobyte.bvg.Color;
 import de.topobyte.bvg.LineStyle;
@@ -25,10 +26,11 @@ import de.topobyte.bvg.LineStyle;
 public interface ShapeSink
 {
 
-	public void init(double width, double height);
+	public void init(double width, double height) throws IOException;
 
-	public void fill(Shape shape, Color color);
+	public void fill(Shape shape, Color color) throws IOException;
 
-	public void stroke(Shape shape, Color color, LineStyle lineStyle);
+	public void stroke(Shape shape, Color color, LineStyle lineStyle)
+			throws IOException;
 
 }

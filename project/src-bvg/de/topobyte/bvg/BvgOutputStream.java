@@ -20,20 +20,23 @@ package de.topobyte.bvg;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import de.topobyte.bvg.path.Path;
+import de.topobyte.bvg.path.PathElement;
+import de.topobyte.bvg.path.Type;
 
 public class BvgOutputStream
 {
 
 	private OutputStream os;
+	private DataOutputStream dos;
+
 	private double width;
 	private double height;
 
 	private Fill fill;
 	private Stroke stroke;
-
-	private DataOutputStream dos;
 
 	public BvgOutputStream(OutputStream os, double width, double height)
 			throws IOException
@@ -64,9 +67,32 @@ public class BvgOutputStream
 		this.stroke = stroke;
 	}
 
-	public void write(Path path)
+	public void write(Path path) throws IOException
 	{
+		List<Type> types = path.getTypes();
+		List<PathElement> elements = path.getElements();
 
+		for (int i = 0; i < types.size(); i++) {
+			Type type = types.get(i);
+			PathElement pathElement = elements.get(i);
+
+			switch (type) {
+			case MOVE:
+				dos.writeByte(Constants.PATH_MOVE_TO);
+				break;
+			case CLOSE:
+				dos.writeByte(Constants.PATH_CLOSE);
+				break;
+			case LINE:
+				dos.writeByte(Constants.PATH_LINE_TO);
+				break;
+			case QUAD:
+				dos.writeByte(Constants.PATH_QUAD_TO);
+				break;
+			case CUBIC:
+				dos.writeByte(Constants.PATH_CUBIC_TO);
+				break;
+			}
+		}
 	}
-
 }

@@ -81,7 +81,7 @@ public class SvgParser
 		go(rootGN, 0);
 	}
 
-	private void go(CompositeGraphicsNode cgn, int level)
+	private void go(CompositeGraphicsNode cgn, int level) throws IOException
 	{
 		print(cgn.toString(), level);
 		List<?> children = cgn.getChildren();
