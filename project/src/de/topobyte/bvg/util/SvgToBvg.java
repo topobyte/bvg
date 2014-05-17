@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import de.topobyte.bvg.BvgOutputStream;
 import de.topobyte.bvg.Color;
 import de.topobyte.bvg.LineStyle;
+import de.topobyte.bvg.path.Path;
 
 public class SvgToBvg implements ShapeSink
 {
@@ -75,15 +76,19 @@ public class SvgToBvg implements ShapeSink
 	@Override
 	public void fill(Shape shape, Color color)
 	{
+		Path path = SwingUtil.createPath(shape);
+
 		bvgOutputStream.setFill(null);
-		bvgOutputStream.write(shape);
+		bvgOutputStream.write(path);
 	}
 
 	@Override
 	public void stroke(Shape shape, Color color, LineStyle lineStyle)
 	{
+		Path path = SwingUtil.createPath(shape);
+
 		bvgOutputStream.setStroke(null);
-		bvgOutputStream.write(shape);
+		bvgOutputStream.write(path);
 	}
 
 }

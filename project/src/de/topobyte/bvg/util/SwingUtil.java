@@ -18,9 +18,21 @@
 package de.topobyte.bvg.util;
 
 import java.awt.BasicStroke;
+import java.awt.Shape;
+import java.awt.geom.PathIterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.topobyte.bvg.Cap;
 import de.topobyte.bvg.Join;
+import de.topobyte.bvg.path.Close;
+import de.topobyte.bvg.path.CubicTo;
+import de.topobyte.bvg.path.LineTo;
+import de.topobyte.bvg.path.MoveTo;
+import de.topobyte.bvg.path.Path;
+import de.topobyte.bvg.path.PathElement;
+import de.topobyte.bvg.path.QuadTo;
+import de.topobyte.bvg.path.Type;
 
 public class SwingUtil
 {
@@ -75,5 +87,46 @@ public class SwingUtil
 		case MITER:
 			return BasicStroke.JOIN_MITER;
 		}
+	}
+
+	public static Path createPath(Shape shape)
+	{
+		PathIterator it = shape.getPathIterator(null);
+
+		double points[] = new double[6];
+
+		List<Type> types = new ArrayList<Type>();
+		List<PathElement> elements = new ArrayList<PathElement>();
+
+		while (!it.isDone()) {
+			int type = it.currentSegment(points);
+			switch (type) {
+			case PathIterator.SEG_MOVETO:
+				types.add(Type.MOVE);
+				elements.add(new MoveTo(points[0], points[1]));
+				break;
+			case PathIterator.SEG_CLOSE:
+				types.add(Type.CLOSE);
+				elements.add(new Close());
+				break;
+			case PathIterator.SEG_LINETO:
+				types.add(Type.LINE);
+				elements.add(new LineTo(points[0], points[1]));
+				break;
+			case PathIterator.SEG_QUADTO:
+				types.add(Type.QUAD);
+				elements.add(new QuadTo(points[0], points[1], points[2],
+						points[3]));
+				break;
+			case PathIterator.SEG_CUBICTO:
+				types.add(Type.CUBIC);
+				elements.add(new CubicTo(points[0], points[1], points[2],
+						points[3], points[4], points[5]));
+				break;
+			}
+			it.next();
+		}
+
+		return new Path(types, elements);
 	}
 }

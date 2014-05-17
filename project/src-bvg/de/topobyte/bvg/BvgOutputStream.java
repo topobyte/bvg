@@ -17,10 +17,11 @@
 
 package de.topobyte.bvg;
 
-import java.awt.Shape;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import de.topobyte.bvg.path.Path;
 
 public class BvgOutputStream
 {
@@ -63,9 +64,9 @@ public class BvgOutputStream
 		this.stroke = stroke;
 	}
 
-	public void write(Shape shape)
+	public void write(Path path)
 	{
-		System.out.println("write shape");
+
 	}
 
 }
