@@ -44,7 +44,8 @@ public class BvgOutputStream
 		dos = new DataOutputStream(os);
 
 		// file header
-		dos.write(Constants.magic);
+		dos.write(Constants.MAGIC);
+		dos.writeShort(Constants.VERSION);
 		dos.writeByte(Constants.ENCODING_PLAIN);
 
 		// image header
@@ -64,7 +65,7 @@ public class BvgOutputStream
 
 	public void write(Shape shape)
 	{
-
+		System.out.println("write shape");
 	}
 
 }

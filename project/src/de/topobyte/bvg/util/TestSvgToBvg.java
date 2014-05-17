@@ -17,30 +17,17 @@
 
 package de.topobyte.bvg.util;
 
-import java.awt.Shape;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
-import de.topobyte.bvg.BvgOutputStream;
-import de.topobyte.bvg.Color;
-import de.topobyte.bvg.LineStyle;
-
-public class SvgToBvg implements ShapeSink
+public class TestSvgToBvg
 {
 
 	public static void main(String[] args) throws Exception
 	{
-		if (args.length != 2) {
-			System.out.println("usage: " + SvgToBvg.class.getSimpleName()
-					+ " [input] [output]");
-			System.exit(1);
-		}
-
-		String input = args[0];
-		String output = args[1];
+		String input = "/home/z/git/map-icons/simple/bakery.svg";
+		String output = "/home/z/git/map-icons/bvg/bakery.bvg";
 
 		File fileInput = new File(input);
 
@@ -56,34 +43,6 @@ public class SvgToBvg implements ShapeSink
 		svgParser.parseToSink(fileInput);
 
 		bos.close();
-	}
-
-	private BvgOutputStream bvgOutputStream;
-
-	public SvgToBvg(OutputStream os) throws IOException
-	{
-		int width = 800, height = 800;
-		bvgOutputStream = new BvgOutputStream(os, width, height);
-	}
-
-	@Override
-	public void init(double width, double height)
-	{
-		// TODO: implement
-	}
-
-	@Override
-	public void fill(Shape shape, Color color)
-	{
-		bvgOutputStream.setFill(null);
-		bvgOutputStream.write(shape);
-	}
-
-	@Override
-	public void stroke(Shape shape, Color color, LineStyle lineStyle)
-	{
-		bvgOutputStream.setStroke(null);
-		bvgOutputStream.write(shape);
 	}
 
 }

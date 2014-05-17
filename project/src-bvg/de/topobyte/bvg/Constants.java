@@ -21,7 +21,9 @@ public class Constants
 {
 
 	// 4 magic bytes
-	static final byte[] magic = new byte[] { 98, 118, 103, 0 };
+	static final byte[] MAGIC = new byte[] { 98, 118, 103, 0 };
+
+	static final short VERSION = 1;
 
 	// width, height
 
