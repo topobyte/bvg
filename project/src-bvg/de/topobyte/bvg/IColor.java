@@ -17,28 +17,17 @@
 
 package de.topobyte.bvg;
 
-public class Constants
+public interface IColor
 {
 
-	// 4 magic bytes
-	static final byte[] magic = new byte[] { 98, 118, 103, 0 };
+	public int getColorCode();
 
-	// width, height
+	public int getRed();
 
-	// encoding
-	static final byte ENCODING_PLAIN = 0;
-	static final byte ENCODING_DEFLATE = 1;
+	public int getBlue();
 
-	// element types
-	static final byte ID_FILL = 0;
-	static final byte ID_STROKE = 1;
-	static final byte ID_FILL_STROKE = 2;
+	public int getGreen();
 
-	// path construction
-	static final byte PATH_MOVE_TO = 0;
-	static final byte PATH_LINE_TO = 1;
-	static final byte PATH_QUAD_TO = 2;
-	static final byte PATH_CUBIC_TO = 3;
-	static final byte PATH_CLOSE = 4;
+	public int getAlpha();
 
 }

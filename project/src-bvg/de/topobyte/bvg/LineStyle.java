@@ -17,28 +17,43 @@
 
 package de.topobyte.bvg;
 
-public class Constants
+public class LineStyle
 {
 
-	// 4 magic bytes
-	static final byte[] magic = new byte[] { 98, 118, 103, 0 };
+	private float width;
+	private Cap cap;
+	private Join join;
+	private float miterLimit = 0;
 
-	// width, height
+	public LineStyle(float width, Cap cap, Join join)
+	{
+		this.width = width;
+		this.cap = cap;
+		this.join = join;
+	}
 
-	// encoding
-	static final byte ENCODING_PLAIN = 0;
-	static final byte ENCODING_DEFLATE = 1;
+	public void setMiterLimit(float miterLimit)
+	{
+		this.miterLimit = miterLimit;
+	}
 
-	// element types
-	static final byte ID_FILL = 0;
-	static final byte ID_STROKE = 1;
-	static final byte ID_FILL_STROKE = 2;
+	public float getWidth()
+	{
+		return width;
+	}
 
-	// path construction
-	static final byte PATH_MOVE_TO = 0;
-	static final byte PATH_LINE_TO = 1;
-	static final byte PATH_QUAD_TO = 2;
-	static final byte PATH_CUBIC_TO = 3;
-	static final byte PATH_CLOSE = 4;
+	public Cap getCap()
+	{
+		return cap;
+	}
 
+	public Join getJoin()
+	{
+		return join;
+	}
+
+	public float getMiterLimit()
+	{
+		return miterLimit;
+	}
 }

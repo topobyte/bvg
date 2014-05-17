@@ -3,30 +3,30 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src-bvg"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/batik/batik-anim.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-awt-util.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-bridge.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-codec.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-css.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-dom.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-ext.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-extension.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-gui-util.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-gvt.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-parser.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-rasterizer.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-script.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-slideshow.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-squiggle.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-svg-dom.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-svggen.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-svgpp.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-swing.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-transcoder.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-ttf2svg.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-util.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik-xml.jar"/>
-	<classpathentry kind="lib" path="lib/batik/batik.jar"/>
+	<classpathentry kind="lib" path="lib/batik/batik-anim.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-awt-util.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-bridge.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-codec.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-css.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-dom.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-ext.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-extension.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-gui-util.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-gvt.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-parser.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-rasterizer.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-script.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-slideshow.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-squiggle.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-svg-dom.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-svggen.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-svgpp.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-swing.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-transcoder.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-ttf2svg.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-util.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik-xml.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
+	<classpathentry kind="lib" path="lib/batik/batik.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
 	<classpathentry kind="lib" path="lib/batik/js.jar"/>
 	<classpathentry kind="lib" path="lib/batik/pdf-transcoder.jar"/>
 	<classpathentry kind="lib" path="lib/batik/xalan-2.6.0.jar"/>

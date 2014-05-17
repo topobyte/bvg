@@ -18,18 +18,17 @@
 package de.topobyte.bvg.util;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
+import java.awt.BasicStroke;
 import java.awt.Composite;
-import java.awt.Graphics2D;
 import java.awt.Paint;
-import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Dimension2D;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.DocumentLoader;
@@ -47,19 +46,25 @@ import org.apache.batik.gvt.StrokeShapePainter;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.svg.SVGDocument;
 
-public class Test
+import de.topobyte.bvg.Color;
+import de.topobyte.bvg.LineStyle;
+
+public class SvgParser
 {
-	public static void main(String[] args) throws Exception
+
+	private ShapeSink sink;
+
+	public SvgParser(ShapeSink sink)
 	{
-		String input = "/home/z/git/map-icons/simple/bakery.svg";
-		String output = "/home/z/git/map-icons/bvg/bakery.png";
+		this.sink = sink;
+	}
 
-		File fileInput = new File(input);
-		File fileOutput = new File(output);
-
+	public void parseToSink(File file) throws MalformedURLException,
+			IOException
+	{
 		String xmlParser = XMLResourceDescriptor.getXMLParserClassName();
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(xmlParser);
-		SVGDocument doc = df.createSVGDocument(fileInput.toURL().toString());
+		SVGDocument doc = df.createSVGDocument(file.toURI().toString());
 		UserAgent userAgent = new UserAgentAdapter();
 		DocumentLoader loader = new DocumentLoader(userAgent);
 		BridgeContext ctx = new BridgeContext(userAgent, loader);
@@ -67,73 +72,92 @@ public class Test
 		GVTBuilder builder = new GVTBuilder();
 		RootGraphicsNode rootGN = (RootGraphicsNode) builder.build(ctx, doc);
 
-		System.out.println(rootGN);
-		System.out.println(rootGN.getGeometryBounds());
-		System.out.println(rootGN.getOutline());
+		Dimension2D docSize = ctx.getDocumentSize();
+		double width = docSize.getWidth();
+		double height = docSize.getHeight();
 
-		BufferedImage image = new BufferedImage(800, 800,
-				BufferedImage.TYPE_4BYTE_ABGR);
+		sink.init(width, height);
 
-		Graphics2D g2d = image.createGraphics();
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-
-		System.out.println("TRAVERSAL");
-		go(rootGN, 0, g2d);
-
-		ImageIO.write(image, "png", fileOutput);
+		go(rootGN, 0);
 	}
 
-	private static void go(CompositeGraphicsNode cgn, int level, Graphics2D g2d)
+	private void go(CompositeGraphicsNode cgn, int level)
 	{
 		print(cgn.toString(), level);
 		List<?> children = cgn.getChildren();
 		for (Object child : children) {
 			if (child instanceof CompositeGraphicsNode) {
-				go((CompositeGraphicsNode) child, level + 1, g2d);
+				go((CompositeGraphicsNode) child, level + 1);
 			} else {
 				print("LEAF: " + child.toString(), level);
 				if (child instanceof ShapeNode) {
+					int alpha = 255;
 					ShapeNode sn = (ShapeNode) child;
 					Composite composite = sn.getComposite();
 					if (composite != null) {
 						print("COMPOSITE: " + composite, level + 1);
 						if (composite instanceof AlphaComposite) {
 							AlphaComposite ac = (AlphaComposite) composite;
-							float alpha = ac.getAlpha();
+							float alphaF = ac.getAlpha();
+							alpha = Math.round(alphaF * 255);
 							print("alpha: " + alpha, level + 1);
 						}
-						g2d.setComposite(sn.getComposite());
 					}
+
+					AffineTransform transform = sn.getGlobalTransform();
+					Shape shape = sn.getShape();
+					Shape tshape = transform.createTransformedShape(shape);
+
 					ShapePainter shapePainter = sn.getShapePainter();
 					if (shapePainter instanceof CompositeShapePainter) {
-						AffineTransform transform = sn.getGlobalTransform();
-						g2d.setTransform(transform);
 						CompositeShapePainter csp = (CompositeShapePainter) shapePainter;
 						for (int i = 0; i < csp.getShapePainterCount(); i++) {
 							ShapePainter sp = csp.getShapePainter(i);
 							if (sp instanceof FillShapePainter) {
+								print("FILL", level + 1);
 								FillShapePainter fsp = (FillShapePainter) sp;
 								Paint paint = fsp.getPaint();
 								if (paint != null) {
 									print("PAINT: " + paint, level + 1);
-									g2d.setPaint(paint);
-									g2d.fill(sn.getShape());
-								}
-								if (paint instanceof Color) {
-									Color c = (Color) paint;
-									print("Color: " + c, level + 1);
+									if (paint instanceof java.awt.Color) {
+										java.awt.Color c = (java.awt.Color) paint;
+										print("Color: " + c, level + 1);
+										Color color = new Color(c.getRGB(),
+												alpha);
+										sink.fill(tshape, color);
+									}
 								}
 							} else if (sp instanceof StrokeShapePainter) {
+								print("STROKE", level + 1);
 								StrokeShapePainter ssp = (StrokeShapePainter) sp;
 								Paint paint = ssp.getPaint();
 								print("PAINT: " + paint, level + 1);
 								Stroke stroke = ssp.getStroke();
 								print("STROKE: " + stroke, level + 1);
 								if (stroke != null && paint != null) {
-									g2d.setPaint(paint);
-									g2d.setStroke(stroke);
-									g2d.draw(sn.getShape());
+									if (paint instanceof java.awt.Color
+											&& stroke instanceof BasicStroke) {
+										java.awt.Color c = (java.awt.Color) paint;
+										Color color = new Color(c.getRGB(),
+												alpha);
+
+										BasicStroke bs = (BasicStroke) stroke;
+										float width = bs.getLineWidth();
+										int endCap = bs.getEndCap();
+										int lineJoin = bs.getLineJoin();
+
+										LineStyle lineStyle = new LineStyle(
+												width,
+												SwingUtil.getCap(endCap),
+												SwingUtil.getJoin(lineJoin));
+										if (lineJoin == BasicStroke.JOIN_MITER) {
+											float miterLimit = bs
+													.getMiterLimit();
+											lineStyle.setMiterLimit(miterLimit);
+										}
+
+										sink.stroke(tshape, color, lineStyle);
+									}
 								}
 							}
 						}
@@ -143,11 +167,12 @@ public class Test
 		}
 	}
 
-	private static void print(String string, int level)
+	private void print(String string, int level)
 	{
 		for (int i = 0; i < level; i++) {
 			System.out.print("  ");
 		}
 		System.out.println(string);
 	}
+
 }

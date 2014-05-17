@@ -26,15 +26,15 @@ public class BvgOutputStream
 {
 
 	private OutputStream os;
-	private int width;
-	private int height;
+	private double width;
+	private double height;
 
 	private Fill fill;
 	private Stroke stroke;
 
 	private DataOutputStream dos;
 
-	public BvgOutputStream(OutputStream os, int width, int height)
+	public BvgOutputStream(OutputStream os, double width, double height)
 			throws IOException
 	{
 		this.os = os;
@@ -48,9 +48,8 @@ public class BvgOutputStream
 		dos.writeByte(Constants.ENCODING_PLAIN);
 
 		// image header
-		dos.writeByte(Constants.COLOR_TYPE_RGB);
-		dos.writeInt(width);
-		dos.writeInt(height);
+		dos.writeDouble(width);
+		dos.writeDouble(height);
 	}
 
 	public void setFill(Fill fill)

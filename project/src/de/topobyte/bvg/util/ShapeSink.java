@@ -15,30 +15,20 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg;
+package de.topobyte.bvg.util;
 
-public class Constants
+import java.awt.Shape;
+
+import de.topobyte.bvg.Color;
+import de.topobyte.bvg.LineStyle;
+
+public interface ShapeSink
 {
 
-	// 4 magic bytes
-	static final byte[] magic = new byte[] { 98, 118, 103, 0 };
+	public void init(double width, double height);
 
-	// width, height
+	public void fill(Shape shape, Color color);
 
-	// encoding
-	static final byte ENCODING_PLAIN = 0;
-	static final byte ENCODING_DEFLATE = 1;
-
-	// element types
-	static final byte ID_FILL = 0;
-	static final byte ID_STROKE = 1;
-	static final byte ID_FILL_STROKE = 2;
-
-	// path construction
-	static final byte PATH_MOVE_TO = 0;
-	static final byte PATH_LINE_TO = 1;
-	static final byte PATH_QUAD_TO = 2;
-	static final byte PATH_CUBIC_TO = 3;
-	static final byte PATH_CLOSE = 4;
+	public void stroke(Shape shape, Color color, LineStyle lineStyle);
 
 }
