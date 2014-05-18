@@ -27,8 +27,8 @@ public class TestBvgToPng
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/bvg/bakery.bvg";
-		String output = "/home/z/git/map-icons/bvg-to-png/bakery.png";
+		String input = "/home/z/git/map-icons/bvg/hotel.bvg";
+		String output = "/home/z/git/map-icons/test/hotel.png";
 
 		File fileInput = new File(input);
 		File fileOutput = new File(output);

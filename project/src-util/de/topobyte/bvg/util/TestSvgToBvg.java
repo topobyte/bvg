@@ -27,7 +27,7 @@ public class TestSvgToBvg
 	public static void main(String[] args) throws Exception
 	{
 		String input = "/home/z/git/map-icons/simple/bakery.svg";
-		String output = "/home/z/git/map-icons/bvg/bakery.bvg";
+		String output = "/home/z/git/map-icons/test/bakery.bvg";
 
 		File fileInput = new File(input);
 
