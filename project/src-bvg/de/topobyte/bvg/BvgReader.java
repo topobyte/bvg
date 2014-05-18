@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.InflaterInputStream;
 
 import de.topobyte.bvg.path.CompactPath;
 import de.topobyte.bvg.path.Type;
@@ -50,10 +51,12 @@ public class BvgReader
 	}
 
 	private BvgImage image = null;
+	private InputStream is;
 	private DataInputStream dis;
 
 	private BvgReader(InputStream is)
 	{
+		this.is = is;
 		dis = new DataInputStream(is);
 	}
 
@@ -72,6 +75,15 @@ public class BvgReader
 
 		System.out.println("Size: " + width + ", " + height);
 
+		if (encoding == Constants.ENCODING_PLAIN) {
+			// valid encoding
+		} else if (encoding == Constants.ENCODING_DEFLATE) {
+			InflaterInputStream deflater = new InflaterInputStream(is);
+			dis = new DataInputStream(deflater);
+		} else {
+			throw new IOException("Illegal encoding");
+		}
+
 		while (true) {
 			byte head;
 			try {
@@ -85,6 +97,8 @@ public class BvgReader
 				readStroke();
 			}
 		}
+
+		dis.close();
 	}
 
 	private void readFill() throws IOException
