@@ -58,7 +58,9 @@ public class BvgToPng
 
 		File fileOutput = new File(output);
 		File parentFile = fileOutput.getParentFile();
-		parentFile.mkdirs();
+		if (parentFile != null) {
+			parentFile.mkdirs();
+		}
 
 		FileOutputStream fos = new FileOutputStream(fileOutput);
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
