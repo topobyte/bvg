@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" output="bin/util" path="src-util"/>
 	<classpathentry kind="src" path="src-bvg"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/batik/batik-anim.jar" sourcepath="/home/z/Downloads/batik-src-1.7.zip"/>
@@ -33,5 +33,5 @@
 	<classpathentry kind="lib" path="lib/batik/xerces_2_5_0.jar"/>
 	<classpathentry kind="lib" path="lib/batik/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="lib/batik/xml-apis.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="bin/main"/>
 </classpath>
