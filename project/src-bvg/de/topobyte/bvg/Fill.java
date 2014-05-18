@@ -20,9 +20,16 @@ package de.topobyte.bvg;
 public class Fill
 {
 
+	private IColor color;
+
 	public Fill(IColor color)
 	{
+		this.color = color;
+	}
 
+	public IColor getColor()
+	{
+		return color;
 	}
 
 }

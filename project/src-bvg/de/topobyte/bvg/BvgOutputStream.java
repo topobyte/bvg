@@ -22,8 +22,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import de.topobyte.bvg.path.CubicTo;
+import de.topobyte.bvg.path.LineTo;
+import de.topobyte.bvg.path.MoveTo;
 import de.topobyte.bvg.path.Path;
 import de.topobyte.bvg.path.PathElement;
+import de.topobyte.bvg.path.QuadTo;
 import de.topobyte.bvg.path.Type;
 
 public class BvgOutputStream
@@ -34,9 +38,6 @@ public class BvgOutputStream
 
 	private double width;
 	private double height;
-
-	private Fill fill;
-	private Stroke stroke;
 
 	public BvgOutputStream(OutputStream os, double width, double height)
 			throws IOException
@@ -57,20 +58,80 @@ public class BvgOutputStream
 		dos.writeDouble(height);
 	}
 
-	public void setFill(Fill fill)
+	public void fill(Fill fill, Path path) throws IOException
 	{
-		this.fill = fill;
+		IColor color = fill.getColor();
+		int code = color.getColorCode();
+		dos.writeInt(code);
+		write(path);
 	}
 
-	public void setStroke(Stroke stroke)
+	public void stroke(Stroke stroke, Path path) throws IOException
 	{
-		this.stroke = stroke;
+		IColor color = stroke.getColor();
+		int code = color.getColorCode();
+		dos.writeInt(code);
+		LineStyle lineStyle = stroke.getLineStyle();
+		float width = lineStyle.getWidth();
+		dos.writeFloat(width);
+		Cap cap = lineStyle.getCap();
+		switch (cap) {
+		case BUTT:
+			dos.writeByte(Constants.CAP_BUTT);
+			break;
+		case ROUND:
+			dos.writeByte(Constants.CAP_ROUND);
+			break;
+		case SQUARE:
+			dos.writeByte(Constants.CAP_SQUARE);
+			break;
+		}
+		Join join = lineStyle.getJoin();
+		switch (join) {
+		case BEVEL:
+			dos.writeByte(Constants.JOIN_BEVEL);
+			break;
+		case MITER:
+			dos.writeByte(Constants.JOIN_MITER);
+			break;
+		case ROUND:
+			dos.writeByte(Constants.JOIN_ROUND);
+			break;
+		}
+		if (join == Join.MITER) {
+			float miterLimit = lineStyle.getMiterLimit();
+			dos.writeFloat(miterLimit);
+		}
+		write(path);
 	}
 
 	public void write(Path path) throws IOException
 	{
 		List<Type> types = path.getTypes();
 		List<PathElement> elements = path.getElements();
+
+		int n = 0;
+		for (int i = 0; i < types.size(); i++) {
+			Type type = types.get(i);
+
+			switch (type) {
+			default:
+			case CLOSE:
+				break;
+			case MOVE:
+			case LINE:
+				n += 2;
+				break;
+			case QUAD:
+				n += 4;
+				break;
+			case CUBIC:
+				n += 6;
+				break;
+			}
+		}
+
+		dos.writeInt(n);
 
 		for (int i = 0; i < types.size(); i++) {
 			Type type = types.get(i);
@@ -79,18 +140,36 @@ public class BvgOutputStream
 			switch (type) {
 			case MOVE:
 				dos.writeByte(Constants.PATH_MOVE_TO);
+				MoveTo move = (MoveTo) pathElement;
+				dos.writeDouble(move.getX());
+				dos.writeDouble(move.getY());
 				break;
 			case CLOSE:
 				dos.writeByte(Constants.PATH_CLOSE);
 				break;
 			case LINE:
 				dos.writeByte(Constants.PATH_LINE_TO);
+				LineTo line = (LineTo) pathElement;
+				dos.writeDouble(line.getX());
+				dos.writeDouble(line.getY());
 				break;
 			case QUAD:
 				dos.writeByte(Constants.PATH_QUAD_TO);
+				QuadTo quad = (QuadTo) pathElement;
+				dos.writeDouble(quad.getCX());
+				dos.writeDouble(quad.getCY());
+				dos.writeDouble(quad.getX());
+				dos.writeDouble(quad.getY());
 				break;
 			case CUBIC:
 				dos.writeByte(Constants.PATH_CUBIC_TO);
+				CubicTo cubic = (CubicTo) pathElement;
+				dos.writeDouble(cubic.getCX());
+				dos.writeDouble(cubic.getCY());
+				dos.writeDouble(cubic.getCX2());
+				dos.writeDouble(cubic.getCY2());
+				dos.writeDouble(cubic.getX());
+				dos.writeDouble(cubic.getY());
 				break;
 			}
 		}

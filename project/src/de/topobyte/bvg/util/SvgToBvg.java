@@ -26,7 +26,9 @@ import java.io.OutputStream;
 
 import de.topobyte.bvg.BvgOutputStream;
 import de.topobyte.bvg.Color;
+import de.topobyte.bvg.Fill;
 import de.topobyte.bvg.LineStyle;
+import de.topobyte.bvg.Stroke;
 import de.topobyte.bvg.path.Path;
 
 public class SvgToBvg implements ShapeSink
@@ -60,17 +62,17 @@ public class SvgToBvg implements ShapeSink
 	}
 
 	private BvgOutputStream bvgOutputStream;
+	private OutputStream os;
 
 	public SvgToBvg(OutputStream os) throws IOException
 	{
-		int width = 800, height = 800;
-		bvgOutputStream = new BvgOutputStream(os, width, height);
+		this.os = os;
 	}
 
 	@Override
-	public void init(double width, double height)
+	public void init(double width, double height) throws IOException
 	{
-		// TODO: implement
+		bvgOutputStream = new BvgOutputStream(os, width, height);
 	}
 
 	@Override
@@ -78,8 +80,8 @@ public class SvgToBvg implements ShapeSink
 	{
 		Path path = SwingUtil.createPath(shape);
 
-		bvgOutputStream.setFill(null);
-		bvgOutputStream.write(path);
+		Fill fill = new Fill(color);
+		bvgOutputStream.fill(fill, path);
 	}
 
 	@Override
@@ -88,8 +90,8 @@ public class SvgToBvg implements ShapeSink
 	{
 		Path path = SwingUtil.createPath(shape);
 
-		bvgOutputStream.setStroke(null);
-		bvgOutputStream.write(path);
+		Stroke stroke = new Stroke(color, lineStyle);
+		bvgOutputStream.stroke(stroke, path);
 	}
 
 }

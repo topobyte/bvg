@@ -43,4 +43,13 @@ public class Constants
 	static final byte PATH_CUBIC_TO = 3;
 	static final byte PATH_CLOSE = 4;
 
+	// line style
+	static final byte CAP_BUTT = 0;
+	static final byte CAP_ROUND = 1;
+	static final byte CAP_SQUARE = 2;
+
+	static final byte JOIN_BEVEL = 0;
+	static final byte JOIN_MITER = 1;
+	static final byte JOIN_ROUND = 2;
+
 }

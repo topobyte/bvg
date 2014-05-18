@@ -20,4 +20,23 @@ package de.topobyte.bvg;
 public class Stroke
 {
 
+	private IColor color;
+	private LineStyle lineStyle;
+
+	public Stroke(IColor color, LineStyle lineStyle)
+	{
+		this.color = color;
+		this.lineStyle = lineStyle;
+	}
+
+	public IColor getColor()
+	{
+		return color;
+	}
+
+	public LineStyle getLineStyle()
+	{
+		return lineStyle;
+	}
+
 }
