@@ -17,7 +17,7 @@
 
 package de.topobyte.bvg;
 
-public class Stroke
+public class Stroke implements PaintElement
 {
 
 	private IColor color;

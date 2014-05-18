@@ -15,21 +15,32 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg;
+package de.topobyte.bvg.util;
 
-public class Fill implements PaintElement
+import java.io.File;
+
+import de.topobyte.bvg.BvgImage;
+import de.topobyte.bvg.BvgReader;
+
+public class TestBvgToPng
 {
 
-	private IColor color;
-
-	public Fill(IColor color)
+	public static void main(String[] args) throws Exception
 	{
-		this.color = color;
-	}
+		String input = "/home/z/git/map-icons/bvg/bakery.bvg";
+		String output = "/home/z/git/map-icons/bvg-to-png/bakery.png";
 
-	public IColor getColor()
-	{
-		return color;
+		File fileInput = new File(input);
+		File fileOutput = new File(output);
+
+		File parentFile = fileOutput.getParentFile();
+		parentFile.mkdirs();
+
+		BvgImage bvg = BvgReader.read(fileInput);
+
+		BvgToPng test = new BvgToPng();
+		test.createImage(bvg);
+		test.finish(fileOutput);
 	}
 
 }

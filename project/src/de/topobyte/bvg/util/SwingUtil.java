@@ -19,6 +19,7 @@ package de.topobyte.bvg.util;
 
 import java.awt.BasicStroke;
 import java.awt.Shape;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.List;
 import de.topobyte.bvg.Cap;
 import de.topobyte.bvg.Join;
 import de.topobyte.bvg.path.Close;
+import de.topobyte.bvg.path.CompactPath;
 import de.topobyte.bvg.path.CubicTo;
 import de.topobyte.bvg.path.LineTo;
 import de.topobyte.bvg.path.MoveTo;
@@ -128,5 +130,58 @@ public class SwingUtil
 		}
 
 		return new Path(types, elements);
+	}
+
+	public static GeneralPath createPath(CompactPath path)
+	{
+		GeneralPath result = new GeneralPath();
+
+		List<Type> types = path.getTypes();
+		double[] values = path.getValues();
+
+		int i = 0;
+		for (Type type : types) {
+			switch (type) {
+			case MOVE: {
+				double x = values[i++];
+				double y = values[i++];
+				System.out.println("MOVE " + x + " " + y);
+				result.moveTo(x, y);
+				break;
+			}
+			case CLOSE:
+				result.closePath();
+				break;
+			case LINE: {
+				double x = values[i++];
+				double y = values[i++];
+				System.out.println("LINE " + x + " " + y);
+				result.lineTo(x, y);
+				break;
+			}
+			case QUAD: {
+				double x1 = values[i++];
+				double y1 = values[i++];
+				double x = values[i++];
+				double y = values[i++];
+				System.out.println("QUAD " + x + " " + y);
+				result.quadTo(x1, y1, x, y);
+				break;
+			}
+			case CUBIC: {
+				double x1 = values[i++];
+				double y1 = values[i++];
+				double x2 = values[i++];
+				double y2 = values[i++];
+				double x = values[i++];
+				double y = values[i++];
+				System.out.println("CUBIC " + x + " " + y);
+				result.curveTo(x1, y1, x2, y2, x, y);
+				break;
+			}
+			}
+		}
+
+		return result;
 	}
 }

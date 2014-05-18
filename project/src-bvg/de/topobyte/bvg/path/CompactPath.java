@@ -15,21 +15,30 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg;
+package de.topobyte.bvg.path;
 
-public class Fill implements PaintElement
+import java.util.List;
+
+public class CompactPath
 {
 
-	private IColor color;
+	private List<Type> types;
+	private double[] values;
 
-	public Fill(IColor color)
+	public CompactPath(List<Type> types, double[] values)
 	{
-		this.color = color;
+		this.types = types;
+		this.values = values;
 	}
 
-	public IColor getColor()
+	public List<Type> getTypes()
 	{
-		return color;
+		return types;
+	}
+
+	public double[] getValues()
+	{
+		return values;
 	}
 
 }

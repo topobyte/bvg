@@ -60,6 +60,7 @@ public class BvgOutputStream
 
 	public void fill(Fill fill, Path path) throws IOException
 	{
+		dos.writeByte(Constants.ID_FILL);
 		IColor color = fill.getColor();
 		int code = color.getColorCode();
 		dos.writeInt(code);
@@ -68,6 +69,7 @@ public class BvgOutputStream
 
 	public void stroke(Stroke stroke, Path path) throws IOException
 	{
+		dos.writeByte(Constants.ID_STROKE);
 		IColor color = stroke.getColor();
 		int code = color.getColorCode();
 		dos.writeInt(code);
@@ -131,6 +133,7 @@ public class BvgOutputStream
 			}
 		}
 
+		dos.writeInt(elements.size());
 		dos.writeInt(n);
 
 		for (int i = 0; i < types.size(); i++) {

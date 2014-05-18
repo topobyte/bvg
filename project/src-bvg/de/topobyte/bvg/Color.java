@@ -21,11 +21,6 @@ public class Color implements IColor
 {
 	private int argb;
 
-	public Color(int argb)
-	{
-		this.argb = setFullAlpha(argb);
-	}
-
 	public Color(int rgb, int alpha)
 	{
 		argb = (rgb & 0xFFFFFF) | ((alpha & 0xFF) << 24);

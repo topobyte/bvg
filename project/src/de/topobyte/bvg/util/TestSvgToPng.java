@@ -37,8 +37,8 @@ public class TestSvgToPng implements ShapeSink
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/simple/cafe.svg";
-		String output = "/home/z/git/map-icons/bvg/cafe.png";
+		String input = "/home/z/git/map-icons/simple/bakery.svg";
+		String output = "/home/z/git/map-icons/bvg/bakery.png";
 
 		File fileInput = new File(input);
 		File fileOutput = new File(output);
