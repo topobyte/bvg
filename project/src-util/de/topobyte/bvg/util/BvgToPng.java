@@ -23,13 +23,16 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import de.topobyte.bvg.BvgImage;
+import de.topobyte.bvg.BvgReader;
 import de.topobyte.bvg.Fill;
 import de.topobyte.bvg.IColor;
 import de.topobyte.bvg.LineStyle;
@@ -39,6 +42,35 @@ import de.topobyte.bvg.path.CompactPath;
 
 public class BvgToPng
 {
+
+	public static void main(String[] args) throws Exception
+	{
+		if (args.length != 2) {
+			System.out.println("usage: " + BvgToPng.class.getSimpleName()
+					+ " [input] [output]");
+			System.exit(1);
+		}
+
+		String input = args[0];
+		String output = args[1];
+
+		File fileInput = new File(input);
+
+		File fileOutput = new File(output);
+		File parentFile = fileOutput.getParentFile();
+		parentFile.mkdirs();
+
+		FileOutputStream fos = new FileOutputStream(fileOutput);
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+		BvgImage bvg = BvgReader.read(fileInput);
+
+		BvgToPng test = new BvgToPng();
+		test.createImage(bvg);
+		test.finish(fileOutput);
+
+		bos.close();
+	}
 
 	private BufferedImage image;
 
