@@ -112,7 +112,7 @@ public class SvgToBvg implements ShapeSink
 	@Override
 	public void fill(Shape shape, Color color) throws IOException
 	{
-		Path path = SwingUtil.createPath(shape);
+		Path path = FromSwingUtil.createPath(shape);
 
 		Fill fill = new Fill(color);
 		bvgOutputStream.fill(fill, path);
@@ -122,7 +122,7 @@ public class SvgToBvg implements ShapeSink
 	public void stroke(Shape shape, Color color, LineStyle lineStyle)
 			throws IOException
 	{
-		Path path = SwingUtil.createPath(shape);
+		Path path = FromSwingUtil.createPath(shape);
 
 		Stroke stroke = new Stroke(color, lineStyle);
 		bvgOutputStream.stroke(stroke, path);

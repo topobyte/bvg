@@ -151,8 +151,8 @@ public class SvgParser
 
 										LineStyle lineStyle = new LineStyle(
 												width,
-												SwingUtil.getCap(endCap),
-												SwingUtil.getJoin(lineJoin));
+												FromSwingUtil.getCap(endCap),
+												FromSwingUtil.getJoin(lineJoin));
 										if (lineJoin == BasicStroke.JOIN_MITER) {
 											float miterLimit = bs
 													.getMiterLimit();

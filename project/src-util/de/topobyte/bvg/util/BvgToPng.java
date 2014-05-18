@@ -38,6 +38,7 @@ import de.topobyte.bvg.IColor;
 import de.topobyte.bvg.LineStyle;
 import de.topobyte.bvg.PaintElement;
 import de.topobyte.bvg.Stroke;
+import de.topobyte.bvg.ToSwingUtil;
 import de.topobyte.bvg.path.CompactPath;
 
 public class BvgToPng
@@ -96,7 +97,7 @@ public class BvgToPng
 			CompactPath path = paths.get(i);
 
 			System.out.println("PATH");
-			GeneralPath p = SwingUtil.createPath(path);
+			GeneralPath p = ToSwingUtil.createPath(path);
 
 			if (element instanceof Fill) {
 				System.out.println("FILL");
@@ -122,8 +123,8 @@ public class BvgToPng
 				g.setColor(c);
 
 				LineStyle lineStyle = stroke.getLineStyle();
-				int cap = SwingUtil.getCap(lineStyle.getCap());
-				int join = SwingUtil.getJoin(lineStyle.getJoin());
+				int cap = ToSwingUtil.getCap(lineStyle.getCap());
+				int join = ToSwingUtil.getJoin(lineStyle.getJoin());
 				BasicStroke bs = new BasicStroke(lineStyle.getWidth(), cap,
 						join, lineStyle.getMiterLimit());
 				g.setStroke(bs);

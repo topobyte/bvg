@@ -29,9 +29,9 @@ import javax.imageio.ImageIO;
 
 import de.topobyte.bvg.Color;
 import de.topobyte.bvg.LineStyle;
+import de.topobyte.bvg.ToSwingUtil;
 import de.topobyte.bvg.util.ShapeSink;
 import de.topobyte.bvg.util.SvgParser;
-import de.topobyte.bvg.util.SwingUtil;
 
 public class TestSvgToPng implements ShapeSink
 {
@@ -94,8 +94,8 @@ public class TestSvgToPng implements ShapeSink
 				c.getBlue(), c.getAlpha());
 		g2d.setColor(color);
 		BasicStroke stroke = new BasicStroke(lineStyle.getWidth(),
-				SwingUtil.getCap(lineStyle.getCap()),
-				SwingUtil.getJoin(lineStyle.getJoin()));
+				ToSwingUtil.getCap(lineStyle.getCap()), ToSwingUtil.getJoin(lineStyle
+						.getJoin()));
 		g2d.setStroke(stroke);
 		g2d.draw(shape);
 	}
