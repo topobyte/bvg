@@ -15,19 +15,20 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg.util;
+package de.topobyte.bvg.util.test;
 
 import java.io.File;
 
 import de.topobyte.bvg.BvgImage;
 import de.topobyte.bvg.BvgReader;
+import de.topobyte.bvg.util.BvgToPng;
 
 public class TestBvgToPng
 {
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/bvg/hotel.bvg";
+		String input = "/home/z/git/map-icons/test/hotel.bvg";
 		String output = "/home/z/git/map-icons/test/hotel.png";
 
 		File fileInput = new File(input);

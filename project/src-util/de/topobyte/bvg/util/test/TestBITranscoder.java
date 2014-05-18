@@ -24,13 +24,12 @@ import javax.imageio.ImageIO;
 
 import org.apache.batik.transcoder.TranscoderInput;
 
-
 public class TestBITranscoder
 {
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/simple/circle.svg";
-		String output = "/home/z/git/map-icons/test/circle.bi.png";
+		String input = "/home/z/git/map-icons/test/atm.svg";
+		String output = "/home/z/git/map-icons/test/atm.bi.png";
 
 		BufferedImageTranscoder t = new BufferedImageTranscoder();
 		String svgURI = new File(input).toURI().toString();

@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg.util;
+package de.topobyte.bvg.util.test;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
@@ -29,6 +29,9 @@ import javax.imageio.ImageIO;
 
 import de.topobyte.bvg.Color;
 import de.topobyte.bvg.LineStyle;
+import de.topobyte.bvg.util.ShapeSink;
+import de.topobyte.bvg.util.SvgParser;
+import de.topobyte.bvg.util.SwingUtil;
 
 public class TestSvgToPng implements ShapeSink
 {
@@ -37,8 +40,8 @@ public class TestSvgToPng implements ShapeSink
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/simple/bakery.svg";
-		String output = "/home/z/git/map-icons/test/bakery.png";
+		String input = "/home/z/git/map-icons/test/hotel.svg";
+		String output = "/home/z/git/map-icons/test/hotel.svg.png";
 
 		File fileInput = new File(input);
 		File fileOutput = new File(output);

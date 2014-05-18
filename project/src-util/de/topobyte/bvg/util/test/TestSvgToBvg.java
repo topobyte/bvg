@@ -15,19 +15,22 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg.util;
+package de.topobyte.bvg.util.test;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+
+import de.topobyte.bvg.util.SvgParser;
+import de.topobyte.bvg.util.SvgToBvg;
 
 public class TestSvgToBvg
 {
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/simple/bakery.svg";
-		String output = "/home/z/git/map-icons/test/bakery.bvg";
+		String input = "/home/z/git/map-icons/test/hotel.svg";
+		String output = "/home/z/git/map-icons/test/hotel.bvg";
 
 		File fileInput = new File(input);
 
