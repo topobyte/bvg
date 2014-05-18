@@ -145,6 +145,7 @@ public class SvgParser
 										float width = bs.getLineWidth();
 										int endCap = bs.getEndCap();
 										int lineJoin = bs.getLineJoin();
+										print("Line Width: " + width, level + 1);
 
 										LineStyle lineStyle = new LineStyle(
 												width,

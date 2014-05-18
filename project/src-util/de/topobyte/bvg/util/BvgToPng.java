@@ -97,6 +97,7 @@ public class BvgToPng
 			GeneralPath p = SwingUtil.createPath(path);
 
 			if (element instanceof Fill) {
+				System.out.println("FILL");
 				Fill fill = (Fill) element;
 				IColor color = fill.getColor();
 				System.out
@@ -108,9 +109,12 @@ public class BvgToPng
 
 				g.fill(p);
 			} else if (element instanceof Stroke) {
+				System.out.println("STROKE");
 				Stroke stroke = (Stroke) element;
 
 				IColor color = stroke.getColor();
+				System.out
+						.println(String.format("0x%08X", color.getColorCode()));
 				Color c = new Color(color.getRed(), color.getGreen(),
 						color.getBlue(), color.getAlpha());
 				g.setColor(c);
@@ -121,6 +125,11 @@ public class BvgToPng
 				BasicStroke bs = new BasicStroke(lineStyle.getWidth(), cap,
 						join, lineStyle.getMiterLimit());
 				g.setStroke(bs);
+
+				System.out.println("Linewidth: " + lineStyle.getWidth());
+				System.out.println("Join: " + lineStyle.getJoin());
+				System.out.println("Cap: " + lineStyle.getCap());
+				System.out.println("Miter limit: " + lineStyle.getMiterLimit());
 
 				g.draw(p);
 			}
