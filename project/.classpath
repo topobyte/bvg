@@ -33,5 +33,6 @@
 	<classpathentry kind="lib" path="lib/batik/xerces_2_5_0.jar"/>
 	<classpathentry kind="lib" path="lib/batik/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="lib/batik/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="output" path="bin/main"/>
 </classpath>
