@@ -65,7 +65,7 @@ public class ToSwingUtil
 			case MOVE: {
 				double x = values[i++];
 				double y = values[i++];
-				System.out.println("MOVE " + x + " " + y);
+				// System.out.println("MOVE " + x + " " + y);
 				result.moveTo(x, y);
 				break;
 			}
@@ -75,7 +75,7 @@ public class ToSwingUtil
 			case LINE: {
 				double x = values[i++];
 				double y = values[i++];
-				System.out.println("LINE " + x + " " + y);
+				// System.out.println("LINE " + x + " " + y);
 				result.lineTo(x, y);
 				break;
 			}
@@ -84,7 +84,7 @@ public class ToSwingUtil
 				double y1 = values[i++];
 				double x = values[i++];
 				double y = values[i++];
-				System.out.println("QUAD " + x + " " + y);
+				// System.out.println("QUAD " + x + " " + y);
 				result.quadTo(x1, y1, x, y);
 				break;
 			}
@@ -95,7 +95,7 @@ public class ToSwingUtil
 				double y2 = values[i++];
 				double x = values[i++];
 				double y = values[i++];
-				System.out.println("CUBIC " + x + " " + y);
+				// System.out.println("CUBIC " + x + " " + y);
 				result.curveTo(x1, y1, x2, y2, x, y);
 				break;
 			}

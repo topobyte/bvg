@@ -66,14 +66,14 @@ public class BvgReader
 		dis.readFully(magic, 0, magic.length);
 		short version = dis.readShort();
 		byte encoding = dis.readByte();
-		System.out.println("Version: " + version);
-		System.out.println("Encoding: " + encoding);
+		// System.out.println("Version: " + version);
+		// System.out.println("Encoding: " + encoding);
 
 		double width = dis.readDouble();
 		double height = dis.readDouble();
 		image = new BvgImage(width, height);
 
-		System.out.println("Size: " + width + ", " + height);
+		// System.out.println("Size: " + width + ", " + height);
 
 		if (encoding == Constants.ENCODING_PLAIN) {
 			// valid encoding
@@ -103,12 +103,12 @@ public class BvgReader
 
 	private void readFill() throws IOException
 	{
-		System.out.println("Fill");
+		// System.out.println("Fill");
 		int colorCode = dis.readInt();
 
 		Color color = new Color(colorCode, true);
 
-		System.out.println(String.format("Color: 0x%08X", colorCode));
+		// System.out.println(String.format("Color: 0x%08X", colorCode));
 
 		CompactPath path = readPath();
 
@@ -117,7 +117,7 @@ public class BvgReader
 
 	private void readStroke() throws IOException
 	{
-		System.out.println("Stroke");
+		// System.out.println("Stroke");
 		int colorCode = dis.readInt();
 		float lineWidth = dis.readFloat();
 		byte bCap = dis.readByte();
@@ -158,8 +158,8 @@ public class BvgReader
 			lineStyle.setMiterLimit(miterLimit);
 		}
 
-		System.out.println(String.format("Color: 0x%08X", colorCode));
-		System.out.println("Line width: " + lineWidth);
+		// System.out.println(String.format("Color: 0x%08X", colorCode));
+		// System.out.println("Line width: " + lineWidth);
 
 		CompactPath path = readPath();
 
