@@ -21,6 +21,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.zip.DeflaterOutputStream;
 
 import de.topobyte.bvg.path.CubicTo;
 import de.topobyte.bvg.path.LineTo;
@@ -39,8 +40,8 @@ public class BvgOutputStream
 	private double width;
 	private double height;
 
-	public BvgOutputStream(OutputStream os, double width, double height)
-			throws IOException
+	public BvgOutputStream(OutputStream os, boolean compress, double width,
+			double height) throws IOException
 	{
 		this.os = os;
 		this.width = width;
@@ -51,11 +52,23 @@ public class BvgOutputStream
 		// file header
 		dos.write(Constants.MAGIC);
 		dos.writeShort(Constants.VERSION);
-		dos.writeByte(Constants.ENCODING_PLAIN);
+		dos.writeByte(compress ? Constants.ENCODING_DEFLATE
+				: Constants.ENCODING_PLAIN);
 
 		// image header
 		dos.writeDouble(width);
 		dos.writeDouble(height);
+
+		if (compress) {
+			dos.flush();
+			DeflaterOutputStream deflater = new DeflaterOutputStream(os);
+			dos = new DataOutputStream(deflater);
+		}
+	}
+
+	public void close() throws IOException
+	{
+		dos.close();
 	}
 
 	public void fill(Fill fill, Path path) throws IOException

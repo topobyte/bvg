@@ -41,7 +41,7 @@ public class TestSvgToBvg
 		FileOutputStream fos = new FileOutputStream(fileOutput);
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
 
-		SvgToBvg svgToBvg = new SvgToBvg(bos);
+		SvgToBvg svgToBvg = new SvgToBvg(bos, false);
 		SvgParser svgParser = new SvgParser(svgToBvg);
 		svgParser.parseToSink(fileInput);
 

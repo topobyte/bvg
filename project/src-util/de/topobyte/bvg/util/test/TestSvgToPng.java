@@ -37,6 +37,7 @@ public class TestSvgToPng implements ShapeSink
 {
 	private BufferedImage image;
 	private Graphics2D g2d;
+	private File fileOutput;
 
 	public static void main(String[] args) throws Exception
 	{
@@ -49,16 +50,14 @@ public class TestSvgToPng implements ShapeSink
 		File parentFile = fileOutput.getParentFile();
 		parentFile.mkdirs();
 
-		TestSvgToPng test = new TestSvgToPng();
+		TestSvgToPng test = new TestSvgToPng(fileOutput);
 		SvgParser svgParser = new SvgParser(test);
 		svgParser.parseToSink(fileInput);
-
-		test.finish(fileOutput);
 	}
 
-	public TestSvgToPng()
+	public TestSvgToPng(File fileOutput)
 	{
-		// nothing to do here
+		this.fileOutput = fileOutput;
 	}
 
 	@Override
@@ -73,7 +72,8 @@ public class TestSvgToPng implements ShapeSink
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 
-	public void finish(File fileOutput) throws IOException
+	@Override
+	public void finish() throws IOException
 	{
 		ImageIO.write(image, "png", fileOutput);
 	}

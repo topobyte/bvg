@@ -79,6 +79,8 @@ public class SvgParser
 		sink.init(width, height);
 
 		go(rootGN, 0);
+
+		sink.finish();
 	}
 
 	private void go(CompositeGraphicsNode cgn, int level) throws IOException

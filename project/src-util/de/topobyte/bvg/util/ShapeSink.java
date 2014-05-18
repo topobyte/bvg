@@ -33,4 +33,5 @@ public interface ShapeSink
 	public void stroke(Shape shape, Color color, LineStyle lineStyle)
 			throws IOException;
 
+	public void finish() throws IOException;
 }
