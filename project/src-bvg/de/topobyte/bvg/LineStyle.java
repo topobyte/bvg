@@ -24,12 +24,22 @@ public class LineStyle
 	private Cap cap;
 	private Join join;
 	private float miterLimit = 0;
+	private float[] dashArray = null;
+	private float dashOffset = 0;
 
 	public LineStyle(float width, Cap cap, Join join)
 	{
 		this.width = width;
 		this.cap = cap;
 		this.join = join;
+	}
+
+	public LineStyle(float width, Cap cap, Join join, float[] dashArray,
+			float dashOffset)
+	{
+		this(width, cap, join);
+		this.dashArray = dashArray;
+		this.dashOffset = dashOffset;
 	}
 
 	public void setMiterLimit(float miterLimit)
@@ -55,5 +65,15 @@ public class LineStyle
 	public float getMiterLimit()
 	{
 		return miterLimit;
+	}
+
+	public float[] getDashArray()
+	{
+		return dashArray;
+	}
+
+	public float getDashOffset()
+	{
+		return dashOffset;
 	}
 }

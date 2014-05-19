@@ -125,8 +125,17 @@ public class BvgToPng
 				LineStyle lineStyle = stroke.getLineStyle();
 				int cap = ToSwingUtil.getCap(lineStyle.getCap());
 				int join = ToSwingUtil.getJoin(lineStyle.getJoin());
-				BasicStroke bs = new BasicStroke(lineStyle.getWidth(), cap,
-						join, lineStyle.getMiterLimit());
+				float[] dashArray = lineStyle.getDashArray();
+				float dashOffset = lineStyle.getDashOffset();
+
+				BasicStroke bs;
+				if (dashArray == null) {
+					bs = new BasicStroke(lineStyle.getWidth(), cap, join,
+							lineStyle.getMiterLimit());
+				} else {
+					bs = new BasicStroke(lineStyle.getWidth(), cap, join,
+							lineStyle.getMiterLimit(), dashArray, dashOffset);
+				}
 				g.setStroke(bs);
 
 				System.out.println("Linewidth: " + lineStyle.getWidth());

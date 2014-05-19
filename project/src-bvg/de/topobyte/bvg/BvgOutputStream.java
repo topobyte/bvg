@@ -117,6 +117,15 @@ public class BvgOutputStream
 			float miterLimit = lineStyle.getMiterLimit();
 			dos.writeFloat(miterLimit);
 		}
+		float[] array = lineStyle.getDashArray();
+		dos.writeBoolean(array != null);
+		if (array != null) {
+			dos.writeShort(array.length);
+			for (int i = 0; i < array.length; i++) {
+				dos.writeFloat(array[i]);
+			}
+			dos.writeFloat(lineStyle.getDashOffset());
+		}
 		write(path);
 	}
 

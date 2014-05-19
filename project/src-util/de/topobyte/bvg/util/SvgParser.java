@@ -46,7 +46,9 @@ import org.apache.batik.gvt.StrokeShapePainter;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.svg.SVGDocument;
 
+import de.topobyte.bvg.Cap;
 import de.topobyte.bvg.Color;
+import de.topobyte.bvg.Join;
 import de.topobyte.bvg.LineStyle;
 
 public class SvgParser
@@ -149,11 +151,21 @@ public class SvgParser
 										int lineJoin = bs.getLineJoin();
 										// print("Line Width: " + width, level +
 										// 1);
+										float[] dashArray = bs.getDashArray();
+										float dashPhase = bs.getDashPhase();
 
-										LineStyle lineStyle = new LineStyle(
-												width,
-												FromSwingUtil.getCap(endCap),
-												FromSwingUtil.getJoin(lineJoin));
+										Cap cap = FromSwingUtil.getCap(endCap);
+										Join join = FromSwingUtil
+												.getJoin(lineJoin);
+										LineStyle lineStyle;
+										if (dashArray == null) {
+											lineStyle = new LineStyle(width,
+													cap, join);
+										} else {
+											lineStyle = new LineStyle(width,
+													cap, join, dashArray,
+													dashPhase);
+										}
 										if (lineJoin == BasicStroke.JOIN_MITER) {
 											float miterLimit = bs
 													.getMiterLimit();

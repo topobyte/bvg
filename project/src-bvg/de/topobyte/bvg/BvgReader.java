@@ -151,10 +151,32 @@ public class BvgReader
 			break;
 		}
 
-		LineStyle lineStyle = new LineStyle(lineWidth, cap, join);
+		float miterLimit = 0;
+		if (join == Join.MITER) {
+			miterLimit = dis.readFloat();
+		}
+
+		boolean hasDashArray = dis.readBoolean();
+		float[] dashArray = null;
+		float dashOffset = 0;
+		if (hasDashArray) {
+			int length = dis.readShort();
+			dashArray = new float[length];
+			for (int i = 0; i < length; i++) {
+				dashArray[i] = dis.readFloat();
+			}
+			dashOffset = dis.readFloat();
+		}
+
+		LineStyle lineStyle;
+		if (!hasDashArray) {
+			lineStyle = new LineStyle(lineWidth, cap, join);
+		} else {
+			lineStyle = new LineStyle(lineWidth, cap, join, dashArray,
+					dashOffset);
+		}
 
 		if (join == Join.MITER) {
-			float miterLimit = dis.readFloat();
 			lineStyle.setMiterLimit(miterLimit);
 		}
 
