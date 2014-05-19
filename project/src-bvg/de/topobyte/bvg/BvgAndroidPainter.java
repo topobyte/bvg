@@ -78,7 +78,9 @@ public class BvgAndroidPainter
 				pStroke.setStrokeJoin(join);
 				pStroke.setStrokeMiter(lineStyle.getMiterLimit());
 
-				if (dashArray != null) {
+				if (dashArray == null) {
+					pStroke.setPathEffect(null);
+				} else {
 					DashPathEffect effect = new DashPathEffect(dashArray,
 							dashOffset);
 					pStroke.setPathEffect(effect);
