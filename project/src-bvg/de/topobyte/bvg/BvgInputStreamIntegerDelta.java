@@ -133,13 +133,11 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 
 	private CompactPath readPath() throws IOException
 	{
-		int n = dis.readInt();
-		int v = dis.readInt();
+		int n = reader.readVariableLengthUnsignedInteger();
+		int v = reader.readVariableLengthUnsignedInteger();
 
 		List<Type> types = new ArrayList<Type>(n);
-		double[] values = new double[v];
 
-		int k = 0;
 		for (int i = 0; i < n; i++) {
 			byte t = dis.readByte();
 			Type type = null;
@@ -163,6 +161,13 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 				throw new IOException("Unexpected path element");
 			}
 			types.add(type);
+		}
+
+		double[] values = new double[v];
+		int k = 0;
+
+		for (int i = 0; i < n; i++) {
+			Type type = types.get(i);
 			switch (type) {
 			case CLOSE:
 				break;

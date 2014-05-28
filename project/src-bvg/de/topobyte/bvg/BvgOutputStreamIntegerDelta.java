@@ -112,7 +112,6 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 		int n = 0;
 		for (int i = 0; i < types.size(); i++) {
 			Type type = types.get(i);
-
 			switch (type) {
 			default:
 			case CLOSE:
@@ -130,21 +129,14 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 			}
 		}
 
-		dos.writeInt(elements.size());
-		dos.writeInt(n);
+		writer.writeVariableLengthUnsignedInteger(elements.size());
+		writer.writeVariableLengthUnsignedInteger(n);
 
 		for (int i = 0; i < types.size(); i++) {
 			Type type = types.get(i);
-			PathElement pathElement = elements.get(i);
-
 			switch (type) {
 			case MOVE: {
 				writer.writeByte(Constants.PATH_MOVE_TO);
-				MoveTo move = (MoveTo) pathElement;
-				int x = toIntegerX(move.getX());
-				int y = toIntegerY(move.getY());
-				writer.writeVariableLengthSignedInteger(x);
-				writer.writeVariableLengthSignedInteger(y);
 				break;
 			}
 			case CLOSE: {
@@ -153,6 +145,36 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 			}
 			case LINE: {
 				writer.writeByte(Constants.PATH_LINE_TO);
+				break;
+			}
+			case QUAD: {
+				writer.writeByte(Constants.PATH_QUAD_TO);
+				break;
+			}
+			case CUBIC: {
+				writer.writeByte(Constants.PATH_CUBIC_TO);
+				break;
+			}
+			}
+		}
+
+		for (int i = 0; i < types.size(); i++) {
+			Type type = types.get(i);
+			PathElement pathElement = elements.get(i);
+
+			switch (type) {
+			case MOVE: {
+				MoveTo move = (MoveTo) pathElement;
+				int x = toIntegerX(move.getX());
+				int y = toIntegerY(move.getY());
+				writer.writeVariableLengthSignedInteger(x);
+				writer.writeVariableLengthSignedInteger(y);
+				break;
+			}
+			case CLOSE: {
+				break;
+			}
+			case LINE: {
 				LineTo line = (LineTo) pathElement;
 				int x = toIntegerX(line.getX());
 				int y = toIntegerY(line.getY());
@@ -161,7 +183,6 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 				break;
 			}
 			case QUAD: {
-				writer.writeByte(Constants.PATH_QUAD_TO);
 				QuadTo quad = (QuadTo) pathElement;
 				int cx = toIntegerX(quad.getCX());
 				int cy = toIntegerY(quad.getCY());
@@ -174,7 +195,6 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 				break;
 			}
 			case CUBIC: {
-				writer.writeByte(Constants.PATH_CUBIC_TO);
 				CubicTo cubic = (CubicTo) pathElement;
 				int cx = toIntegerX(cubic.getCX());
 				int cy = toIntegerY(cubic.getCY());
