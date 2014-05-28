@@ -33,7 +33,7 @@ import de.topobyte.bvg.path.Type;
 public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 {
 
-	CompactWriter writer;
+	private CompactWriter writer;
 
 	public BvgOutputStreamIntegerDelta(OutputStream os, boolean compress,
 			double width, double height) throws IOException
@@ -194,13 +194,22 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 		}
 	}
 
+	private int lx = 0;
+	private int ly = 0;
+
 	private int toIntegerX(double x)
 	{
-		return (int) Math.round((x / width) * IntegerDelta.UNIVERSE);
+		int ix = (int) Math.round((x / width) * IntegerDelta.UNIVERSE);
+		int dx = ix - lx;
+		lx = ix;
+		return dx;
 	}
 
 	private int toIntegerY(double y)
 	{
-		return (int) Math.round((y / height) * IntegerDelta.UNIVERSE);
+		int iy = (int) Math.round((y / height) * IntegerDelta.UNIVERSE);
+		int dy = iy - ly;
+		ly = iy;
+		return dy;
 	}
 }

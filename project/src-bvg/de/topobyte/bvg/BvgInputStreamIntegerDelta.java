@@ -211,15 +211,18 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 		return new CompactPath(types, values);
 	}
 
-	private double fromIntegerX(int x)
-	{
+	private int lx = 0;
+	private int ly = 0;
 
-		return x * width / IntegerDelta.UNIVERSE;
+	private double fromIntegerX(int dx)
+	{
+		lx += dx;
+		return lx * width / IntegerDelta.UNIVERSE;
 	}
 
-	private double fromIntegerY(int y)
+	private double fromIntegerY(int dy)
 	{
-
-		return y * height / IntegerDelta.UNIVERSE;
+		ly += dy;
+		return ly * height / IntegerDelta.UNIVERSE;
 	}
 }
