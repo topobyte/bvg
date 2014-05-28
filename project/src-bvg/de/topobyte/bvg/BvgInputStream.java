@@ -19,17 +19,11 @@ package de.topobyte.bvg;
 
 import java.io.IOException;
 
-import de.topobyte.bvg.path.Path;
-
-public interface BvgOutputStream
+public interface BvgInputStream
 {
+	public void read() throws IOException;
 
-	public abstract void close() throws IOException;
+	public void readFill() throws IOException;
 
-	public abstract void fill(Fill fill, Path path) throws IOException;
-
-	public abstract void stroke(Stroke stroke, Path path) throws IOException;
-
-	public abstract void write(Path path) throws IOException;
-
+	public void readStroke() throws IOException;
 }

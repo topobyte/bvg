@@ -23,13 +23,17 @@ public class Constants
 	// 4 magic bytes
 	static final byte[] MAGIC = new byte[] { 98, 118, 103, 0 };
 
-	static final short VERSION = 1;
+	static final short VERSION = 2;
 
 	// width, height
 
 	// encoding
 	static final byte ENCODING_PLAIN = 0;
 	static final byte ENCODING_DEFLATE = 1;
+
+	// strategy
+	static final byte STRATEGY_DOUBLE = 0;
+	static final byte STRATEGY_INT_DELTA = 1;
 
 	// element types
 	static final byte ID_FILL = 0;

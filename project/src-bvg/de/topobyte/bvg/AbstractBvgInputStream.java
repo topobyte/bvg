@@ -17,19 +17,38 @@
 
 package de.topobyte.bvg;
 
+import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 
-import de.topobyte.bvg.path.Path;
-
-public interface BvgOutputStream
+public abstract class AbstractBvgInputStream implements BvgInputStream
 {
+	protected BvgImage image;
+	protected DataInputStream dis;
 
-	public abstract void close() throws IOException;
+	public AbstractBvgInputStream(BvgImage image, DataInputStream dis)
+	{
+		this.image = image;
+		this.dis = dis;
+	}
 
-	public abstract void fill(Fill fill, Path path) throws IOException;
+	@Override
+	public void read() throws IOException
+	{
+		while (true) {
+			byte head;
+			try {
+				head = dis.readByte();
+			} catch (EOFException e) {
+				break;
+			}
+			if (head == Constants.ID_FILL) {
+				readFill();
+			} else if (head == Constants.ID_STROKE) {
+				readStroke();
+			}
+		}
 
-	public abstract void stroke(Stroke stroke, Path path) throws IOException;
-
-	public abstract void write(Path path) throws IOException;
-
+		dis.close();
+	}
 }

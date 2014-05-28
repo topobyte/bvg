@@ -21,6 +21,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import de.topobyte.bvg.EncodingStrategy;
 import de.topobyte.bvg.util.SvgParser;
 import de.topobyte.bvg.util.SvgToBvg;
 
@@ -41,7 +42,8 @@ public class TestSvgToBvg
 		FileOutputStream fos = new FileOutputStream(fileOutput);
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
 
-		SvgToBvg svgToBvg = new SvgToBvg(bos, false);
+		SvgToBvg svgToBvg = new SvgToBvg(bos, false,
+				EncodingStrategy.STRATEGY_DOUBLE);
 		SvgParser svgParser = new SvgParser(svgToBvg);
 		svgParser.parseToSink(fileInput);
 

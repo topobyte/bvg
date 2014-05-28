@@ -17,19 +17,9 @@
 
 package de.topobyte.bvg;
 
-import java.io.IOException;
-
-import de.topobyte.bvg.path.Path;
-
-public interface BvgOutputStream
+public class IntegerDelta
 {
 
-	public abstract void close() throws IOException;
-
-	public abstract void fill(Fill fill, Path path) throws IOException;
-
-	public abstract void stroke(Stroke stroke, Path path) throws IOException;
-
-	public abstract void write(Path path) throws IOException;
+	public static final int UNIVERSE = 1000;
 
 }
