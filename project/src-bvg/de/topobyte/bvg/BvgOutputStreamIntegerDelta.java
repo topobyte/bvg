@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import de.topobyte.bvg.compact.CompactWriter;
 import de.topobyte.bvg.path.CubicTo;
 import de.topobyte.bvg.path.LineTo;
 import de.topobyte.bvg.path.MoveTo;
@@ -32,11 +33,14 @@ import de.topobyte.bvg.path.Type;
 public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 {
 
+	CompactWriter writer;
+
 	public BvgOutputStreamIntegerDelta(OutputStream os, boolean compress,
 			double width, double height) throws IOException
 	{
 		super(os, compress, EncodingStrategy.STRATEGY_INTEGER_DELTA, width,
 				height);
+		writer = new CompactWriter(dos);
 	}
 
 	@Override
@@ -135,42 +139,42 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 
 			switch (type) {
 			case MOVE: {
-				dos.writeByte(Constants.PATH_MOVE_TO);
+				writer.writeByte(Constants.PATH_MOVE_TO);
 				MoveTo move = (MoveTo) pathElement;
 				int x = toIntegerX(move.getX());
 				int y = toIntegerY(move.getY());
-				dos.writeInt(x);
-				dos.writeInt(y);
+				writer.writeVariableLengthSignedInteger(x);
+				writer.writeVariableLengthSignedInteger(y);
 				break;
 			}
 			case CLOSE: {
-				dos.writeByte(Constants.PATH_CLOSE);
+				writer.writeByte(Constants.PATH_CLOSE);
 				break;
 			}
 			case LINE: {
-				dos.writeByte(Constants.PATH_LINE_TO);
+				writer.writeByte(Constants.PATH_LINE_TO);
 				LineTo line = (LineTo) pathElement;
 				int x = toIntegerX(line.getX());
 				int y = toIntegerY(line.getY());
-				dos.writeInt(x);
-				dos.writeInt(y);
+				writer.writeVariableLengthSignedInteger(x);
+				writer.writeVariableLengthSignedInteger(y);
 				break;
 			}
 			case QUAD: {
-				dos.writeByte(Constants.PATH_QUAD_TO);
+				writer.writeByte(Constants.PATH_QUAD_TO);
 				QuadTo quad = (QuadTo) pathElement;
 				int cx = toIntegerX(quad.getCX());
 				int cy = toIntegerY(quad.getCY());
 				int x = toIntegerX(quad.getX());
 				int y = toIntegerY(quad.getY());
-				dos.writeInt(cx);
-				dos.writeInt(cy);
-				dos.writeInt(x);
-				dos.writeInt(y);
+				writer.writeVariableLengthSignedInteger(cx);
+				writer.writeVariableLengthSignedInteger(cy);
+				writer.writeVariableLengthSignedInteger(x);
+				writer.writeVariableLengthSignedInteger(y);
 				break;
 			}
 			case CUBIC: {
-				dos.writeByte(Constants.PATH_CUBIC_TO);
+				writer.writeByte(Constants.PATH_CUBIC_TO);
 				CubicTo cubic = (CubicTo) pathElement;
 				int cx = toIntegerX(cubic.getCX());
 				int cy = toIntegerY(cubic.getCY());
@@ -178,12 +182,12 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 				int cy2 = toIntegerY(cubic.getCY2());
 				int x = toIntegerX(cubic.getX());
 				int y = toIntegerY(cubic.getY());
-				dos.writeInt(cx);
-				dos.writeInt(cy);
-				dos.writeInt(cx2);
-				dos.writeInt(cy2);
-				dos.writeInt(x);
-				dos.writeInt(y);
+				writer.writeVariableLengthSignedInteger(cx);
+				writer.writeVariableLengthSignedInteger(cy);
+				writer.writeVariableLengthSignedInteger(cx2);
+				writer.writeVariableLengthSignedInteger(cy2);
+				writer.writeVariableLengthSignedInteger(x);
+				writer.writeVariableLengthSignedInteger(y);
 				break;
 			}
 			}

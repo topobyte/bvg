@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.topobyte.bvg.compact.CompactReader;
+import de.topobyte.bvg.compact.CompactReaderInputStream;
 import de.topobyte.bvg.path.CompactPath;
 import de.topobyte.bvg.path.Type;
 
@@ -30,12 +32,14 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 
 	private double width;
 	private double height;
+	private CompactReader reader;
 
 	public BvgInputStreamIntegerDelta(BvgImage image, DataInputStream dis)
 	{
 		super(image, dis);
 		width = image.getWidth();
 		height = image.getHeight();
+		reader = new CompactReaderInputStream(dis);
 	}
 
 	@Override
@@ -163,24 +167,24 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 			case CLOSE:
 				break;
 			case MOVE: {
-				int x = dis.readInt();
-				int y = dis.readInt();
+				int x = reader.readVariableLengthSignedInteger();
+				int y = reader.readVariableLengthSignedInteger();
 				values[k++] = fromIntegerX(x);
 				values[k++] = fromIntegerY(y);
 				break;
 			}
 			case LINE: {
-				int x = dis.readInt();
-				int y = dis.readInt();
+				int x = reader.readVariableLengthSignedInteger();
+				int y = reader.readVariableLengthSignedInteger();
 				values[k++] = fromIntegerX(x);
 				values[k++] = fromIntegerY(y);
 				break;
 			}
 			case QUAD: {
-				int cx = dis.readInt();
-				int cy = dis.readInt();
-				int x = dis.readInt();
-				int y = dis.readInt();
+				int cx = reader.readVariableLengthSignedInteger();
+				int cy = reader.readVariableLengthSignedInteger();
+				int x = reader.readVariableLengthSignedInteger();
+				int y = reader.readVariableLengthSignedInteger();
 				values[k++] = fromIntegerX(cx);
 				values[k++] = fromIntegerY(cy);
 				values[k++] = fromIntegerX(x);
@@ -188,12 +192,12 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 				break;
 			}
 			case CUBIC: {
-				int cx = dis.readInt();
-				int cy = dis.readInt();
-				int cx2 = dis.readInt();
-				int cy2 = dis.readInt();
-				int x = dis.readInt();
-				int y = dis.readInt();
+				int cx = reader.readVariableLengthSignedInteger();
+				int cy = reader.readVariableLengthSignedInteger();
+				int cx2 = reader.readVariableLengthSignedInteger();
+				int cy2 = reader.readVariableLengthSignedInteger();
+				int x = reader.readVariableLengthSignedInteger();
+				int y = reader.readVariableLengthSignedInteger();
 				values[k++] = fromIntegerX(cx);
 				values[k++] = fromIntegerY(cy);
 				values[k++] = fromIntegerX(cx2);
