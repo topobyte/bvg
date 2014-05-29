@@ -15,33 +15,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg.util.test;
+package de.topobyte.bvg;
 
-import java.io.File;
-
-import de.topobyte.bvg.BvgIO;
-import de.topobyte.bvg.BvgImage;
-import de.topobyte.bvg.util.BvgToPng;
-
-public class TestBvgToPng
-{
-
-	public static void main(String[] args) throws Exception
-	{
-		String input = "/home/z/git/map-icons/test/hotel.bvg";
-		String output = "/home/z/git/map-icons/test/hotel.png";
-
-		File fileInput = new File(input);
-		File fileOutput = new File(output);
-
-		File parentFile = fileOutput.getParentFile();
-		parentFile.mkdirs();
-
-		BvgImage bvg = BvgIO.read(fileInput);
-
-		BvgToPng test = new BvgToPng();
-		test.createImage(bvg);
-		test.finish(fileOutput);
-	}
-
+public enum EncodingMethod {
+	PLAIN, //
+	DEFLATE
 }

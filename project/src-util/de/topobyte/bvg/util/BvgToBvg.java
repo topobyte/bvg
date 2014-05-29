@@ -26,9 +26,8 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 
+import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
-import de.topobyte.bvg.BvgReader;
-import de.topobyte.bvg.BvgWriter;
 import de.topobyte.bvg.EncodingStrategy;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
@@ -108,9 +107,8 @@ public class BvgToBvg
 
 	private void execute(File fileInput, File fileOutput) throws IOException
 	{
-		BvgImage image = BvgReader.read(fileInput);
-		BvgWriter writer = new BvgWriter(image, compress, strategy);
-		writer.write(fileOutput);
+		BvgImage image = BvgIO.read(fileInput);
+		BvgIO.write(image, fileOutput, compress, strategy);
 	}
 
 }

@@ -17,10 +17,7 @@
 
 package de.topobyte.bvg;
 
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.InflaterInputStream;
@@ -28,50 +25,41 @@ import java.util.zip.InflaterInputStream;
 public class BvgReader
 {
 
-	public static BvgImage read(File file) throws IOException
-	{
-		FileInputStream fis = new FileInputStream(file);
-		BufferedInputStream is = new BufferedInputStream(fis);
-		BvgImage image = read(is);
-		is.close();
-		return image;
-	}
+	BvgMetadata metadata = null;
+	BvgImage image = null;
 
-	public static BvgImage read(InputStream is) throws IOException
-	{
-		BvgReader reader = new BvgReader(is);
-		reader.read();
-		return reader.image;
-	}
-
-	private BvgImage image = null;
 	private InputStream is;
 	private DataInputStream dis;
 
-	private BvgReader(InputStream is)
+	BvgReader(InputStream is)
 	{
 		this.is = is;
 		dis = new DataInputStream(is);
 	}
 
-	private void read() throws IOException
+	void read(BvgMetadata meta) throws IOException
 	{
+		if (meta != null) {
+			metadata = meta;
+		} else {
+			metadata = new BvgMetadata();
+		}
+
 		byte[] magic = new byte[4];
 		dis.readFully(magic, 0, magic.length);
-		short version = dis.readShort();
+		metadata.version = dis.readShort();
 		byte encoding = dis.readByte();
-		// System.out.println("Version: " + version);
-		// System.out.println("Encoding: " + encoding);
+		// System.out.println("Version: " + metadata.version);
+		// System.out.println("Encoding: " + metadata.encoding);
 
-		EncodingStrategy strategy;
 		byte bStrategy = dis.readByte();
 		switch (bStrategy) {
 		default:
 		case Constants.STRATEGY_DOUBLE:
-			strategy = EncodingStrategy.STRATEGY_DOUBLE;
+			metadata.strategy = EncodingStrategy.STRATEGY_DOUBLE;
 			break;
 		case Constants.STRATEGY_INT_DELTA:
-			strategy = EncodingStrategy.STRATEGY_INTEGER_DELTA;
+			metadata.strategy = EncodingStrategy.STRATEGY_INTEGER_DELTA;
 			break;
 		}
 
@@ -82,8 +70,9 @@ public class BvgReader
 		// System.out.println("Size: " + width + ", " + height);
 
 		if (encoding == Constants.ENCODING_PLAIN) {
-			// valid encoding
+			metadata.encoding = EncodingMethod.PLAIN;
 		} else if (encoding == Constants.ENCODING_DEFLATE) {
+			metadata.encoding = EncodingMethod.DEFLATE;
 			InflaterInputStream deflater = new InflaterInputStream(is);
 			dis = new DataInputStream(deflater);
 		} else {
@@ -91,7 +80,7 @@ public class BvgReader
 		}
 
 		BvgInputStream input;
-		switch (strategy) {
+		switch (metadata.strategy) {
 		default:
 		case STRATEGY_DOUBLE:
 			input = new BvgInputStreamDouble(image, dis);

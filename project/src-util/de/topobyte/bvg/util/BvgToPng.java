@@ -31,8 +31,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
-import de.topobyte.bvg.BvgReader;
 import de.topobyte.bvg.Fill;
 import de.topobyte.bvg.IColor;
 import de.topobyte.bvg.LineStyle;
@@ -66,7 +66,7 @@ public class BvgToPng
 		FileOutputStream fos = new FileOutputStream(fileOutput);
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
 
-		BvgImage bvg = BvgReader.read(fileInput);
+		BvgImage bvg = BvgIO.read(fileInput);
 
 		BvgToPng test = new BvgToPng();
 		test.createImage(bvg);
