@@ -21,6 +21,7 @@ import java.util.List;
 
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Join;
@@ -30,12 +31,9 @@ import de.topobyte.bvg.path.CompactPath;
 public class BvgAndroidPainter
 {
 	public static void draw(Canvas canvas, BvgImage bvg, float x, float y,
-			float sx, float sy)
+			float sx, float sy, float sw)
 	{
 		canvas.save();
-
-		canvas.translate(x, y);
-		canvas.scale(sx, sy);
 
 		List<PaintElement> elements = bvg.getPaintElements();
 		List<CompactPath> paths = bvg.getPaths();
@@ -46,11 +44,16 @@ public class BvgAndroidPainter
 		Paint pStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
 		pStroke.setStyle(Paint.Style.STROKE);
 
+		Matrix m = new Matrix();
+		m.postScale(sx, sy);
+		m.postTranslate(x, y);
+
 		for (int i = 0; i < elements.size(); i++) {
 			PaintElement element = elements.get(i);
 			CompactPath path = paths.get(i);
 
 			Path p = ToAndroidUtil.createPath(path);
+			p.transform(m);
 
 			if (element instanceof Fill) {
 				Fill fill = (Fill) element;
@@ -73,7 +76,7 @@ public class BvgAndroidPainter
 				float[] dashArray = lineStyle.getDashArray();
 				float dashOffset = lineStyle.getDashOffset();
 
-				pStroke.setStrokeWidth(lineStyle.getWidth());
+				pStroke.setStrokeWidth(lineStyle.getWidth() * sw);
 				pStroke.setStrokeCap(cap);
 				pStroke.setStrokeJoin(join);
 				pStroke.setStrokeMiter(lineStyle.getMiterLimit());
