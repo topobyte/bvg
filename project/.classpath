@@ -36,5 +36,6 @@
 	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/android.jar"/>
 	<classpathentry kind="lib" path="lib/cli-helper.jar"/>
+	<classpathentry kind="lib" path="lib/android-touch-utils.jar"/>
 	<classpathentry kind="output" path="bin/main"/>
 </classpath>
