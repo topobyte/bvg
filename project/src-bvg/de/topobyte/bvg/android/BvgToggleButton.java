@@ -77,7 +77,11 @@ public class BvgToggleButton extends BvgButton
 
 	public void setStatus(boolean status)
 	{
+		if (this.status == status) {
+			return;
+		}
 		this.status = status;
+		postInvalidate();
 	}
 
 	@Override
