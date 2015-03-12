@@ -130,13 +130,13 @@ public class SvgToPng implements ShapeSink
 					RenderingHints.VALUE_ANTIALIAS_ON);
 			rootGN.paint(g);
 
-			ImageIO.write(image, "png", new File(output));
+			ImageIO.write(image, "png", fileOutput);
 		}
 	}
 
 	private BufferedImage image;
 	private Graphics2D g2d;
-	private File fileOutput;
+	private final File fileOutput;
 
 	public SvgToPng(File fileOutput)
 	{
