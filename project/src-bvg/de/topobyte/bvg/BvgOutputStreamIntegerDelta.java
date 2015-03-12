@@ -33,7 +33,7 @@ import de.topobyte.bvg.path.Type;
 public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 {
 
-	private CompactWriter writer;
+	private final CompactWriter writer;
 
 	public BvgOutputStreamIntegerDelta(OutputStream os, boolean compress,
 			double width, double height) throws IOException
@@ -46,7 +46,7 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 	@Override
 	public void fill(Fill fill, Path path) throws IOException
 	{
-		dos.writeByte(Constants.ID_FILL);
+		super.writeFillCode(path);
 		IColor color = fill.getColor();
 		int code = color.getColorCode();
 		dos.writeInt(code);

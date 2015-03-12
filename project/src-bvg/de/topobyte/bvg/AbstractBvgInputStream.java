@@ -21,6 +21,8 @@ import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 
+import de.topobyte.bvg.path.FillRule;
+
 public abstract class AbstractBvgInputStream implements BvgInputStream
 {
 	protected BvgImage image;
@@ -43,7 +45,9 @@ public abstract class AbstractBvgInputStream implements BvgInputStream
 				break;
 			}
 			if (head == Constants.ID_FILL) {
-				readFill();
+				readFill(FillRule.NON_ZERO);
+			} else if (head == Constants.ID_FILL_EVEN_ODD) {
+				readFill(FillRule.EVEN_ODD);
 			} else if (head == Constants.ID_STROKE) {
 				readStroke();
 			}

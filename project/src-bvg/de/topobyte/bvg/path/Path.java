@@ -22,13 +22,20 @@ import java.util.List;
 public class Path
 {
 
-	private List<Type> types;
-	private List<PathElement> elements;
+	private final FillRule fillRule;
+	private final List<Type> types;
+	private final List<PathElement> elements;
 
-	public Path(List<Type> types, List<PathElement> elements)
+	public Path(FillRule fillRule, List<Type> types, List<PathElement> elements)
 	{
+		this.fillRule = fillRule;
 		this.types = types;
 		this.elements = elements;
+	}
+
+	public FillRule getFillRule()
+	{
+		return fillRule;
 	}
 
 	public List<Type> getTypes()

@@ -23,6 +23,7 @@ import java.awt.geom.PathIterator;
 import java.util.List;
 
 import de.topobyte.bvg.path.CompactPath;
+import de.topobyte.bvg.path.FillRule;
 import de.topobyte.bvg.path.Type;
 
 public class ToSwingUtil
@@ -53,9 +54,22 @@ public class ToSwingUtil
 		}
 	}
 
+	public static int getWindingRule(FillRule fillRule)
+	{
+		switch (fillRule) {
+		default:
+		case NON_ZERO:
+			return PathIterator.WIND_NON_ZERO;
+		case EVEN_ODD:
+			return PathIterator.WIND_EVEN_ODD;
+		}
+	}
+
 	public static GeneralPath createPath(CompactPath path)
 	{
-		GeneralPath result = new GeneralPath(PathIterator.WIND_EVEN_ODD);
+		int fillRule = getWindingRule(path.getFillRule());
+
+		GeneralPath result = new GeneralPath(fillRule);
 
 		List<Type> types = path.getTypes();
 		double[] values = path.getValues();

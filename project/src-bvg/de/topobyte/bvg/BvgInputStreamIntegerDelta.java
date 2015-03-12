@@ -25,14 +25,15 @@ import java.util.List;
 import de.topobyte.bvg.compact.CompactReader;
 import de.topobyte.bvg.compact.CompactReaderInputStream;
 import de.topobyte.bvg.path.CompactPath;
+import de.topobyte.bvg.path.FillRule;
 import de.topobyte.bvg.path.Type;
 
 public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 {
 
-	private double width;
-	private double height;
-	private CompactReader reader;
+	private final double width;
+	private final double height;
+	private final CompactReader reader;
 
 	public BvgInputStreamIntegerDelta(BvgImage image, DataInputStream dis)
 	{
@@ -43,7 +44,7 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 	}
 
 	@Override
-	public void readFill() throws IOException
+	public void readFill(FillRule fillRule) throws IOException
 	{
 		// System.out.println("Fill");
 		int colorCode = dis.readInt();
@@ -52,7 +53,7 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 
 		// System.out.println(String.format("Color: 0x%08X", colorCode));
 
-		CompactPath path = readPath();
+		CompactPath path = readPath(fillRule);
 
 		image.addFill(new Fill(color), path);
 	}
@@ -126,12 +127,12 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 		// System.out.println(String.format("Color: 0x%08X", colorCode));
 		// System.out.println("Line width: " + lineWidth);
 
-		CompactPath path = readPath();
+		CompactPath path = readPath(FillRule.NON_ZERO);
 
 		image.addStroke(new Stroke(color, lineStyle), path);
 	}
 
-	private CompactPath readPath() throws IOException
+	private CompactPath readPath(FillRule fillRule) throws IOException
 	{
 		int n = reader.readVariableLengthUnsignedInteger();
 		int v = reader.readVariableLengthUnsignedInteger();
@@ -213,7 +214,7 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 			}
 			}
 		}
-		return new CompactPath(types, values);
+		return new CompactPath(fillRule, types, values);
 	}
 
 	private int lx = 0;

@@ -1,4 +1,4 @@
-// Copyright 2014 Sebastian Kuerten
+// Copyright 2015 Sebastian Kuerten
 //
 // This file is part of bvg.
 //
@@ -17,35 +17,7 @@
 
 package de.topobyte.bvg.path;
 
-import java.util.List;
-
-public class CompactPath
-{
-
-	private final FillRule fillRule;
-	private final List<Type> types;
-	private final double[] values;
-
-	public CompactPath(FillRule fillRule, List<Type> types, double[] values)
-	{
-		this.fillRule = fillRule;
-		this.types = types;
-		this.values = values;
-	}
-
-	public FillRule getFillRule()
-	{
-		return fillRule;
-	}
-
-	public List<Type> getTypes()
-	{
-		return types;
-	}
-
-	public double[] getValues()
-	{
-		return values;
-	}
-
+public enum FillRule {
+	NON_ZERO, //
+	EVEN_ODD //
 }

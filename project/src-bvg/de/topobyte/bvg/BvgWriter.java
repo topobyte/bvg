@@ -37,9 +37,9 @@ import de.topobyte.bvg.path.Type;
 public class BvgWriter
 {
 
-	private BvgImage image;
-	private boolean compress;
-	private EncodingStrategy strategy;
+	private final BvgImage image;
+	private final boolean compress;
+	private final EncodingStrategy strategy;
 
 	public BvgWriter(BvgImage image, boolean compress, EncodingStrategy strategy)
 	{
@@ -116,6 +116,6 @@ public class BvgWriter
 				break;
 			}
 		}
-		return new Path(types, elements);
+		return new Path(compactPath.getFillRule(), types, elements);
 	}
 }

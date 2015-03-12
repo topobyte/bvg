@@ -23,7 +23,7 @@ public class Constants
 	// 4 magic bytes
 	static final byte[] MAGIC = new byte[] { 98, 118, 103, 0 };
 
-	static final short VERSION = 2;
+	static final short VERSION = 3;
 
 	// width, height
 
@@ -38,7 +38,7 @@ public class Constants
 	// element types
 	static final byte ID_FILL = 0;
 	static final byte ID_STROKE = 1;
-	static final byte ID_FILL_STROKE = 2;
+	static final byte ID_FILL_EVEN_ODD = 2;
 
 	// path construction
 	static final byte PATH_MOVE_TO = 0;

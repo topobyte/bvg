@@ -27,6 +27,7 @@ import de.topobyte.bvg.Cap;
 import de.topobyte.bvg.Join;
 import de.topobyte.bvg.path.Close;
 import de.topobyte.bvg.path.CubicTo;
+import de.topobyte.bvg.path.FillRule;
 import de.topobyte.bvg.path.LineTo;
 import de.topobyte.bvg.path.MoveTo;
 import de.topobyte.bvg.path.Path;
@@ -67,6 +68,14 @@ public class FromSwingUtil
 	{
 		PathIterator it = shape.getPathIterator(null);
 
+		FillRule fillRule = FillRule.NON_ZERO;
+		int windingRule = it.getWindingRule();
+		if (windingRule == PathIterator.WIND_NON_ZERO) {
+			fillRule = FillRule.NON_ZERO;
+		} else if (windingRule == PathIterator.WIND_EVEN_ODD) {
+			fillRule = FillRule.EVEN_ODD;
+		}
+
 		double points[] = new double[6];
 
 		List<Type> types = new ArrayList<Type>();
@@ -101,7 +110,7 @@ public class FromSwingUtil
 			it.next();
 		}
 
-		return new Path(types, elements);
+		return new Path(fillRule, types, elements);
 	}
 
 }

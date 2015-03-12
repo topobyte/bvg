@@ -41,7 +41,7 @@ public class BvgOutputStreamDouble extends AbstractBvgOutputStream
 	@Override
 	public void fill(Fill fill, Path path) throws IOException
 	{
-		dos.writeByte(Constants.ID_FILL);
+		super.writeFillCode(path);
 		IColor color = fill.getColor();
 		int code = color.getColorCode();
 		dos.writeInt(code);

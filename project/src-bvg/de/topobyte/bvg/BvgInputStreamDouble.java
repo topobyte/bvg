@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.topobyte.bvg.path.CompactPath;
+import de.topobyte.bvg.path.FillRule;
 import de.topobyte.bvg.path.Type;
 
 public class BvgInputStreamDouble extends AbstractBvgInputStream
@@ -34,7 +35,7 @@ public class BvgInputStreamDouble extends AbstractBvgInputStream
 	}
 
 	@Override
-	public void readFill() throws IOException
+	public void readFill(FillRule fillRule) throws IOException
 	{
 		// System.out.println("Fill");
 		int colorCode = dis.readInt();
@@ -43,7 +44,7 @@ public class BvgInputStreamDouble extends AbstractBvgInputStream
 
 		// System.out.println(String.format("Color: 0x%08X", colorCode));
 
-		CompactPath path = readPath();
+		CompactPath path = readPath(fillRule);
 
 		image.addFill(new Fill(color), path);
 	}
@@ -117,12 +118,12 @@ public class BvgInputStreamDouble extends AbstractBvgInputStream
 		// System.out.println(String.format("Color: 0x%08X", colorCode));
 		// System.out.println("Line width: " + lineWidth);
 
-		CompactPath path = readPath();
+		CompactPath path = readPath(FillRule.NON_ZERO);
 
 		image.addStroke(new Stroke(color, lineStyle), path);
 	}
 
-	private CompactPath readPath() throws IOException
+	private CompactPath readPath(FillRule fillRule) throws IOException
 	{
 		int n = dis.readInt();
 		int v = dis.readInt();
@@ -185,6 +186,6 @@ public class BvgInputStreamDouble extends AbstractBvgInputStream
 			}
 			}
 		}
-		return new CompactPath(types, values);
+		return new CompactPath(fillRule, types, values);
 	}
 }

@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.DeflaterOutputStream;
 
+import de.topobyte.bvg.path.Path;
+
 public abstract class AbstractBvgOutputStream implements BvgOutputStream
 {
 
@@ -65,6 +67,19 @@ public abstract class AbstractBvgOutputStream implements BvgOutputStream
 			dos.flush();
 			DeflaterOutputStream deflater = new DeflaterOutputStream(os);
 			dos = new DataOutputStream(deflater);
+		}
+	}
+
+	protected void writeFillCode(Path path) throws IOException
+	{
+		switch (path.getFillRule()) {
+		default:
+		case NON_ZERO:
+			dos.writeByte(Constants.ID_FILL);
+			break;
+		case EVEN_ODD:
+			dos.writeByte(Constants.ID_FILL_EVEN_ODD);
+			break;
 		}
 	}
 
