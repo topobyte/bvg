@@ -19,6 +19,7 @@ package de.topobyte.bvg;
 
 import java.awt.BasicStroke;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
 import java.util.List;
 
 import de.topobyte.bvg.path.CompactPath;
@@ -54,7 +55,7 @@ public class ToSwingUtil
 
 	public static GeneralPath createPath(CompactPath path)
 	{
-		GeneralPath result = new GeneralPath();
+		GeneralPath result = new GeneralPath(PathIterator.WIND_EVEN_ODD);
 
 		List<Type> types = path.getTypes();
 		double[] values = path.getValues();
