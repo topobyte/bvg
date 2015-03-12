@@ -29,6 +29,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import de.topobyte.bvg.BvgOutputStream;
 import de.topobyte.bvg.BvgOutputStreamDouble;
@@ -68,7 +69,13 @@ public class SvgToBvg implements ShapeSink
 				"double, int_delta");
 
 		CommandLineParser parser = new GnuParser();
-		CommandLine line = parser.parse(options, args);
+		CommandLine line = null;
+		try {
+			line = parser.parse(options, args);
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+			printHelpAndExit(options);
+		}
 
 		boolean compress = line.hasOption(OPTION_COMPRESS);
 

@@ -25,6 +25,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
@@ -58,7 +59,13 @@ public class BvgToBvg
 				"double, int_delta");
 
 		CommandLineParser parser = new GnuParser();
-		CommandLine line = parser.parse(options, args);
+		CommandLine line = null;
+		try {
+			line = parser.parse(options, args);
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+			printHelpAndExit(options);
+		}
 
 		boolean compress = line.hasOption(OPTION_COMPRESS);
 
