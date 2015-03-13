@@ -62,7 +62,13 @@ public class BvgDrawable extends Drawable
 		float scaleW = (float) (width / image.getWidth());
 		float scaleH = (float) (height / image.getHeight());
 		float scale = Math.min(scaleW, scaleH);
+		float w = (float) (scale * image.getWidth());
+		float h = (float) (scale * image.getHeight());
+
+		canvas.save();
+		canvas.clipRect(0, 0, w, h);
 		BvgAndroidPainter.draw(canvas, image, 0, 0, scale, scale, scale);
+		canvas.restore();
 	}
 
 	@Override
