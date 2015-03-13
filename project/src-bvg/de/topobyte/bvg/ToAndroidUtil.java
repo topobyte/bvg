@@ -21,7 +21,9 @@ import java.util.List;
 
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Path.FillType;
 import de.topobyte.bvg.path.CompactPath;
+import de.topobyte.bvg.path.FillRule;
 import de.topobyte.bvg.path.Type;
 
 public class ToAndroidUtil
@@ -53,9 +55,23 @@ public class ToAndroidUtil
 		}
 	}
 
+	public static FillType getWindingRule(FillRule fillRule)
+	{
+		switch (fillRule) {
+		default:
+		case NON_ZERO:
+			return Path.FillType.WINDING;
+		case EVEN_ODD:
+			return Path.FillType.EVEN_ODD;
+		}
+	}
+
 	public static Path createPath(CompactPath path)
 	{
+		FillType fillType = getWindingRule(path.getFillRule());
+
 		Path p = new Path();
+		p.setFillType(fillType);
 
 		List<Type> types = path.getTypes();
 		double[] values = path.getValues();
