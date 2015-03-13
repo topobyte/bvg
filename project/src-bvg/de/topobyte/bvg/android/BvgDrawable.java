@@ -25,6 +25,7 @@ import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import de.topobyte.bvg.BvgAndroidPainter;
@@ -57,13 +58,22 @@ public class BvgDrawable extends Drawable
 		if (image == null) {
 			return;
 		}
-		int width = canvas.getWidth();
-		int height = canvas.getHeight();
+
+		Rect bounds = getBounds();
+		int width = bounds.width();
+		int height = bounds.height();
 		float scaleW = (float) (width / image.getWidth());
 		float scaleH = (float) (height / image.getHeight());
 		float scale = Math.min(scaleW, scaleH);
 		float w = (float) (scale * image.getWidth());
 		float h = (float) (scale * image.getHeight());
+
+		Log.e("bvg", "canvas: " + width + " x " + height);
+		Log.e("bvg", "image: " + image.getWidth() + " x " + image.getHeight());
+		Log.e("bvg", "scaleH: " + scaleH);
+		Log.e("bvg", "scaleW: " + scaleW);
+		Log.e("bvg", "scale: " + scale);
+		Log.e("bvg", "result: " + w + " x " + h);
 
 		canvas.save();
 		canvas.clipRect(0, 0, w, h);
