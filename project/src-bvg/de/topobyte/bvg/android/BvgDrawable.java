@@ -22,26 +22,36 @@ import java.io.InputStream;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import de.topobyte.bvg.BvgAndroidPainter;
+import de.topobyte.bvg.BvgAndroidPainterWithCache;
 import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
 
 public class BvgDrawable extends Drawable
 {
 
-	protected float bw;
-	protected float bh;
-
 	protected BvgImage image = null;
 
-	public BvgDrawable(Context context, String iconPath)
+	private final CacheMode mode;
+
+	private BvgAndroidPainterWithCache cachePainter = null;
+
+	private Bitmap bitmap = null;
+	private int lastWidth = 0;
+	private int lastHeight = 0;
+
+	public BvgDrawable(Context context, String iconPath, CacheMode mode)
 	{
+		this.mode = mode;
 		AssetManager assets = context.getAssets();
 		try {
 			InputStream is = assets.open(iconPath);
@@ -77,7 +87,30 @@ public class BvgDrawable extends Drawable
 
 		canvas.save();
 		canvas.clipRect(0, 0, w, h);
-		BvgAndroidPainter.draw(canvas, image, 0, 0, scale, scale, scale);
+		if (mode == CacheMode.NOTHING) {
+			BvgAndroidPainter.draw(canvas, image, 0, 0, scale, scale, scale);
+		} else if (mode == CacheMode.PATHS) {
+			if (cachePainter == null) {
+				cachePainter = new BvgAndroidPainterWithCache(image);
+			}
+			cachePainter.draw(canvas, 0, 0, scale, scale, scale);
+		} else if (mode == CacheMode.OFFSCREEN) {
+			boolean newImage = true;
+			if (bitmap != null) {
+				newImage = width != lastWidth || height != lastHeight;
+			}
+			if (newImage) {
+				if (bitmap != null) {
+					bitmap.recycle();
+				}
+				bitmap = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+				lastWidth = width;
+				lastHeight = height;
+				Canvas c = new Canvas(bitmap);
+				BvgAndroidPainter.draw(c, image, 0, 0, scale, scale, scale);
+			}
+			canvas.drawBitmap(bitmap, 0, 0, new Paint());
+		}
 		canvas.restore();
 	}
 
@@ -96,7 +129,7 @@ public class BvgDrawable extends Drawable
 	@Override
 	public int getOpacity()
 	{
-		return PixelFormat.OPAQUE;
+		return PixelFormat.TRANSLUCENT;
 	}
 
 }
