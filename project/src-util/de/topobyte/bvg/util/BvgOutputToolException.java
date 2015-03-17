@@ -1,4 +1,4 @@
-// Copyright 2014 Sebastian Kuerten
+// Copyright 2015 Sebastian Kuerten
 //
 // This file is part of bvg.
 //
@@ -15,23 +15,26 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg;
+package de.topobyte.bvg.util;
 
-public enum EncodingMethod {
+public class BvgOutputToolException extends Exception
+{
 
-	PLAIN(Constants.ENCODING_PLAIN), //
-	DEFLATE(Constants.ENCODING_DEFLATE), //
-	LZ4(Constants.ENCODING_LZ4);
+	private static final long serialVersionUID = -4188697880746041423L;
 
-	private final int value;
-
-	private EncodingMethod(int value)
+	public BvgOutputToolException(String message, Throwable cause)
 	{
-		this.value = value;
+		super(message, cause);
 	}
 
-	public int getByte()
+	public BvgOutputToolException(String message)
 	{
-		return value;
+		super(message);
 	}
+
+	public BvgOutputToolException(Throwable cause)
+	{
+		super(cause);
+	}
+
 }

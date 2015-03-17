@@ -32,10 +32,10 @@ import de.topobyte.bvg.path.Type;
 public class BvgOutputStreamDouble extends AbstractBvgOutputStream
 {
 
-	public BvgOutputStreamDouble(OutputStream os, boolean compress,
+	public BvgOutputStreamDouble(OutputStream os, EncodingMethod method,
 			double width, double height) throws IOException
 	{
-		super(os, compress, EncodingStrategy.STRATEGY_DOUBLE, width, height);
+		super(os, method, EncodingStrategy.STRATEGY_DOUBLE, width, height);
 	}
 
 	@Override

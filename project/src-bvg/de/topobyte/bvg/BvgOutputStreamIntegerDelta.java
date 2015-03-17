@@ -35,10 +35,10 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 
 	private final CompactWriter writer;
 
-	public BvgOutputStreamIntegerDelta(OutputStream os, boolean compress,
+	public BvgOutputStreamIntegerDelta(OutputStream os, EncodingMethod method,
 			double width, double height) throws IOException
 	{
-		super(os, compress, EncodingStrategy.STRATEGY_INTEGER_DELTA, width,
+		super(os, method, EncodingStrategy.STRATEGY_INTEGER_DELTA, width,
 				height);
 		writer = new CompactWriter(dos);
 	}

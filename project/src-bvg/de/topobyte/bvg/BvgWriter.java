@@ -38,13 +38,14 @@ public class BvgWriter
 {
 
 	private final BvgImage image;
-	private final boolean compress;
+	private final EncodingMethod method;
 	private final EncodingStrategy strategy;
 
-	public BvgWriter(BvgImage image, boolean compress, EncodingStrategy strategy)
+	public BvgWriter(BvgImage image, EncodingMethod method,
+			EncodingStrategy strategy)
 	{
 		this.image = image;
-		this.compress = compress;
+		this.method = method;
 		this.strategy = strategy;
 	}
 
@@ -61,11 +62,11 @@ public class BvgWriter
 		switch (strategy) {
 		default:
 		case STRATEGY_DOUBLE:
-			bvgOutput = new BvgOutputStreamDouble(os, compress,
-					image.getWidth(), image.getHeight());
+			bvgOutput = new BvgOutputStreamDouble(os, method, image.getWidth(),
+					image.getHeight());
 			break;
 		case STRATEGY_INTEGER_DELTA:
-			bvgOutput = new BvgOutputStreamIntegerDelta(os, compress,
+			bvgOutput = new BvgOutputStreamIntegerDelta(os, method,
 					image.getWidth(), image.getHeight());
 			break;
 		}

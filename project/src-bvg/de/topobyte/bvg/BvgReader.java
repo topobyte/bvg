@@ -22,13 +22,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.InflaterInputStream;
 
+import net.jpountz.lz4.LZ4BlockInputStream;
+import net.jpountz.lz4.LZ4Factory;
+import net.jpountz.lz4.LZ4FastDecompressor;
+
 public class BvgReader
 {
 
 	BvgMetadata metadata = null;
 	BvgImage image = null;
 
-	private InputStream is;
+	private final InputStream is;
 	private DataInputStream dis;
 
 	BvgReader(InputStream is)
@@ -73,8 +77,17 @@ public class BvgReader
 			metadata.encoding = EncodingMethod.PLAIN;
 		} else if (encoding == Constants.ENCODING_DEFLATE) {
 			metadata.encoding = EncodingMethod.DEFLATE;
+
 			InflaterInputStream deflater = new InflaterInputStream(is);
 			dis = new DataInputStream(deflater);
+		} else if (encoding == Constants.ENCODING_LZ4) {
+			metadata.encoding = EncodingMethod.LZ4;
+
+			LZ4Factory factory = LZ4Factory.safeInstance();
+			LZ4FastDecompressor decompressor = factory.fastDecompressor();
+
+			LZ4BlockInputStream lz4 = new LZ4BlockInputStream(is, decompressor);
+			dis = new DataInputStream(lz4);
 		} else {
 			throw new IOException("Illegal encoding");
 		}

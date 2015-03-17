@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.DeflaterOutputStream;
 
+import net.jpountz.lz4.LZ4BlockOutputStream;
+import net.jpountz.lz4.LZ4Compressor;
+import net.jpountz.lz4.LZ4Factory;
 import de.topobyte.bvg.path.Path;
 
 public abstract class AbstractBvgOutputStream implements BvgOutputStream
@@ -33,7 +36,7 @@ public abstract class AbstractBvgOutputStream implements BvgOutputStream
 	protected double width;
 	protected double height;
 
-	public AbstractBvgOutputStream(OutputStream os, boolean compress,
+	public AbstractBvgOutputStream(OutputStream os, EncodingMethod method,
 			EncodingStrategy strategy, double width, double height)
 			throws IOException
 	{
@@ -46,8 +49,7 @@ public abstract class AbstractBvgOutputStream implements BvgOutputStream
 		// file header
 		dos.write(Constants.MAGIC);
 		dos.writeShort(Constants.VERSION);
-		dos.writeByte(compress ? Constants.ENCODING_DEFLATE
-				: Constants.ENCODING_PLAIN);
+		dos.writeByte(method.getByte());
 
 		switch (strategy) {
 		default:
@@ -63,10 +65,19 @@ public abstract class AbstractBvgOutputStream implements BvgOutputStream
 		dos.writeDouble(width);
 		dos.writeDouble(height);
 
-		if (compress) {
+		if (method == EncodingMethod.DEFLATE) {
 			dos.flush();
+
 			DeflaterOutputStream deflater = new DeflaterOutputStream(os);
 			dos = new DataOutputStream(deflater);
+		} else if (method == EncodingMethod.LZ4) {
+			LZ4Factory factory = LZ4Factory.safeInstance();
+			LZ4Compressor compressor = factory.fastCompressor();
+			compressor = factory.highCompressor();
+
+			LZ4BlockOutputStream lz4 = new LZ4BlockOutputStream(os, 1 << 16,
+					compressor);
+			dos = new DataOutputStream(lz4);
 		}
 	}
 

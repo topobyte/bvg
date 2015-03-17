@@ -1,4 +1,4 @@
-// Copyright 2014 Sebastian Kuerten
+// Copyright 2015 Sebastian Kuerten
 //
 // This file is part of bvg.
 //
@@ -15,23 +15,41 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg;
+package de.topobyte.bvg.util;
 
-public enum EncodingMethod {
+import de.topobyte.bvg.EncodingMethod;
+import de.topobyte.bvg.EncodingStrategy;
 
-	PLAIN(Constants.ENCODING_PLAIN), //
-	DEFLATE(Constants.ENCODING_DEFLATE), //
-	LZ4(Constants.ENCODING_LZ4);
+public class EncodingParameters
+{
 
-	private final int value;
+	private EncodingMethod method;
+	private EncodingStrategy strategy;
 
-	private EncodingMethod(int value)
+	public EncodingParameters(EncodingMethod method, EncodingStrategy strategy)
 	{
-		this.value = value;
+		this.method = method;
+		this.strategy = strategy;
 	}
 
-	public int getByte()
+	public EncodingMethod getMethod()
 	{
-		return value;
+		return method;
 	}
+
+	public EncodingStrategy getStrategy()
+	{
+		return strategy;
+	}
+
+	public void setMethod(EncodingMethod method)
+	{
+		this.method = method;
+	}
+
+	public void setStrategy(EncodingStrategy strategy)
+	{
+		this.strategy = strategy;
+	}
+
 }

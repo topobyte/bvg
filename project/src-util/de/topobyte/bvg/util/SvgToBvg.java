@@ -35,38 +35,31 @@ import de.topobyte.bvg.BvgOutputStream;
 import de.topobyte.bvg.BvgOutputStreamDouble;
 import de.topobyte.bvg.BvgOutputStreamIntegerDelta;
 import de.topobyte.bvg.Color;
+import de.topobyte.bvg.EncodingMethod;
 import de.topobyte.bvg.EncodingStrategy;
 import de.topobyte.bvg.Fill;
 import de.topobyte.bvg.LineStyle;
 import de.topobyte.bvg.Stroke;
 import de.topobyte.bvg.path.Path;
-import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 public class SvgToBvg implements ShapeSink
 {
 
-	private final static String OPTION_COMPRESS = "compress";
-	private final static String OPTION_STRATEGY = "strategy";
-
 	private final static String HELP_MESSAGE = SvgToBvg.class.getSimpleName()
-			+ "[options] [input] [output]";
+			+ " [options] [input] [output]";
 
 	private static void printHelpAndExit(Options options)
 	{
 		new HelpFormatter().printHelp(HELP_MESSAGE, options);
-		System.out.println("usage: " + BvgToPng.class.getSimpleName()
+		System.out.println("usage: " + SvgToBvg.class.getSimpleName()
 				+ " [input] [output]");
 		System.exit(1);
 	}
 
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) throws IOException
 	{
-
 		Options options = new Options();
-		OptionHelper.add(options, OPTION_COMPRESS, false, false,
-				"compress using deflate");
-		OptionHelper.add(options, OPTION_STRATEGY, true, false,
-				"double, int_delta");
+		BvgOutputToolUtil.addOptions(options);
 
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = null;
@@ -77,19 +70,13 @@ public class SvgToBvg implements ShapeSink
 			printHelpAndExit(options);
 		}
 
-		boolean compress = line.hasOption(OPTION_COMPRESS);
-
-		EncodingStrategy strategy = EncodingStrategy.STRATEGY_DOUBLE;
-		if (line.hasOption(OPTION_STRATEGY)) {
-			String value = line.getOptionValue(OPTION_STRATEGY);
-			if (value.equals("double")) {
-				strategy = EncodingStrategy.STRATEGY_DOUBLE;
-			} else if (value.equals("int_delta")) {
-				strategy = EncodingStrategy.STRATEGY_INTEGER_DELTA;
-			} else {
-				System.out.println("unknown encoding strategy");
-				printHelpAndExit(options);
-			}
+		EncodingParameters parameters = null;
+		try {
+			parameters = BvgOutputToolUtil.parse(line);
+		} catch (BvgOutputToolException e) {
+			System.out.println("Error while parsing command line: "
+					+ e.getMessage());
+			printHelpAndExit(options);
 		}
 
 		String[] extra = line.getArgs();
@@ -111,7 +98,8 @@ public class SvgToBvg implements ShapeSink
 		FileOutputStream fos = new FileOutputStream(fileOutput);
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
 
-		SvgToBvg svgToBvg = new SvgToBvg(bos, compress, strategy);
+		SvgToBvg svgToBvg = new SvgToBvg(bos, parameters.getMethod(),
+				parameters.getStrategy());
 		SvgParser svgParser = new SvgParser(svgToBvg);
 		svgParser.parseToSink(fileInput);
 
@@ -119,16 +107,16 @@ public class SvgToBvg implements ShapeSink
 	}
 
 	private BvgOutputStream bvgOutputStream;
-	private OutputStream os;
+	private final OutputStream os;
 
-	private boolean compress;
-	private EncodingStrategy strategy;
+	private final EncodingMethod method;
+	private final EncodingStrategy strategy;
 
-	public SvgToBvg(OutputStream os, boolean compress, EncodingStrategy strategy)
-			throws IOException
+	public SvgToBvg(OutputStream os, EncodingMethod method,
+			EncodingStrategy strategy) throws IOException
 	{
 		this.os = os;
-		this.compress = compress;
+		this.method = method;
 		this.strategy = strategy;
 	}
 
@@ -138,11 +126,11 @@ public class SvgToBvg implements ShapeSink
 		switch (strategy) {
 		default:
 		case STRATEGY_DOUBLE:
-			bvgOutputStream = new BvgOutputStreamDouble(os, compress, width,
+			bvgOutputStream = new BvgOutputStreamDouble(os, method, width,
 					height);
 			break;
 		case STRATEGY_INTEGER_DELTA:
-			bvgOutputStream = new BvgOutputStreamIntegerDelta(os, compress,
+			bvgOutputStream = new BvgOutputStreamIntegerDelta(os, method,
 					width, height);
 			break;
 		}

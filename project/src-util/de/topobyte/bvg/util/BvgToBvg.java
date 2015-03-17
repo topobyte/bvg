@@ -29,23 +29,18 @@ import org.apache.commons.cli.ParseException;
 
 import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
+import de.topobyte.bvg.EncodingMethod;
 import de.topobyte.bvg.EncodingStrategy;
-import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 public class BvgToBvg
 {
 
-	private final static String OPTION_COMPRESS = "compress";
-	private final static String OPTION_STRATEGY = "strategy";
-
 	private final static String HELP_MESSAGE = BvgToBvg.class.getSimpleName()
-			+ "[options] [input] [output]";
+			+ " [options] [input] [output]";
 
 	private static void printHelpAndExit(Options options)
 	{
 		new HelpFormatter().printHelp(HELP_MESSAGE, options);
-		System.out.println("usage: " + BvgToPng.class.getSimpleName()
-				+ " [input] [output]");
 		System.exit(1);
 	}
 
@@ -53,10 +48,7 @@ public class BvgToBvg
 	{
 
 		Options options = new Options();
-		OptionHelper.add(options, OPTION_COMPRESS, false, false,
-				"compress using deflate");
-		OptionHelper.add(options, OPTION_STRATEGY, true, false,
-				"double, int_delta");
+		BvgOutputToolUtil.addOptions(options);
 
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = null;
@@ -67,19 +59,13 @@ public class BvgToBvg
 			printHelpAndExit(options);
 		}
 
-		boolean compress = line.hasOption(OPTION_COMPRESS);
-
-		EncodingStrategy strategy = EncodingStrategy.STRATEGY_DOUBLE;
-		if (line.hasOption(OPTION_STRATEGY)) {
-			String value = line.getOptionValue(OPTION_STRATEGY);
-			if (value.equals("double")) {
-				strategy = EncodingStrategy.STRATEGY_DOUBLE;
-			} else if (value.equals("int_delta")) {
-				strategy = EncodingStrategy.STRATEGY_INTEGER_DELTA;
-			} else {
-				System.out.println("unknown encoding strategy");
-				printHelpAndExit(options);
-			}
+		EncodingParameters parameters = null;
+		try {
+			parameters = BvgOutputToolUtil.parse(line);
+		} catch (BvgOutputToolException e) {
+			System.out.println("Error while parsing command line: "
+					+ e.getMessage());
+			printHelpAndExit(options);
 		}
 
 		String[] extra = line.getArgs();
@@ -98,24 +84,25 @@ public class BvgToBvg
 			parentFile.mkdirs();
 		}
 
-		BvgToBvg bvgToBvg = new BvgToBvg(compress, strategy);
+		BvgToBvg bvgToBvg = new BvgToBvg(parameters.getMethod(),
+				parameters.getStrategy());
 		bvgToBvg.execute(fileInput, fileOutput);
 	}
 
-	private boolean compress;
-	private EncodingStrategy strategy;
+	private final EncodingMethod method;
+	private final EncodingStrategy strategy;
 
-	public BvgToBvg(boolean compress, EncodingStrategy strategy)
+	public BvgToBvg(EncodingMethod method, EncodingStrategy strategy)
 			throws IOException
 	{
-		this.compress = compress;
+		this.method = method;
 		this.strategy = strategy;
 	}
 
 	private void execute(File fileInput, File fileOutput) throws IOException
 	{
 		BvgImage image = BvgIO.read(fileInput);
-		BvgIO.write(image, fileOutput, compress, strategy);
+		BvgIO.write(image, fileOutput, method, strategy);
 	}
 
 }

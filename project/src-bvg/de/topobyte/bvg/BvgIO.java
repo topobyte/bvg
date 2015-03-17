@@ -54,17 +54,18 @@ public class BvgIO
 		return reader.image;
 	}
 
-	public static void write(BvgImage image, File file, boolean compress,
+	public static void write(BvgImage image, File file, EncodingMethod method,
 			EncodingStrategy strategy) throws IOException
 	{
-		BvgWriter writer = new BvgWriter(image, compress, strategy);
+		BvgWriter writer = new BvgWriter(image, method, strategy);
 		writer.write(file);
 	}
 
 	public static void write(BvgImage image, OutputStream output,
-			boolean compress, EncodingStrategy strategy) throws IOException
+			EncodingMethod method, EncodingStrategy strategy)
+			throws IOException
 	{
-		BvgWriter writer = new BvgWriter(image, compress, strategy);
+		BvgWriter writer = new BvgWriter(image, method, strategy);
 		writer.write(output);
 	}
 

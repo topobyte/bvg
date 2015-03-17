@@ -30,6 +30,7 @@ public class Constants
 	// encoding
 	static final byte ENCODING_PLAIN = 0;
 	static final byte ENCODING_DEFLATE = 1;
+	static final byte ENCODING_LZ4 = 2;
 
 	// strategy
 	static final byte STRATEGY_DOUBLE = 0;
