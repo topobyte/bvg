@@ -94,13 +94,13 @@ public class BvgDrawable extends Drawable
 		float w = (float) (scale * image.getWidth());
 		float h = (float) (scale * image.getHeight());
 
-		Log.e("bvg", "canvas: " + width + " x " + height);
-		Log.e("bvg", "image: " + image.getWidth() + " x " + image.getHeight());
-		Log.e("bvg", "scaleH: " + scaleH);
-		Log.e("bvg", "scaleW: " + scaleW);
-		Log.e("bvg", "scale: " + scale);
-		Log.e("bvg", "result: " + w + " x " + h);
-		Log.e("bvg", "left, top: " + bounds.left + ", " + bounds.top);
+		Log.i("bvg", "canvas: " + width + " x " + height);
+		Log.i("bvg", "image: " + image.getWidth() + " x " + image.getHeight());
+		Log.i("bvg", "scaleH: " + scaleH);
+		Log.i("bvg", "scaleW: " + scaleW);
+		Log.i("bvg", "scale: " + scale);
+		Log.i("bvg", "result: " + w + " x " + h);
+		Log.i("bvg", "left, top: " + bounds.left + ", " + bounds.top);
 
 		canvas.save();
 		canvas.clipRect(0, 0, w, h);
@@ -158,7 +158,7 @@ public class BvgDrawable extends Drawable
 	@Override
 	public int getIntrinsicHeight()
 	{
-		Log.e("bvg", "getIntrinsicHeight: " + h);
+		Log.i("bvg", "getIntrinsicHeight: " + h);
 		// return Math.round((float) (image.getHeight()));
 		return super.getIntrinsicHeight();
 	}
@@ -166,7 +166,7 @@ public class BvgDrawable extends Drawable
 	@Override
 	public int getIntrinsicWidth()
 	{
-		Log.e("bvg", "getIntrinsicWidth: " + w);
+		Log.i("bvg", "getIntrinsicWidth: " + w);
 		// return Math.round((float) (image.getWidth()));
 		return super.getIntrinsicWidth();
 	}
