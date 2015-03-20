@@ -31,6 +31,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Gravity;
 import de.topobyte.bvg.BvgAndroidPainter;
 import de.topobyte.bvg.BvgAndroidPainterWithCache;
 import de.topobyte.bvg.BvgIO;
@@ -42,6 +43,7 @@ public class BvgDrawable extends Drawable
 	protected BvgImage image = null;
 
 	private final CacheMode mode;
+	private final int gravity;
 
 	private BvgAndroidPainterWithCache cachePainter = null;
 
@@ -51,7 +53,14 @@ public class BvgDrawable extends Drawable
 
 	public BvgDrawable(Context context, String iconPath, CacheMode mode)
 	{
+		this(context, iconPath, mode, Gravity.NO_GRAVITY);
+	}
+
+	public BvgDrawable(Context context, String iconPath, CacheMode mode,
+			int gravity)
+	{
 		this.mode = mode;
+		this.gravity = gravity;
 		AssetManager assets = context.getAssets();
 		try {
 			InputStream is = assets.open(iconPath);
@@ -85,6 +94,7 @@ public class BvgDrawable extends Drawable
 			return;
 		}
 
+		// Determine the maximal size that fits into the bounds
 		Rect bounds = getBounds();
 		int width = bounds.width();
 		int height = bounds.height();
@@ -94,6 +104,27 @@ public class BvgDrawable extends Drawable
 		float w = (float) (scale * image.getWidth());
 		float h = (float) (scale * image.getHeight());
 
+		// Apply the gravity using the size computed before
+		Rect target = new Rect();
+		int iw = Math.round(w);
+		int ih = Math.round(h);
+		Gravity.apply(gravity, iw, ih, bounds, target);
+
+		// Determine new size and scale values depending on the results that
+		// resulted from applying the gravity
+		int tx = target.left;
+		int ty = target.top;
+		int tw = target.width();
+		int th = target.height();
+		float tscaleX = tw / (float) image.getWidth();
+		float tscaleY = th / (float) image.getHeight();
+		float tscaleW = Math.min(tscaleX, tscaleY);
+
+		// These are the scale values that we will use for drawing
+		float sx = tscaleX;
+		float sy = tscaleY;
+		float sw = tscaleW;
+
 		Log.i("bvg", "canvas: " + width + " x " + height);
 		Log.i("bvg", "image: " + image.getWidth() + " x " + image.getHeight());
 		Log.i("bvg", "scaleH: " + scaleH);
@@ -102,31 +133,36 @@ public class BvgDrawable extends Drawable
 		Log.i("bvg", "result: " + w + " x " + h);
 		Log.i("bvg", "left, top: " + bounds.left + ", " + bounds.top);
 
+		Log.i("bvg", "target: " + target);
+		Log.i("bvg", "sx: " + sx);
+		Log.i("bvg", "sy: " + sy);
+		Log.i("bvg", "sw: " + sw);
+
 		canvas.save();
-		canvas.clipRect(0, 0, w, h);
+		canvas.clipRect(target.left, target.top, target.right, target.bottom);
 		if (mode == CacheMode.NOTHING) {
-			BvgAndroidPainter.draw(canvas, image, 0, 0, scale, scale, scale);
+			BvgAndroidPainter.draw(canvas, image, tx, ty, sx, sy, sw);
 		} else if (mode == CacheMode.PATHS) {
 			if (cachePainter == null) {
 				cachePainter = new BvgAndroidPainterWithCache(image);
 			}
-			cachePainter.draw(canvas, 0, 0, scale, scale, scale);
+			cachePainter.draw(canvas, tx, ty, sx, sy, sw);
 		} else if (mode == CacheMode.OFFSCREEN) {
 			boolean newImage = true;
 			if (bitmap != null) {
-				newImage = width != lastWidth || height != lastHeight;
+				newImage = tw != lastWidth || th != lastHeight;
 			}
 			if (newImage) {
 				if (bitmap != null) {
 					bitmap.recycle();
 				}
-				bitmap = Bitmap.createBitmap(width, height, Config.ARGB_8888);
-				lastWidth = width;
-				lastHeight = height;
+				bitmap = Bitmap.createBitmap(tw, th, Config.ARGB_8888);
+				lastWidth = tw;
+				lastHeight = th;
 				Canvas c = new Canvas(bitmap);
-				BvgAndroidPainter.draw(c, image, 0, 0, scale, scale, scale);
+				BvgAndroidPainter.draw(c, image, 0, 0, sx, sy, sw);
 			}
-			canvas.drawBitmap(bitmap, 0, 0, new Paint());
+			canvas.drawBitmap(bitmap, tx, ty, new Paint());
 		}
 		canvas.restore();
 	}
