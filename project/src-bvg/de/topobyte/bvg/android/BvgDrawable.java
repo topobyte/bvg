@@ -62,6 +62,22 @@ public class BvgDrawable extends Drawable
 		}
 	}
 
+	private float w = -1;
+	private float h = -1;
+
+	@Override
+	protected void onBoundsChange(Rect bounds)
+	{
+		Log.e("bvg", "onBoundsChange");
+		int width = bounds.width();
+		int height = bounds.height();
+		float scaleW = width / (float) image.getWidth();
+		float scaleH = height / (float) image.getHeight();
+		float scale = Math.min(scaleW, scaleH);
+		w = (float) (scale * image.getWidth());
+		h = (float) (scale * image.getHeight());
+	}
+
 	@Override
 	public void draw(Canvas canvas)
 	{
@@ -72,8 +88,8 @@ public class BvgDrawable extends Drawable
 		Rect bounds = getBounds();
 		int width = bounds.width();
 		int height = bounds.height();
-		float scaleW = (float) (width / image.getWidth());
-		float scaleH = (float) (height / image.getHeight());
+		float scaleW = width / (float) image.getWidth();
+		float scaleH = height / (float) image.getHeight();
 		float scale = Math.min(scaleW, scaleH);
 		float w = (float) (scale * image.getWidth());
 		float h = (float) (scale * image.getHeight());
@@ -84,6 +100,7 @@ public class BvgDrawable extends Drawable
 		Log.e("bvg", "scaleW: " + scaleW);
 		Log.e("bvg", "scale: " + scale);
 		Log.e("bvg", "result: " + w + " x " + h);
+		Log.e("bvg", "left, top: " + bounds.left + ", " + bounds.top);
 
 		canvas.save();
 		canvas.clipRect(0, 0, w, h);
@@ -130,6 +147,28 @@ public class BvgDrawable extends Drawable
 	public int getOpacity()
 	{
 		return PixelFormat.TRANSLUCENT;
+	}
+
+	/*
+	 * We do NOT return an intrinsic size different from (-1,-1) because
+	 * ImageView will then render the Drawable at this size and perform the
+	 * scaling itself. Not what we want for vector graphics!
+	 */
+
+	@Override
+	public int getIntrinsicHeight()
+	{
+		Log.e("bvg", "getIntrinsicHeight: " + h);
+		// return Math.round((float) (image.getHeight()));
+		return super.getIntrinsicHeight();
+	}
+
+	@Override
+	public int getIntrinsicWidth()
+	{
+		Log.e("bvg", "getIntrinsicWidth: " + w);
+		// return Math.round((float) (image.getWidth()));
+		return super.getIntrinsicWidth();
 	}
 
 }
