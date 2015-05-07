@@ -1,0 +1,83 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
+allprojects {
+    group = pGroup
+    version = pVersion
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'eclipse'
+
+    repositories {
+        maven {
+            url maven_path_topobyte
+        }
+        mavenCentral()
+    }
+}
+
+configure([project(':bvg'), project(':bvg-awt'), project(':bvg-android')]) {
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: maven_url_topobyte)
+            }
+        }
+    }
+}
+
+project(':bvg') {
+    dependencies {
+        compile 'net.jpountz.lz4:lz4:1.3.0'
+    }
+    eclipse {
+        project {
+            name = 'bvg-core'
+        }
+    }
+}
+
+project(':bvg-awt') {
+    dependencies {
+        compile project(':bvg')
+    }
+    eclipse {
+        project {
+            name = 'bvg-awt'
+        }
+    }
+}
+
+project(':bvg-android') {
+    dependencies {
+        compile project(':bvg')
+        compile 'topobyte:android-touch-util:0.0.1'
+        compile 'com.google.android:android:4.1.1.4'
+    }
+    eclipse {
+        project {
+            name = 'bvg-android'
+        }
+    }
+}
+
+project(':bvg-util') {
+    dependencies {
+        compile project(':bvg')
+        compile project(':bvg-awt')
+        compile 'topobyte:cli-helper:0.0.1'
+        compile 'commons-cli:commons-cli:1.2'
+        compile 'org.apache.xmlgraphics:batik-bridge:1.7'
+        compile 'org.apache.xmlgraphics:batik-transcoder:1.7'
+        compile 'org.apache.xmlgraphics:batik-gvt:1.7'
+    }
+    eclipse {
+        project {
+            name = 'bvg-util'
+        }
+    }
+}

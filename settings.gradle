@@ -1,0 +1,5 @@
+include 'core', 'util', 'awt', 'android'
+project(':core').name = 'bvg'
+project(':util').name = 'bvg-util'
+project(':awt').name = 'bvg-awt'
+project(':android').name = 'bvg-android'
