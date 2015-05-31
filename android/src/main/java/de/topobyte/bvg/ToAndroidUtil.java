@@ -68,9 +68,14 @@ public class ToAndroidUtil
 
 	public static Path createPath(CompactPath path)
 	{
+		Path p = new Path();
+		return createPath(path, p);
+	}
+
+	public static Path createPath(CompactPath path, Path p)
+	{
 		FillType fillType = getWindingRule(path.getFillRule());
 
-		Path p = new Path();
 		p.setFillType(fillType);
 
 		List<Type> types = path.getTypes();

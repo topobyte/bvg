@@ -48,11 +48,14 @@ public class BvgAndroidPainter
 		m.postScale(sx, sy);
 		m.postTranslate(x, y);
 
+		Path p = new Path();
+
 		for (int i = 0; i < elements.size(); i++) {
 			PaintElement element = elements.get(i);
 			CompactPath path = paths.get(i);
 
-			Path p = ToAndroidUtil.createPath(path);
+			p.reset();
+			ToAndroidUtil.createPath(path, p);
 			p.transform(m);
 
 			if (element instanceof Fill) {
