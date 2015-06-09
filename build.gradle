@@ -20,7 +20,8 @@ subprojects {
     }
 }
 
-configure([project(':bvg'), project(':bvg-awt'), project(':bvg-android')]) {
+configure([project(':bvg'), project(':bvg-awt'),
+    project(':bvg-android'), project(':bvg-util')]) {
     uploadArchives {
         repositories {
             mavenDeployer {
