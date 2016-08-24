@@ -21,7 +21,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import de.topobyte.android.touch.utils.compat.Action;
 import de.topobyte.bvg.BvgAndroidPainter;
 
 public class BvgToggleButton extends BvgButton
@@ -87,12 +86,13 @@ public class BvgToggleButton extends BvgButton
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		Action action = touchUtil.getActionMasked(event);
-		if (action == Action.ACTION_UP) {
+		int action = event.getActionMasked();
+		if (action == MotionEvent.ACTION_UP) {
 			toggle();
 			postInvalidate();
 			performClick();
 		}
 		return true;
 	}
+
 }

@@ -29,8 +29,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import de.topobyte.android.touch.utils.compat.Action;
-import de.topobyte.android.touch.utils.compat.VersionedTouchUtil;
 import de.topobyte.bvg.BvgAndroidPainter;
 import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
@@ -56,8 +54,6 @@ public class BvgButton extends View
 	protected float iconHeight = 0;
 	protected float ix = 0;
 	protected float iy = 0;
-
-	protected VersionedTouchUtil touchUtil;
 
 	protected float strokeWidth;
 
@@ -105,7 +101,6 @@ public class BvgButton extends View
 		float density = getResources().getDisplayMetrics().density;
 		strokeWidth = 1 * density;
 		initPaints(density);
-		touchUtil = VersionedTouchUtil.newInstance();
 	}
 
 	private void initPaints(float density)
@@ -197,8 +192,8 @@ public class BvgButton extends View
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		Action action = touchUtil.getActionMasked(event);
-		if (action == Action.ACTION_UP) {
+		int action = event.getActionMasked();
+		if (action == MotionEvent.ACTION_UP) {
 			performClick();
 		}
 		return true;
