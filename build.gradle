@@ -56,7 +56,6 @@ project(':bvg-awt') {
 project(':bvg-android') {
     dependencies {
         compile project(':bvg')
-        compile 'topobyte:android-touch-util:0.0.1'
         compile 'com.google.android:android:4.1.1.4'
     }
     eclipse {
