@@ -16,6 +16,9 @@ subprojects {
         maven {
             url maven_path_topobyte
         }
+        maven {
+            url 'http://mvn.topobyte.de'
+        }
         mavenCentral()
     }
 }
@@ -78,8 +81,7 @@ project(':bvg-util') {
     dependencies {
         compile project(':bvg')
         compile project(':bvg-awt')
-        compile 'topobyte:cli-helper:0.0.1'
-        compile 'commons-cli:commons-cli:1.2'
+        compile 'de.topobyte:commons-cli-helper:0.0.5'
         compile 'org.apache.xmlgraphics:batik-bridge:1.7'
         compile 'org.apache.xmlgraphics:batik-transcoder:1.7'
         compile 'org.apache.xmlgraphics:batik-gvt:1.7'
