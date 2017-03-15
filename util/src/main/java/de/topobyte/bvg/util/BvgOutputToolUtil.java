@@ -31,9 +31,9 @@ public class BvgOutputToolUtil
 
 	public static void addOptions(Options options)
 	{
-		OptionHelper.add(options, OPTION_COMPRESS, true, false,
+		OptionHelper.addL(options, OPTION_COMPRESS, true, false,
 				"[plain], deflate, lz4");
-		OptionHelper.add(options, OPTION_STRATEGY, true, false,
+		OptionHelper.addL(options, OPTION_STRATEGY, true, false,
 				"[double], int_delta");
 	}
 

@@ -69,7 +69,7 @@ public class SvgToPng implements ShapeSink
 	{
 
 		Options options = new Options();
-		OptionHelper.add(options, OPTION_GVT, false, false,
+		OptionHelper.addL(options, OPTION_GVT, false, false,
 				"use GVT painting instead of parser");
 
 		CommandLineParser parser = new GnuParser();
@@ -113,8 +113,8 @@ public class SvgToPng implements ShapeSink
 			BridgeContext ctx = new BridgeContext(userAgent, loader);
 			ctx.setDynamicState(BridgeContext.DYNAMIC);
 			GVTBuilder builder = new GVTBuilder();
-			RootGraphicsNode rootGN = (RootGraphicsNode) builder
-					.build(ctx, doc);
+			RootGraphicsNode rootGN = (RootGraphicsNode) builder.build(ctx,
+					doc);
 
 			Dimension2D docSize = ctx.getDocumentSize();
 			double width = docSize.getWidth();
