@@ -26,7 +26,7 @@ import java.io.OutputStream;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -61,7 +61,7 @@ public class SvgToBvg implements ShapeSink
 		Options options = new Options();
 		BvgOutputToolUtil.addOptions(options);
 
-		CommandLineParser parser = new GnuParser();
+		CommandLineParser parser = new DefaultParser();
 		CommandLine line = null;
 		try {
 			line = parser.parse(options, args);

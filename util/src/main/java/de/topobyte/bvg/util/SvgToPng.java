@@ -38,7 +38,7 @@ import org.apache.batik.gvt.RootGraphicsNode;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -72,7 +72,7 @@ public class SvgToPng implements ShapeSink
 		OptionHelper.addL(options, OPTION_GVT, false, false,
 				"use GVT painting instead of parser");
 
-		CommandLineParser parser = new GnuParser();
+		CommandLineParser parser = new DefaultParser();
 		CommandLine line = null;
 		try {
 			line = parser.parse(options, args);
