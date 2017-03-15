@@ -94,8 +94,8 @@ public class TestSvgToPng implements ShapeSink
 				c.getBlue(), c.getAlpha());
 		g2d.setColor(color);
 		BasicStroke stroke = new BasicStroke(lineStyle.getWidth(),
-				ToSwingUtil.getCap(lineStyle.getCap()), ToSwingUtil.getJoin(lineStyle
-						.getJoin()));
+				ToSwingUtil.getCap(lineStyle.getCap()),
+				ToSwingUtil.getJoin(lineStyle.getJoin()));
 		g2d.setStroke(stroke);
 		g2d.draw(shape);
 	}

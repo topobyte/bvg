@@ -113,8 +113,8 @@ public class SvgToPng implements ShapeSink
 			BridgeContext ctx = new BridgeContext(userAgent, loader);
 			ctx.setDynamicState(BridgeContext.DYNAMIC);
 			GVTBuilder builder = new GVTBuilder();
-			RootGraphicsNode rootGN = (RootGraphicsNode) builder.build(ctx,
-					doc);
+			RootGraphicsNode rootGN = (RootGraphicsNode) builder
+					.build(ctx, doc);
 
 			Dimension2D docSize = ctx.getDocumentSize();
 			double width = docSize.getWidth();
