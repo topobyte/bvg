@@ -15,40 +15,33 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg.util.test;
+package de.topobyte.bvg.util;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 
-import de.topobyte.bvg.EncodingMethod;
-import de.topobyte.bvg.EncodingStrategy;
-import de.topobyte.bvg.util.SvgParser;
-import de.topobyte.bvg.util.SvgToBvg;
+import de.topobyte.bvg.BvgIO;
+import de.topobyte.bvg.BvgImage;
+import de.topobyte.bvg.util.BvgToPng;
 
-public class TestSvgToBvg
+public class TestBvgToPng
 {
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/test/hotel.svg";
-		String output = "/home/z/git/map-icons/test/hotel.bvg";
+		String input = "/home/z/git/map-icons/test/hotel.bvg";
+		String output = "/home/z/git/map-icons/test/hotel.png";
 
 		File fileInput = new File(input);
-
 		File fileOutput = new File(output);
+
 		File parentFile = fileOutput.getParentFile();
 		parentFile.mkdirs();
 
-		FileOutputStream fos = new FileOutputStream(fileOutput);
-		BufferedOutputStream bos = new BufferedOutputStream(fos);
+		BvgImage bvg = BvgIO.read(fileInput);
 
-		SvgToBvg svgToBvg = new SvgToBvg(bos, EncodingMethod.PLAIN,
-				EncodingStrategy.STRATEGY_DOUBLE);
-		SvgParser svgParser = new SvgParser(svgToBvg);
-		svgParser.parseToSink(fileInput);
-
-		bos.close();
+		BvgToPng test = new BvgToPng();
+		test.createImage(bvg);
+		test.finish(fileOutput);
 	}
 
 }

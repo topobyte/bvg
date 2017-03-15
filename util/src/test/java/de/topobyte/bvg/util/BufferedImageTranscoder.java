@@ -15,33 +15,32 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with bvg. If not, see <http://www.gnu.org/licenses/>.
 
-package de.topobyte.bvg.util.test;
+package de.topobyte.bvg.util;
 
-import java.io.File;
+import java.awt.image.BufferedImage;
 
-import de.topobyte.bvg.BvgIO;
-import de.topobyte.bvg.BvgImage;
-import de.topobyte.bvg.util.BvgToPng;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.ImageTranscoder;
 
-public class TestBvgToPng
+public class BufferedImageTranscoder extends ImageTranscoder
 {
+	private BufferedImage img = null;
 
-	public static void main(String[] args) throws Exception
+	public BufferedImage getBufferedImage()
 	{
-		String input = "/home/z/git/map-icons/test/hotel.bvg";
-		String output = "/home/z/git/map-icons/test/hotel.png";
+		return img;
+	}
 
-		File fileInput = new File(input);
-		File fileOutput = new File(output);
+	@Override
+	public BufferedImage createImage(int width, int height)
+	{
+		return new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+	}
 
-		File parentFile = fileOutput.getParentFile();
-		parentFile.mkdirs();
-
-		BvgImage bvg = BvgIO.read(fileInput);
-
-		BvgToPng test = new BvgToPng();
-		test.createImage(bvg);
-		test.finish(fileOutput);
+	@Override
+	public void writeImage(BufferedImage img, TranscoderOutput output)
+	{
+		this.img = img;
 	}
 
 }
