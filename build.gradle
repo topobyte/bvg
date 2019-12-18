@@ -24,7 +24,8 @@ subprojects {
 }
 
 configure([project(':bvg'), project(':bvg-awt'),
-    project(':bvg-android'), project(':bvg-util')]) {
+    project(':bvg-android'), project(':bvg-util'),
+    project(':bvg-inkscape4j')]) {
     uploadArchives {
         repositories {
             mavenDeployer {
@@ -77,10 +78,24 @@ project(':bvg-android') {
     }
 }
 
+project(':bvg-inkscape4j') {
+    dependencies {
+        compile project(':bvg')
+        compile 'de.topobyte:inkscape4j-core:0.0.7'
+        compile 'de.topobyte:inkscape4j-writer:0.0.7'
+    }
+    eclipse {
+        project {
+            name = 'bvg-inkscape4j'
+        }
+    }
+}
+
 project(':bvg-util') {
     dependencies {
         compile project(':bvg')
         compile project(':bvg-awt')
+        compile project(':bvg-inkscape4j')
         compile 'de.topobyte:commons-cli-helper:0.0.5'
         compile 'org.apache.xmlgraphics:batik-bridge:1.7'
         compile 'org.apache.xmlgraphics:batik-transcoder:1.7'

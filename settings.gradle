@@ -1,5 +1,6 @@
-include 'core', 'util', 'awt', 'android'
+include 'core', 'util', 'awt', 'android', 'inkscape4j'
 project(':core').name = 'bvg'
 project(':util').name = 'bvg-util'
 project(':awt').name = 'bvg-awt'
 project(':android').name = 'bvg-android'
+project(':inkscape4j').name = 'bvg-inkscape4j'
