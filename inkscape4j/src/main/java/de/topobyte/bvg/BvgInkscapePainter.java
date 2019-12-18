@@ -46,11 +46,13 @@ public class BvgInkscapePainter
 
 			if (element instanceof Fill) {
 				Fill fill = (Fill) element;
+
 				IColor color = fill.getColor();
 				ColorCode c = new ColorCode(color.getRed(), color.getGreen(),
 						color.getBlue(), color.getAlpha());
+				int alpha = c.getAlpha();
 
-				p.setStyle(style(c, null, 1, 1, 1, 0));
+				p.setStyle(style(c, null, alpha / 255.0, 1, 1, 0));
 				layer.getObjects().add(p);
 			} else if (element instanceof Stroke) {
 				Stroke stroke = (Stroke) element;
@@ -58,6 +60,7 @@ public class BvgInkscapePainter
 				IColor color = stroke.getColor();
 				ColorCode c = new ColorCode(color.getRed(), color.getGreen(),
 						color.getBlue(), color.getAlpha());
+				int alpha = c.getAlpha();
 
 				LineStyle lineStyle = stroke.getLineStyle();
 				LineCap cap = ToInkscapeUtil.getCap(lineStyle.getCap());
@@ -65,7 +68,8 @@ public class BvgInkscapePainter
 				float[] dashArray = lineStyle.getDashArray();
 				float dashOffset = lineStyle.getDashOffset();
 
-				p.setStyle(style(null, c, 1, 1, 1, lineStyle.getWidth()));
+				p.setStyle(style(null, c, alpha / 255.0, 1, 1,
+						lineStyle.getWidth()));
 				p.getStyle().setLineCap(cap);
 				p.getStyle().setLineJoin(join);
 
