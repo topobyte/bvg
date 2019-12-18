@@ -35,6 +35,7 @@ public class BvgInkscapePainter
 	public static void draw(IdFactory idFactory, Layer layer, BvgImage bvg,
 			float x, float y, float sx, float sy)
 	{
+		// TODO: use x, y and sx, sy
 		List<PaintElement> elements = bvg.getPaintElements();
 		List<CompactPath> paths = bvg.getPaths();
 
