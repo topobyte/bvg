@@ -28,6 +28,7 @@ import de.topobyte.bvg.path.CompactPath;
 
 public class BvgAwtPainter
 {
+
 	public static void draw(Graphics2D g, BvgImage bvg, float x, float y,
 			float sx, float sy)
 	{
@@ -83,4 +84,5 @@ public class BvgAwtPainter
 
 		g.setTransform(backup);
 	}
+
 }

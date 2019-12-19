@@ -35,6 +35,7 @@ import de.topobyte.bvg.BvgImage;
 
 public class BvgButton extends View
 {
+
 	protected int colorFill = 0x99666666;
 	protected int colorStroke = 0xAA333333;
 

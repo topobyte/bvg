@@ -52,4 +52,5 @@ public class QuadTo implements PathElement
 	{
 		return cy;
 	}
+
 }

@@ -26,6 +26,7 @@ import org.apache.batik.transcoder.TranscoderInput;
 
 public class TestBITranscoder
 {
+
 	public static void main(String[] args) throws Exception
 	{
 		String input = "/home/z/git/map-icons/test/atm.svg";
@@ -39,4 +40,5 @@ public class TestBITranscoder
 		BufferedImage image = t.getBufferedImage();
 		ImageIO.write(image, "png", new File(output));
 	}
+
 }

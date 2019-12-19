@@ -23,9 +23,11 @@ import de.topobyte.bvg.path.FillRule;
 
 public interface BvgInputStream
 {
+
 	public void read() throws IOException;
 
 	public void readFill(FillRule fillRule) throws IOException;
 
 	public void readStroke() throws IOException;
+
 }

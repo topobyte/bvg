@@ -28,6 +28,7 @@ import de.topobyte.bvg.path.Type;
 
 public class ToSwingUtil
 {
+
 	public static int getCap(Cap cap)
 	{
 		switch (cap) {
@@ -119,4 +120,5 @@ public class ToSwingUtil
 
 		return result;
 	}
+
 }

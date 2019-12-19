@@ -69,4 +69,5 @@ public class BvgImage
 	{
 		return Collections.unmodifiableList(paths);
 	}
+
 }

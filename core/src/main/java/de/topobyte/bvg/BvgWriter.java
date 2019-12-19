@@ -119,4 +119,5 @@ public class BvgWriter
 		}
 		return new Path(compactPath.getFillRule(), types, elements);
 	}
+
 }

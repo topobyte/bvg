@@ -26,6 +26,7 @@ import java.io.OutputStream;
 
 public class BvgIO
 {
+
 	public static BvgImage read(File file) throws IOException
 	{
 		return read(file, null);

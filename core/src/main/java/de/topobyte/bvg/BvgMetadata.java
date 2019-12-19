@@ -19,6 +19,7 @@ package de.topobyte.bvg;
 
 public class BvgMetadata
 {
+
 	short version;
 	EncodingMethod encoding;
 	EncodingStrategy strategy;
@@ -37,4 +38,5 @@ public class BvgMetadata
 	{
 		return strategy;
 	}
+
 }

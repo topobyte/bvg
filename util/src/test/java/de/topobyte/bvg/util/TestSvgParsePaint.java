@@ -39,6 +39,7 @@ import org.w3c.dom.svg.SVGDocument;
 
 public class TestSvgParsePaint
 {
+
 	public static void main(String[] args)
 			throws MalformedURLException, IOException
 	{
@@ -72,4 +73,5 @@ public class TestSvgParsePaint
 
 		ImageIO.write(image, "png", new File(output));
 	}
+
 }

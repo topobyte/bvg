@@ -54,4 +54,5 @@ public class BvgInfo
 				"Encoding strategy: " + metadata.getEncodingStrategy());
 		System.out.println("Version: " + metadata.getVersion());
 	}
+
 }

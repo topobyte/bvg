@@ -152,4 +152,5 @@ public class BvgToPng
 	{
 		ImageIO.write(image, "png", fileOutput);
 	}
+
 }

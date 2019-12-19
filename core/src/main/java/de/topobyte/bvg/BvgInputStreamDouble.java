@@ -188,4 +188,5 @@ public class BvgInputStreamDouble extends AbstractBvgInputStream
 		}
 		return new CompactPath(fillRule, types, values);
 	}
+
 }

@@ -174,4 +174,5 @@ public class CompactWriter
 		writeVariableLengthUnsignedInteger(bytes.length);
 		os.write(bytes);
 	}
+
 }

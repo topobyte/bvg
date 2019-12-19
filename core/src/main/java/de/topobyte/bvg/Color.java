@@ -19,6 +19,7 @@ package de.topobyte.bvg;
 
 public class Color implements IColor
 {
+
 	private int argb;
 
 	public Color(int rgb, int alpha)

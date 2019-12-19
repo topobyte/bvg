@@ -24,6 +24,7 @@ import org.apache.batik.transcoder.image.ImageTranscoder;
 
 public class BufferedImageTranscoder extends ImageTranscoder
 {
+
 	private BufferedImage img = null;
 
 	public BufferedImage getBufferedImage()

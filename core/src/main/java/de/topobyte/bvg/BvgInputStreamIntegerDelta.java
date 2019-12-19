@@ -231,4 +231,5 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 		ly += dy;
 		return ly * height / IntegerDelta.UNIVERSE;
 	}
+
 }

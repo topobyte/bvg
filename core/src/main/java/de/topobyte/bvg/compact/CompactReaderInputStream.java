@@ -126,4 +126,5 @@ public class CompactReaderInputStream implements CompactReader
 			len -= n;
 		}
 	}
+
 }

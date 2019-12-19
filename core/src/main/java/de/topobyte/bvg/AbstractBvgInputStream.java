@@ -25,6 +25,7 @@ import de.topobyte.bvg.path.FillRule;
 
 public abstract class AbstractBvgInputStream implements BvgInputStream
 {
+
 	protected BvgImage image;
 	protected DataInputStream dis;
 
@@ -55,4 +56,5 @@ public abstract class AbstractBvgInputStream implements BvgInputStream
 
 		dis.close();
 	}
+
 }

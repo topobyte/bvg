@@ -26,6 +26,7 @@ import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 public class BvgOutputToolUtil
 {
+
 	private final static String OPTION_COMPRESS = "compress";
 	private final static String OPTION_STRATEGY = "strategy";
 
@@ -70,4 +71,5 @@ public class BvgOutputToolUtil
 
 		return new EncodingParameters(method, strategy);
 	}
+
 }

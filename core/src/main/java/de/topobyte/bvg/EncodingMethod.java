@@ -34,4 +34,5 @@ public enum EncodingMethod {
 	{
 		return value;
 	}
+
 }

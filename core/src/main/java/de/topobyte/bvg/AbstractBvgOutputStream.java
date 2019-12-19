@@ -99,4 +99,5 @@ public abstract class AbstractBvgOutputStream implements BvgOutputStream
 	{
 		dos.close();
 	}
+
 }

@@ -232,4 +232,5 @@ public class BvgOutputStreamIntegerDelta extends AbstractBvgOutputStream
 		ly = iy;
 		return dy;
 	}
+
 }

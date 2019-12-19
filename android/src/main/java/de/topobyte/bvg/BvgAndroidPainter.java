@@ -30,6 +30,7 @@ import de.topobyte.bvg.path.CompactPath;
 
 public class BvgAndroidPainter
 {
+
 	public static void draw(Canvas canvas, BvgImage bvg, float x, float y,
 			float sx, float sy, float sw)
 	{
@@ -98,4 +99,5 @@ public class BvgAndroidPainter
 
 		canvas.restore();
 	}
+
 }

@@ -34,4 +34,5 @@ public interface ShapeSink
 			throws IOException;
 
 	public void finish() throws IOException;
+
 }

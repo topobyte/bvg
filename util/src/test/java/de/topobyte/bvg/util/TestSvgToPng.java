@@ -35,6 +35,7 @@ import de.topobyte.bvg.util.SvgParser;
 
 public class TestSvgToPng implements ShapeSink
 {
+
 	private BufferedImage image;
 	private Graphics2D g2d;
 	private File fileOutput;

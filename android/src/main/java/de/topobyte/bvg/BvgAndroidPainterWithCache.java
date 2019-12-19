@@ -120,4 +120,5 @@ public class BvgAndroidPainterWithCache
 
 		canvas.restore();
 	}
+
 }

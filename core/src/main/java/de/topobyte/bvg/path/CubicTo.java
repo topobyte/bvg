@@ -67,4 +67,5 @@ public class CubicTo implements PathElement
 	{
 		return cy2;
 	}
+
 }

@@ -25,6 +25,7 @@ import de.topobyte.bvg.BvgAndroidPainter;
 
 public class BvgToggleButton extends BvgButton
 {
+
 	protected int colorFillToggled = 0x600000ff;
 
 	private boolean status = false;
