@@ -78,6 +78,7 @@ public class BvgInkscapePainter
 					p.getStyle().setDashArray(dashArray);
 					p.getStyle().setDashOffset(dashOffset);
 				}
+				layer.getObjects().add(p);
 			}
 		}
 	}
