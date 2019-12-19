@@ -39,8 +39,8 @@ import org.w3c.dom.svg.SVGDocument;
 
 public class TestSvgParsePaint
 {
-	public static void main(String[] args) throws MalformedURLException,
-			IOException
+	public static void main(String[] args)
+			throws MalformedURLException, IOException
 	{
 		String input = "/home/z/git/map-icons/simple/circle.svg";
 		String output = "/home/z/git/map-icons/test/circle.paint.png";

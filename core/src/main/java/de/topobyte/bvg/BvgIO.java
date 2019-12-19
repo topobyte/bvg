@@ -62,8 +62,7 @@ public class BvgIO
 	}
 
 	public static void write(BvgImage image, OutputStream output,
-			EncodingMethod method, EncodingStrategy strategy)
-			throws IOException
+			EncodingMethod method, EncodingStrategy strategy) throws IOException
 	{
 		BvgWriter writer = new BvgWriter(image, method, strategy);
 		writer.write(output);

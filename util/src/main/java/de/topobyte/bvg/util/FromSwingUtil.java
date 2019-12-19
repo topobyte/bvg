@@ -98,8 +98,8 @@ public class FromSwingUtil
 				break;
 			case PathIterator.SEG_QUADTO:
 				types.add(Type.QUAD);
-				elements.add(new QuadTo(points[0], points[1], points[2],
-						points[3]));
+				elements.add(
+						new QuadTo(points[0], points[1], points[2], points[3]));
 				break;
 			case PathIterator.SEG_CUBICTO:
 				types.add(Type.CUBIC);

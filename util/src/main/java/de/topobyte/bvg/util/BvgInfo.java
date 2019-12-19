@@ -29,8 +29,8 @@ public class BvgInfo
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length != 1) {
-			System.out.println("usage: " + BvgInfo.class.getSimpleName()
-					+ " [input]");
+			System.out.println(
+					"usage: " + BvgInfo.class.getSimpleName() + " [input]");
 			System.exit(1);
 		}
 
@@ -50,8 +50,8 @@ public class BvgInfo
 		System.out.println("Width: " + image.getWidth());
 		System.out.println("Height: " + image.getHeight());
 		System.out.println("Encoding method: " + metadata.getEncodingMethod());
-		System.out.println("Encoding strategy: "
-				+ metadata.getEncodingStrategy());
+		System.out.println(
+				"Encoding strategy: " + metadata.getEncodingStrategy());
 		System.out.println("Version: " + metadata.getVersion());
 	}
 }

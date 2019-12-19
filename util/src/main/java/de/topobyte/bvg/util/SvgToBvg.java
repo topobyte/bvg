@@ -74,8 +74,8 @@ public class SvgToBvg implements ShapeSink
 		try {
 			parameters = BvgOutputToolUtil.parse(line);
 		} catch (BvgOutputToolException e) {
-			System.out.println("Error while parsing command line: "
-					+ e.getMessage());
+			System.out.println(
+					"Error while parsing command line: " + e.getMessage());
 			printHelpAndExit(options);
 		}
 
@@ -130,8 +130,8 @@ public class SvgToBvg implements ShapeSink
 					height);
 			break;
 		case STRATEGY_INTEGER_DELTA:
-			bvgOutputStream = new BvgOutputStreamIntegerDelta(os, method,
-					width, height);
+			bvgOutputStream = new BvgOutputStreamIntegerDelta(os, method, width,
+					height);
 			break;
 		}
 	}

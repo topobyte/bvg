@@ -61,8 +61,7 @@ public class SvgParser
 		this.sink = sink;
 	}
 
-	public void parseToSink(File file) throws MalformedURLException,
-			IOException
+	public void parseToSink(File file) throws MalformedURLException, IOException
 	{
 		String xmlParser = XMLResourceDescriptor.getXMLParserClassName();
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(xmlParser);

@@ -139,8 +139,8 @@ public class BvgButton extends View
 		canvas.drawPath(path, fill);
 		canvas.drawPath(path, stroke);
 		if (icon != null) {
-			BvgAndroidPainter
-					.draw(canvas, icon, ix, iy, scaleW, scaleH, scaleW);
+			BvgAndroidPainter.draw(canvas, icon, ix, iy, scaleW, scaleH,
+					scaleW);
 		}
 	}
 

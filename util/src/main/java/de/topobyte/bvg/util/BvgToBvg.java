@@ -63,8 +63,8 @@ public class BvgToBvg
 		try {
 			parameters = BvgOutputToolUtil.parse(line);
 		} catch (BvgOutputToolException e) {
-			System.out.println("Error while parsing command line: "
-					+ e.getMessage());
+			System.out.println(
+					"Error while parsing command line: " + e.getMessage());
 			printHelpAndExit(options);
 		}
 
