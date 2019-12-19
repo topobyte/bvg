@@ -18,27 +18,31 @@
 package de.topobyte.bvg.util;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 
 import org.apache.batik.transcoder.TranscoderInput;
+
+import de.topobyte.system.utils.SystemPaths;
 
 public class TestBITranscoder
 {
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/test/atm.svg";
-		String output = "/home/z/git/map-icons/test/atm.bi.png";
+		Path dirTest = SystemPaths.CWD.getParent().resolve("test");
+
+		Path input = dirTest.resolve("shapes.svg");
+		Path output = dirTest.resolve("shapes-transcoded.png");
 
 		BufferedImageTranscoder t = new BufferedImageTranscoder();
-		String svgURI = new File(input).toURI().toString();
+		String svgURI = input.toFile().toURI().toString();
 		TranscoderInput tin = new TranscoderInput(svgURI);
 		t.transcode(tin, null);
 
 		BufferedImage image = t.getBufferedImage();
-		ImageIO.write(image, "png", new File(output));
+		ImageIO.write(image, "png", output.toFile());
 	}
 
 }

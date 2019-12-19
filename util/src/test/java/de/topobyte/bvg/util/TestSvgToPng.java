@@ -22,41 +22,38 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 
 import de.topobyte.bvg.Color;
 import de.topobyte.bvg.LineStyle;
 import de.topobyte.bvg.ToSwingUtil;
+import de.topobyte.system.utils.SystemPaths;
 
 public class TestSvgToPng implements ShapeSink
 {
 
 	private BufferedImage image;
 	private Graphics2D g2d;
-	private File fileOutput;
+	private Path fileOutput;
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/test/hotel.svg";
-		String output = "/home/z/git/map-icons/test/hotel.svg.png";
+		Path dirTest = SystemPaths.CWD.getParent().resolve("test");
 
-		File fileInput = new File(input);
-		File fileOutput = new File(output);
+		Path input = dirTest.resolve("shapes.svg");
+		Path output = dirTest.resolve("shapes-direct.png");
 
-		File parentFile = fileOutput.getParentFile();
-		parentFile.mkdirs();
-
-		TestSvgToPng test = new TestSvgToPng(fileOutput);
+		TestSvgToPng test = new TestSvgToPng(output);
 		SvgParser svgParser = new SvgParser(test);
-		svgParser.parseToSink(fileInput);
+		svgParser.parseToSink(input);
 	}
 
-	public TestSvgToPng(File fileOutput)
+	public TestSvgToPng(Path output)
 	{
-		this.fileOutput = fileOutput;
+		this.fileOutput = output;
 	}
 
 	@Override
@@ -74,7 +71,7 @@ public class TestSvgToPng implements ShapeSink
 	@Override
 	public void finish() throws IOException
 	{
-		ImageIO.write(image, "png", fileOutput);
+		ImageIO.write(image, "png", fileOutput.toFile());
 	}
 
 	@Override

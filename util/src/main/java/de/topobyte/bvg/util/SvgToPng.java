@@ -25,6 +25,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -91,7 +92,7 @@ public class SvgToPng implements ShapeSink
 		String input = extra[0];
 		String output = extra[1];
 
-		File fileInput = new File(input);
+		java.nio.file.Path fileInput = Paths.get(input);
 
 		File fileOutput = new File(output);
 		File parentFile = fileOutput.getParentFile();
@@ -107,7 +108,7 @@ public class SvgToPng implements ShapeSink
 			String xmlParser = XMLResourceDescriptor.getXMLParserClassName();
 			SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(xmlParser);
 			SVGDocument doc = df
-					.createSVGDocument(fileInput.toURI().toString());
+					.createSVGDocument(fileInput.toFile().toURI().toString());
 			UserAgent userAgent = new UserAgentAdapter();
 			DocumentLoader loader = new DocumentLoader(userAgent);
 			BridgeContext ctx = new BridgeContext(userAgent, loader);

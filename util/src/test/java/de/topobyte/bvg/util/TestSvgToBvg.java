@@ -18,33 +18,31 @@
 package de.topobyte.bvg.util;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import de.topobyte.bvg.EncodingMethod;
 import de.topobyte.bvg.EncodingStrategy;
+import de.topobyte.system.utils.SystemPaths;
 
 public class TestSvgToBvg
 {
 
 	public static void main(String[] args) throws Exception
 	{
-		String input = "/home/z/git/map-icons/test/hotel.svg";
-		String output = "/home/z/git/map-icons/test/hotel.bvg";
+		Path dirTest = SystemPaths.CWD.getParent().resolve("test");
 
-		File fileInput = new File(input);
+		Path input = dirTest.resolve("shapes.svg");
+		Path output = dirTest.resolve("shapes.bvg");
 
-		File fileOutput = new File(output);
-		File parentFile = fileOutput.getParentFile();
-		parentFile.mkdirs();
-
-		FileOutputStream fos = new FileOutputStream(fileOutput);
+		OutputStream fos = Files.newOutputStream(output);
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
 
 		SvgToBvg svgToBvg = new SvgToBvg(bos, EncodingMethod.PLAIN,
 				EncodingStrategy.STRATEGY_DOUBLE);
 		SvgParser svgParser = new SvgParser(svgToBvg);
-		svgParser.parseToSink(fileInput);
+		svgParser.parseToSink(input);
 
 		bos.close();
 	}

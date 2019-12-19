@@ -25,9 +25,9 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
@@ -61,11 +61,12 @@ public class SvgParser
 		this.sink = sink;
 	}
 
-	public void parseToSink(File file) throws MalformedURLException, IOException
+	public void parseToSink(Path path) throws MalformedURLException, IOException
 	{
 		String xmlParser = XMLResourceDescriptor.getXMLParserClassName();
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(xmlParser);
-		SVGDocument doc = df.createSVGDocument(file.toURI().toString());
+		SVGDocument doc = df
+				.createSVGDocument(path.toFile().toURI().toString());
 		UserAgent userAgent = new UserAgentAdapter();
 		DocumentLoader loader = new DocumentLoader(userAgent);
 		BridgeContext ctx = new BridgeContext(userAgent, loader);

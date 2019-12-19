@@ -17,30 +17,28 @@
 
 package de.topobyte.bvg.util;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 
 import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
+import de.topobyte.system.utils.SystemPaths;
 
 public class TestBvgToPng
 {
 
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) throws IOException
 	{
-		String input = "/home/z/git/map-icons/test/hotel.bvg";
-		String output = "/home/z/git/map-icons/test/hotel.png";
+		Path dirTest = SystemPaths.CWD.getParent().resolve("test");
 
-		File fileInput = new File(input);
-		File fileOutput = new File(output);
+		Path input = dirTest.resolve("shapes.bvg");
+		Path output = dirTest.resolve("shapes.png");
 
-		File parentFile = fileOutput.getParentFile();
-		parentFile.mkdirs();
-
-		BvgImage bvg = BvgIO.read(fileInput);
+		BvgImage bvg = BvgIO.read(input.toFile());
 
 		BvgToPng test = new BvgToPng();
 		test.createImage(bvg);
-		test.finish(fileOutput);
+		test.finish(output.toFile());
 	}
 
 }

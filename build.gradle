@@ -101,6 +101,8 @@ project(':bvg-util') {
         compile 'org.apache.xmlgraphics:batik-transcoder:1.12'
         compile 'org.apache.xmlgraphics:batik-gvt:1.12'
         compile 'org.apache.xmlgraphics:batik-anim:1.12'
+
+        testCompile 'de.topobyte:system-utils:0.0.1'
     }
     eclipse {
         project {

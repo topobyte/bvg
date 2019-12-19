@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Paths;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -87,7 +88,7 @@ public class SvgToBvg implements ShapeSink
 		String input = extra[0];
 		String output = extra[1];
 
-		File fileInput = new File(input);
+		java.nio.file.Path fileInput = Paths.get(input);
 
 		File fileOutput = new File(output);
 		File parentFile = fileOutput.getParentFile();

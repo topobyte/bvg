@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 
@@ -37,16 +38,20 @@ import org.apache.batik.gvt.RootGraphicsNode;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.svg.SVGDocument;
 
+import de.topobyte.system.utils.SystemPaths;
+
 public class TestSvgParsePaint
 {
 
 	public static void main(String[] args)
 			throws MalformedURLException, IOException
 	{
-		String input = "/home/z/git/map-icons/simple/circle.svg";
-		String output = "/home/z/git/map-icons/test/circle.paint.png";
+		Path dirTest = SystemPaths.CWD.getParent().resolve("test");
 
-		File file = new File(input);
+		Path input = dirTest.resolve("shapes.svg");
+		Path output = dirTest.resolve("shapes-painted.png");
+
+		File file = input.toFile();
 		String xmlParser = XMLResourceDescriptor.getXMLParserClassName();
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(xmlParser);
 		SVGDocument doc = df.createSVGDocument(file.toURI().toString());
@@ -71,7 +76,7 @@ public class TestSvgParsePaint
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		rootGN.paint(g);
 
-		ImageIO.write(image, "png", new File(output));
+		ImageIO.write(image, "png", output.toFile());
 	}
 
 }
