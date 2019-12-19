@@ -97,9 +97,10 @@ project(':bvg-util') {
         compile project(':bvg-awt')
         compile project(':bvg-inkscape4j')
         compile 'de.topobyte:commons-cli-helper:0.0.5'
-        compile 'org.apache.xmlgraphics:batik-bridge:1.7'
-        compile 'org.apache.xmlgraphics:batik-transcoder:1.7'
-        compile 'org.apache.xmlgraphics:batik-gvt:1.7'
+        compile 'org.apache.xmlgraphics:batik-bridge:1.12'
+        compile 'org.apache.xmlgraphics:batik-transcoder:1.12'
+        compile 'org.apache.xmlgraphics:batik-gvt:1.12'
+        compile 'org.apache.xmlgraphics:batik-anim:1.12'
     }
     eclipse {
         project {
