@@ -50,6 +50,7 @@ import org.w3c.dom.svg.SVGDocument;
 
 import de.topobyte.bvg.Cap;
 import de.topobyte.bvg.Color;
+import de.topobyte.bvg.DashArrays;
 import de.topobyte.bvg.Join;
 import de.topobyte.bvg.LineStyle;
 import de.topobyte.melon.strings.Strings;
@@ -173,7 +174,7 @@ public class SvgParser
 							if (dashArray == null) {
 								lineStyle = new LineStyle(width, cap, join);
 							} else {
-								scale(dashArray, scale);
+								DashArrays.scale(dashArray, scale);
 								dashPhase *= scale;
 								lineStyle = new LineStyle(width, cap, join,
 										dashArray, dashPhase);
@@ -189,13 +190,6 @@ public class SvgParser
 					}
 				}
 			}
-		}
-	}
-
-	private void scale(float[] dashArray, double scale)
-	{
-		for (int i = 0; i < dashArray.length; i++) {
-			dashArray[i] *= scale;
 		}
 	}
 

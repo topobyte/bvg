@@ -35,7 +35,6 @@ public class BvgInkscapePainter
 	public static void draw(IdFactory idFactory, Layer layer, BvgImage bvg,
 			float x, float y, float sx, float sy)
 	{
-		// TODO: use x, y and sx, sy
 		List<PaintElement> elements = bvg.getPaintElements();
 		List<CompactPath> paths = bvg.getPaths();
 
@@ -54,6 +53,8 @@ public class BvgInkscapePainter
 				int alpha = c.getAlpha();
 
 				p.setStyle(style(c, null, alpha / 255.0, 1, 1, 0));
+
+				transform(p, x, y, sx, sy);
 				layer.getObjects().add(p);
 			} else if (element instanceof Stroke) {
 				Stroke stroke = (Stroke) element;
@@ -78,9 +79,17 @@ public class BvgInkscapePainter
 					p.getStyle().setDashArray(dashArray);
 					p.getStyle().setDashOffset(dashOffset);
 				}
+
+				transform(p, x, y, sx, sy);
 				layer.getObjects().add(p);
 			}
 		}
+	}
+
+	private static void transform(Path p, float x, float y, float sx, float sy)
+	{
+		PathTransformer transformer = new PathTransformer(x, y, sx, sy);
+		transformer.transform(p);
 	}
 
 }
