@@ -84,8 +84,7 @@ public class BvgToSvg
 
 		IdFactory idFactory = new SimpleIdFactory();
 
-		BvgInkscapePainter.draw(idFactory, layer, bvg, 0, 0, (float) width,
-				(float) height);
+		BvgInkscapePainter.draw(idFactory, layer, bvg, 0, 0, 1, 1);
 	}
 
 	public void finish(File fileOutput) throws IOException
