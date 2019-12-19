@@ -31,6 +31,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
 import de.topobyte.bvg.Fill;
@@ -43,6 +46,8 @@ import de.topobyte.bvg.path.CompactPath;
 
 public class BvgToPng
 {
+
+	final static Logger logger = LoggerFactory.getLogger(BvgToPng.class);
 
 	public static void main(String[] args) throws Exception
 	{
@@ -96,15 +101,14 @@ public class BvgToPng
 			PaintElement element = elements.get(i);
 			CompactPath path = paths.get(i);
 
-			System.out.println("PATH");
+			logger.debug("PATH");
 			GeneralPath p = ToSwingUtil.createPath(path);
 
 			if (element instanceof Fill) {
-				System.out.println("FILL");
+				logger.debug("FILL");
 				Fill fill = (Fill) element;
 				IColor color = fill.getColor();
-				System.out
-						.println(String.format("0x%08X", color.getColorCode()));
+				logger.debug(String.format("0x%08X", color.getColorCode()));
 				Color c = new Color(color.getRed(), color.getGreen(),
 						color.getBlue(), color.getAlpha());
 
@@ -112,12 +116,11 @@ public class BvgToPng
 
 				g.fill(p);
 			} else if (element instanceof Stroke) {
-				System.out.println("STROKE");
+				logger.debug("STROKE");
 				Stroke stroke = (Stroke) element;
 
 				IColor color = stroke.getColor();
-				System.out
-						.println(String.format("0x%08X", color.getColorCode()));
+				logger.debug(String.format("0x%08X", color.getColorCode()));
 				Color c = new Color(color.getRed(), color.getGreen(),
 						color.getBlue(), color.getAlpha());
 				g.setColor(c);
@@ -138,10 +141,10 @@ public class BvgToPng
 				}
 				g.setStroke(bs);
 
-				System.out.println("Linewidth: " + lineStyle.getWidth());
-				System.out.println("Join: " + lineStyle.getJoin());
-				System.out.println("Cap: " + lineStyle.getCap());
-				System.out.println("Miter limit: " + lineStyle.getMiterLimit());
+				logger.debug("Linewidth: " + lineStyle.getWidth());
+				logger.debug("Join: " + lineStyle.getJoin());
+				logger.debug("Cap: " + lineStyle.getCap());
+				logger.debug("Miter limit: " + lineStyle.getMiterLimit());
 
 				g.draw(p);
 			}
