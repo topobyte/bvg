@@ -95,87 +95,86 @@ public class SvgParser
 			} else {
 				// print("LEAF: " + child.toString(), level);
 				if (child instanceof ShapeNode) {
-					int alpha = 255;
-					ShapeNode sn = (ShapeNode) child;
-					Composite composite = sn.getComposite();
-					if (composite != null) {
-						// print("COMPOSITE: " + composite, level + 1);
-						if (composite instanceof AlphaComposite) {
-							AlphaComposite ac = (AlphaComposite) composite;
-							float alphaF = ac.getAlpha();
-							alpha = Math.round(alphaF * 255);
-							// print("alpha: " + alpha, level + 1);
+					process((ShapeNode) child, level);
+				}
+			}
+		}
+	}
+
+	private void process(ShapeNode sn, int level) throws IOException
+	{
+		AffineTransform transform = sn.getGlobalTransform();
+		Shape shape = sn.getShape();
+		Shape tshape = transform.createTransformedShape(shape);
+
+		int alpha = 255;
+		Composite composite = sn.getComposite();
+		if (composite != null) {
+			// print("COMPOSITE: " + composite, level + 1);
+			if (composite instanceof AlphaComposite) {
+				AlphaComposite ac = (AlphaComposite) composite;
+				float alphaF = ac.getAlpha();
+				alpha = Math.round(alphaF * 255);
+				// print("alpha: " + alpha, level + 1);
+			}
+		}
+
+		ShapePainter shapePainter = sn.getShapePainter();
+		if (shapePainter instanceof CompositeShapePainter) {
+			CompositeShapePainter csp = (CompositeShapePainter) shapePainter;
+			for (int i = 0; i < csp.getShapePainterCount(); i++) {
+				ShapePainter sp = csp.getShapePainter(i);
+				if (sp instanceof FillShapePainter) {
+					// print("FILL", level + 1);
+					FillShapePainter fsp = (FillShapePainter) sp;
+					Paint paint = fsp.getPaint();
+					if (paint != null) {
+						// print("PAINT: " + paint, level + 1);
+						if (paint instanceof java.awt.Color) {
+							java.awt.Color c = (java.awt.Color) paint;
+							// print("Color: " + c, level + 1);
+							Color color = new Color(c.getRGB(), alpha);
+							sink.fill(tshape, color);
 						}
 					}
+				} else if (sp instanceof StrokeShapePainter) {
+					// print("STROKE", level + 1);
+					StrokeShapePainter ssp = (StrokeShapePainter) sp;
 
-					AffineTransform transform = sn.getGlobalTransform();
-					Shape shape = sn.getShape();
-					Shape tshape = transform.createTransformedShape(shape);
+					Paint paint = ssp.getPaint();
+					// print("PAINT: " + paint, level + 1);
+					Stroke stroke = ssp.getStroke();
+					// print("STROKE: " + stroke, level + 1);
+					if (stroke != null && paint != null) {
+						if (paint instanceof java.awt.Color
+								&& stroke instanceof BasicStroke) {
+							java.awt.Color c = (java.awt.Color) paint;
+							Color color = new Color(c.getRGB(), alpha);
 
-					ShapePainter shapePainter = sn.getShapePainter();
-					if (shapePainter instanceof CompositeShapePainter) {
-						CompositeShapePainter csp = (CompositeShapePainter) shapePainter;
-						for (int i = 0; i < csp.getShapePainterCount(); i++) {
-							ShapePainter sp = csp.getShapePainter(i);
-							if (sp instanceof FillShapePainter) {
-								// print("FILL", level + 1);
-								FillShapePainter fsp = (FillShapePainter) sp;
-								Paint paint = fsp.getPaint();
-								if (paint != null) {
-									// print("PAINT: " + paint, level + 1);
-									if (paint instanceof java.awt.Color) {
-										java.awt.Color c = (java.awt.Color) paint;
-										// print("Color: " + c, level + 1);
-										Color color = new Color(c.getRGB(),
-												alpha);
-										sink.fill(tshape, color);
-									}
-								}
-							} else if (sp instanceof StrokeShapePainter) {
-								// print("STROKE", level + 1);
-								StrokeShapePainter ssp = (StrokeShapePainter) sp;
-								Paint paint = ssp.getPaint();
-								// print("PAINT: " + paint, level + 1);
-								Stroke stroke = ssp.getStroke();
-								// print("STROKE: " + stroke, level + 1);
-								if (stroke != null && paint != null) {
-									if (paint instanceof java.awt.Color
-											&& stroke instanceof BasicStroke) {
-										java.awt.Color c = (java.awt.Color) paint;
-										Color color = new Color(c.getRGB(),
-												alpha);
+							BasicStroke bs = (BasicStroke) stroke;
+							float width = bs.getLineWidth();
+							int endCap = bs.getEndCap();
+							int lineJoin = bs.getLineJoin();
+							// print("Line Width: " + width, level +
+							// 1);
+							float[] dashArray = bs.getDashArray();
+							float dashPhase = bs.getDashPhase();
 
-										BasicStroke bs = (BasicStroke) stroke;
-										float width = bs.getLineWidth();
-										int endCap = bs.getEndCap();
-										int lineJoin = bs.getLineJoin();
-										// print("Line Width: " + width, level +
-										// 1);
-										float[] dashArray = bs.getDashArray();
-										float dashPhase = bs.getDashPhase();
-
-										Cap cap = FromSwingUtil.getCap(endCap);
-										Join join = FromSwingUtil
-												.getJoin(lineJoin);
-										LineStyle lineStyle;
-										if (dashArray == null) {
-											lineStyle = new LineStyle(width,
-													cap, join);
-										} else {
-											lineStyle = new LineStyle(width,
-													cap, join, dashArray,
-													dashPhase);
-										}
-										if (lineJoin == BasicStroke.JOIN_MITER) {
-											float miterLimit = bs
-													.getMiterLimit();
-											lineStyle.setMiterLimit(miterLimit);
-										}
-
-										sink.stroke(tshape, color, lineStyle);
-									}
-								}
+							Cap cap = FromSwingUtil.getCap(endCap);
+							Join join = FromSwingUtil.getJoin(lineJoin);
+							LineStyle lineStyle;
+							if (dashArray == null) {
+								lineStyle = new LineStyle(width, cap, join);
+							} else {
+								lineStyle = new LineStyle(width, cap, join,
+										dashArray, dashPhase);
 							}
+							if (lineJoin == BasicStroke.JOIN_MITER) {
+								float miterLimit = bs.getMiterLimit();
+								lineStyle.setMiterLimit(miterLimit);
+							}
+
+							sink.stroke(tshape, color, lineStyle);
 						}
 					}
 				}

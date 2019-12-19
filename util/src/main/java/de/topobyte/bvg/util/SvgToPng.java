@@ -68,7 +68,6 @@ public class SvgToPng implements ShapeSink
 
 	public static void main(String[] args) throws Exception
 	{
-
 		Options options = new Options();
 		OptionHelper.addL(options, OPTION_GVT, false, false,
 				"use GVT painting instead of parser");
