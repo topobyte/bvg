@@ -113,6 +113,8 @@ public class SvgParser
 		Shape shape = sn.getShape();
 		Shape tshape = transform.createTransformedShape(shape);
 
+		double scale = (transform.getScaleX() + transform.getScaleY()) / 2;
+
 		int alpha = 255;
 		Composite composite = sn.getComposite();
 		if (composite != null) {
@@ -158,7 +160,7 @@ public class SvgParser
 							Color color = new Color(c.getRGB(), alpha);
 
 							BasicStroke bs = (BasicStroke) stroke;
-							float width = bs.getLineWidth();
+							float width = (float) (bs.getLineWidth() * scale);
 							int endCap = bs.getEndCap();
 							int lineJoin = bs.getLineJoin();
 							print("Line Width: " + width, level + 1);
@@ -171,12 +173,15 @@ public class SvgParser
 							if (dashArray == null) {
 								lineStyle = new LineStyle(width, cap, join);
 							} else {
+								scale(dashArray, scale);
+								dashPhase *= scale;
 								lineStyle = new LineStyle(width, cap, join,
 										dashArray, dashPhase);
 							}
 							if (lineJoin == BasicStroke.JOIN_MITER) {
 								float miterLimit = bs.getMiterLimit();
-								lineStyle.setMiterLimit(miterLimit);
+								lineStyle.setMiterLimit(
+										(float) (miterLimit * scale));
 							}
 
 							sink.stroke(tshape, color, lineStyle);
@@ -184,6 +189,13 @@ public class SvgParser
 					}
 				}
 			}
+		}
+	}
+
+	private void scale(float[] dashArray, double scale)
+	{
+		for (int i = 0; i < dashArray.length; i++) {
+			dashArray[i] *= scale;
 		}
 	}
 
