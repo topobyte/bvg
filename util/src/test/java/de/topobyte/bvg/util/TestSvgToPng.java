@@ -30,8 +30,6 @@ import javax.imageio.ImageIO;
 import de.topobyte.bvg.Color;
 import de.topobyte.bvg.LineStyle;
 import de.topobyte.bvg.ToSwingUtil;
-import de.topobyte.bvg.util.ShapeSink;
-import de.topobyte.bvg.util.SvgParser;
 
 public class TestSvgToPng implements ShapeSink
 {

@@ -23,8 +23,6 @@ import java.io.FileOutputStream;
 
 import de.topobyte.bvg.EncodingMethod;
 import de.topobyte.bvg.EncodingStrategy;
-import de.topobyte.bvg.util.SvgParser;
-import de.topobyte.bvg.util.SvgToBvg;
 
 public class TestSvgToBvg
 {

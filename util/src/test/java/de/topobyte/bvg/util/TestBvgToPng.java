@@ -21,7 +21,6 @@ import java.io.File;
 
 import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
-import de.topobyte.bvg.util.BvgToPng;
 
 public class TestBvgToPng
 {

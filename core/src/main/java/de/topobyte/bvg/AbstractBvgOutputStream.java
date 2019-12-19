@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.DeflaterOutputStream;
 
+import de.topobyte.bvg.path.Path;
 import net.jpountz.lz4.LZ4BlockOutputStream;
 import net.jpountz.lz4.LZ4Compressor;
 import net.jpountz.lz4.LZ4Factory;
-import de.topobyte.bvg.path.Path;
 
 public abstract class AbstractBvgOutputStream implements BvgOutputStream
 {
