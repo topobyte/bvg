@@ -96,7 +96,7 @@ project(':bvg-util') {
         compile project(':bvg')
         compile project(':bvg-awt')
         compile project(':bvg-inkscape4j')
-        compile 'de.topobyte:commons-cli-helper:0.0.5'
+        compile 'de.topobyte:commons-cli-helper:0.1.0'
         compile 'org.apache.xmlgraphics:batik-bridge:1.12'
         compile 'org.apache.xmlgraphics:batik-transcoder:1.12'
         compile 'org.apache.xmlgraphics:batik-gvt:1.12'
