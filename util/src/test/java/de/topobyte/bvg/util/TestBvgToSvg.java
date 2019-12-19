@@ -1,4 +1,4 @@
-// Copyright 2014 Sebastian Kuerten
+// Copyright 2019 Sebastian Kuerten
 //
 // This file is part of bvg.
 //
@@ -24,7 +24,7 @@ import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
 import de.topobyte.system.utils.SystemPaths;
 
-public class TestBvgToPng
+public class TestBvgToSvg
 {
 
 	public static void main(String[] args) throws IOException
@@ -32,11 +32,11 @@ public class TestBvgToPng
 		Path dirTest = SystemPaths.CWD.getParent().resolve("test");
 
 		Path input = dirTest.resolve("shapes.bvg");
-		Path output = dirTest.resolve("shapes-frombvg.png");
+		Path output = dirTest.resolve("shapes-frombvg.svg");
 
 		BvgImage bvg = BvgIO.read(input.toFile());
 
-		BvgToPng test = new BvgToPng();
+		BvgToSvg test = new BvgToSvg();
 		test.createImage(bvg);
 		test.finish(output.toFile());
 	}
