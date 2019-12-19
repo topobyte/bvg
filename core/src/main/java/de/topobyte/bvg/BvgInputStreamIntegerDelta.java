@@ -137,7 +137,7 @@ public class BvgInputStreamIntegerDelta extends AbstractBvgInputStream
 		int n = reader.readVariableLengthUnsignedInteger();
 		int v = reader.readVariableLengthUnsignedInteger();
 
-		List<Type> types = new ArrayList<Type>(n);
+		List<Type> types = new ArrayList<>(n);
 
 		for (int i = 0; i < n; i++) {
 			byte t = dis.readByte();

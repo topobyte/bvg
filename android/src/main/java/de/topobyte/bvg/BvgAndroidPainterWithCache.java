@@ -34,7 +34,7 @@ public class BvgAndroidPainterWithCache
 {
 
 	private final List<PaintElement> elements;
-	private final List<ColorPath> ps = new ArrayList<ColorPath>();
+	private final List<ColorPath> ps = new ArrayList<>();
 
 	public BvgAndroidPainterWithCache(BvgImage bvg)
 	{

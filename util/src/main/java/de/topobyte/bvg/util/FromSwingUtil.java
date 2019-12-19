@@ -78,8 +78,8 @@ public class FromSwingUtil
 
 		double points[] = new double[6];
 
-		List<Type> types = new ArrayList<Type>();
-		List<PathElement> elements = new ArrayList<PathElement>();
+		List<Type> types = new ArrayList<>();
+		List<PathElement> elements = new ArrayList<>();
 
 		while (!it.isDone()) {
 			int type = it.currentSegment(points);

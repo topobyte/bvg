@@ -90,7 +90,7 @@ public class BvgWriter
 
 	private Path convertPath(CompactPath compactPath)
 	{
-		List<PathElement> elements = new ArrayList<PathElement>();
+		List<PathElement> elements = new ArrayList<>();
 		List<Type> types = compactPath.getTypes();
 		double[] values = compactPath.getValues();
 		int k = 0;

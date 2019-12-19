@@ -29,8 +29,8 @@ public class BvgImage
 	private double width;
 	private double height;
 
-	private List<PaintElement> elements = new ArrayList<PaintElement>();
-	private List<CompactPath> paths = new ArrayList<CompactPath>();
+	private List<PaintElement> elements = new ArrayList<>();
+	private List<CompactPath> paths = new ArrayList<>();
 
 	public BvgImage(double width, double height)
 	{

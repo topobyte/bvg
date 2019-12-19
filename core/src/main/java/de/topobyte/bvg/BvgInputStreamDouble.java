@@ -128,7 +128,7 @@ public class BvgInputStreamDouble extends AbstractBvgInputStream
 		int n = dis.readInt();
 		int v = dis.readInt();
 
-		List<Type> types = new ArrayList<Type>(n);
+		List<Type> types = new ArrayList<>(n);
 		double[] values = new double[v];
 
 		int k = 0;
