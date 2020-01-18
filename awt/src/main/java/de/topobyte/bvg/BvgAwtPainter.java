@@ -69,7 +69,7 @@ public class BvgAwtPainter
 				float dashOffset = lineStyle.getDashOffset();
 				float miterLimit = lineStyle.getMiterLimit();
 				if (miterLimit < 1) {
-					miterLimit = 10;
+					miterLimit = 1;
 				}
 
 				BasicStroke bs;
