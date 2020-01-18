@@ -1,17 +1,13 @@
 #!/bin/bash
 
-if [ "$#" -lt "1" ]; then
-	echo "usage: bvg-utils <class name>"
+DIR=$(dirname $0)
+LIBS="$DIR/../cli/build/lib-run"
+
+if [ ! -d "$LIBS" ]; then
+	echo "Please run './gradlew createRuntime'"
 	exit 1
 fi
 
-# find java claspath
-DIR=`dirname $0`
-#echo "we are operating from: $DIR"
-CLASSPATH=$DIR/../util/build/lib-run/*
-CLASSPATH+=:$DIR/../
-CLASSPATH+=:.
-#echo "CLASSPATH=$CLASSPATH"
+CLASSPATH="$LIBS/*"
 
-CMD="java -cp $CLASSPATH"
-exec $CMD "$@"
+exec java -cp "$CLASSPATH" "$@"

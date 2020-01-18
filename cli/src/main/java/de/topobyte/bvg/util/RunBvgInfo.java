@@ -1,4 +1,4 @@
-// Copyright 2014 Sebastian Kuerten
+// Copyright 2020 Sebastian Kuerten
 //
 // This file is part of bvg.
 //
@@ -17,20 +17,32 @@
 
 package de.topobyte.bvg.util;
 
+import java.io.File;
+
+import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
 import de.topobyte.bvg.BvgMetadata;
 
-public class BvgInfo
+public class RunBvgInfo
 {
 
-	public void printInfo(BvgImage image, BvgMetadata metadata)
+	public static void main(String[] args) throws Exception
 	{
-		System.out.println("Width: " + image.getWidth());
-		System.out.println("Height: " + image.getHeight());
-		System.out.println("Encoding method: " + metadata.getEncodingMethod());
-		System.out.println(
-				"Encoding strategy: " + metadata.getEncodingStrategy());
-		System.out.println("Version: " + metadata.getVersion());
+		if (args.length != 1) {
+			System.out.println(
+					"usage: " + RunBvgInfo.class.getSimpleName() + " [input]");
+			System.exit(1);
+		}
+
+		String input = args[0];
+
+		File fileInput = new File(input);
+
+		BvgMetadata metadata = new BvgMetadata();
+		BvgImage image = BvgIO.read(fileInput, metadata);
+
+		BvgInfo test = new BvgInfo();
+		test.printInfo(image, metadata);
 	}
 
 }

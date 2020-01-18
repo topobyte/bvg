@@ -18,19 +18,8 @@
 package de.topobyte.bvg.util;
 
 import java.awt.Shape;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Paths;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 
 import de.topobyte.bvg.BvgOutputStream;
 import de.topobyte.bvg.BvgOutputStreamDouble;
@@ -45,67 +34,6 @@ import de.topobyte.bvg.path.Path;
 
 public class SvgToBvg implements ShapeSink
 {
-
-	private final static String HELP_MESSAGE = SvgToBvg.class.getSimpleName()
-			+ " [options] [input] [output]";
-
-	private static void printHelpAndExit(Options options)
-	{
-		new HelpFormatter().printHelp(HELP_MESSAGE, options);
-		System.out.println("usage: " + SvgToBvg.class.getSimpleName()
-				+ " [input] [output]");
-		System.exit(1);
-	}
-
-	public static void main(String[] args) throws IOException
-	{
-		Options options = new Options();
-		BvgOutputToolUtil.addOptions(options);
-
-		CommandLineParser parser = new DefaultParser();
-		CommandLine line = null;
-		try {
-			line = parser.parse(options, args);
-		} catch (ParseException e) {
-			System.out.println(e.getMessage());
-			printHelpAndExit(options);
-		}
-
-		EncodingParameters parameters = null;
-		try {
-			parameters = BvgOutputToolUtil.parse(line);
-		} catch (BvgOutputToolException e) {
-			System.out.println(
-					"Error while parsing command line: " + e.getMessage());
-			printHelpAndExit(options);
-		}
-
-		String[] extra = line.getArgs();
-		if (extra.length != 2) {
-			printHelpAndExit(options);
-		}
-
-		String input = extra[0];
-		String output = extra[1];
-
-		java.nio.file.Path fileInput = Paths.get(input);
-
-		File fileOutput = new File(output);
-		File parentFile = fileOutput.getParentFile();
-		if (parentFile != null) {
-			parentFile.mkdirs();
-		}
-
-		FileOutputStream fos = new FileOutputStream(fileOutput);
-		BufferedOutputStream bos = new BufferedOutputStream(fos);
-
-		SvgToBvg svgToBvg = new SvgToBvg(bos, parameters.getMethod(),
-				parameters.getStrategy());
-		SvgParser svgParser = new SvgParser(svgToBvg);
-		svgParser.parseToSink(fileInput);
-
-		bos.close();
-	}
 
 	private BvgOutputStream bvgOutputStream;
 	private final OutputStream os;

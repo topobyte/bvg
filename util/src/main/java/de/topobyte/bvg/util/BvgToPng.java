@@ -20,55 +20,16 @@ package de.topobyte.bvg.util;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.topobyte.bvg.BvgAwtPainter;
-import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
 
 public class BvgToPng
 {
-
-	final static Logger logger = LoggerFactory.getLogger(BvgToPng.class);
-
-	public static void main(String[] args) throws Exception
-	{
-		if (args.length != 2) {
-			System.out.println("usage: " + BvgToPng.class.getSimpleName()
-					+ " [input] [output]");
-			System.exit(1);
-		}
-
-		String input = args[0];
-		String output = args[1];
-
-		File fileInput = new File(input);
-
-		File fileOutput = new File(output);
-		File parentFile = fileOutput.getParentFile();
-		if (parentFile != null) {
-			parentFile.mkdirs();
-		}
-
-		FileOutputStream fos = new FileOutputStream(fileOutput);
-		BufferedOutputStream bos = new BufferedOutputStream(fos);
-
-		BvgImage bvg = BvgIO.read(fileInput);
-
-		BvgToPng test = new BvgToPng();
-		test.createImage(bvg);
-		test.finish(fileOutput);
-
-		bos.close();
-	}
 
 	private BufferedImage image;
 

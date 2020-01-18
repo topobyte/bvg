@@ -2,4 +2,4 @@
 
 DIR=`dirname $0`
 
-$DIR/bvg-utils de.topobyte.bvg.util.SvgToBvg "$@"
+$DIR/bvg-utils de.topobyte.bvg.util.RunSvgToBvg "$@"

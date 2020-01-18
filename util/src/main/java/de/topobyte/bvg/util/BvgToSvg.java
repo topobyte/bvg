@@ -17,13 +17,11 @@
 
 package de.topobyte.bvg.util;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import de.topobyte.bvg.BvgIO;
 import de.topobyte.bvg.BvgImage;
 import de.topobyte.bvg.BvgInkscapePainter;
 import de.topobyte.inkscape4j.Layer;
@@ -34,37 +32,6 @@ import de.topobyte.inkscape4j.ids.SimpleIdFactory;
 
 public class BvgToSvg
 {
-
-	public static void main(String[] args) throws Exception
-	{
-		if (args.length != 2) {
-			System.out.println("usage: " + BvgToSvg.class.getSimpleName()
-					+ " [input] [output]");
-			System.exit(1);
-		}
-
-		String input = args[0];
-		String output = args[1];
-
-		File fileInput = new File(input);
-
-		File fileOutput = new File(output);
-		File parentFile = fileOutput.getParentFile();
-		if (parentFile != null) {
-			parentFile.mkdirs();
-		}
-
-		FileOutputStream fos = new FileOutputStream(fileOutput);
-		BufferedOutputStream bos = new BufferedOutputStream(fos);
-
-		BvgImage bvg = BvgIO.read(fileInput);
-
-		BvgToSvg test = new BvgToSvg();
-		test.createImage(bvg);
-		test.finish(fileOutput);
-
-		bos.close();
-	}
 
 	private SvgFile svg;
 
