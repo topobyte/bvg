@@ -67,14 +67,18 @@ public class BvgAwtPainter
 				int join = ToSwingUtil.getJoin(lineStyle.getJoin());
 				float[] dashArray = lineStyle.getDashArray();
 				float dashOffset = lineStyle.getDashOffset();
+				float miterLimit = lineStyle.getMiterLimit();
+				if (miterLimit < 1) {
+					miterLimit = 10;
+				}
 
 				BasicStroke bs;
 				if (dashArray == null) {
 					bs = new BasicStroke(lineStyle.getWidth(), cap, join,
-							lineStyle.getMiterLimit());
+							miterLimit);
 				} else {
 					bs = new BasicStroke(lineStyle.getWidth(), cap, join,
-							lineStyle.getMiterLimit(), dashArray, dashOffset);
+							miterLimit, dashArray, dashOffset);
 				}
 				g.setStroke(bs);
 
