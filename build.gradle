@@ -63,22 +63,12 @@ project(':bvg-awt') {
     dependencies {
         compile project(':bvg')
     }
-    eclipse {
-        project {
-            name = 'bvg-awt'
-        }
-    }
 }
 
 project(':bvg-android') {
     dependencies {
         compile project(':bvg')
         compile 'com.google.android:android:4.1.1.4'
-    }
-    eclipse {
-        project {
-            name = 'bvg-android'
-        }
     }
 }
 
@@ -87,11 +77,6 @@ project(':bvg-inkscape4j') {
         compile project(':bvg')
         compile 'de.topobyte:inkscape4j-core:0.0.7'
         compile 'de.topobyte:inkscape4j-writer:0.0.7'
-    }
-    eclipse {
-        project {
-            name = 'bvg-inkscape4j'
-        }
     }
 }
 
@@ -110,11 +95,6 @@ project(':bvg-util') {
         testCompile 'de.topobyte:system-utils:0.0.1'
         testRuntime 'org.slf4j:slf4j-log4j12:1.6.1'
         testRuntime 'log4j:log4j:1.2.16'
-    }
-    eclipse {
-        project {
-            name = 'bvg-util'
-        }
     }
 }
 
