@@ -76,7 +76,11 @@ public class SvgToPng implements ShapeSink
 		java.awt.Color color = new java.awt.Color(c.getRed(), c.getGreen(),
 				c.getBlue(), c.getAlpha());
 		g2d.setColor(color);
-		BasicStroke stroke = new BasicStroke(lineStyle.getWidth(),
+		float width = lineStyle.getWidth();
+		if (width < 0) {
+			width = 0;
+		}
+		BasicStroke stroke = new BasicStroke(width,
 				ToSwingUtil.getCap(lineStyle.getCap()),
 				ToSwingUtil.getJoin(lineStyle.getJoin()));
 		g2d.setStroke(stroke);

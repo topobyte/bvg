@@ -63,6 +63,10 @@ public class BvgAwtPainter
 				g.setColor(c);
 
 				LineStyle lineStyle = stroke.getLineStyle();
+				float width = lineStyle.getWidth();
+				if (width < 0) {
+					width = 0;
+				}
 				int cap = ToSwingUtil.getCap(lineStyle.getCap());
 				int join = ToSwingUtil.getJoin(lineStyle.getJoin());
 				float[] dashArray = lineStyle.getDashArray();
@@ -74,11 +78,10 @@ public class BvgAwtPainter
 
 				BasicStroke bs;
 				if (dashArray == null) {
-					bs = new BasicStroke(lineStyle.getWidth(), cap, join,
-							miterLimit);
+					bs = new BasicStroke(width, cap, join, miterLimit);
 				} else {
-					bs = new BasicStroke(lineStyle.getWidth(), cap, join,
-							miterLimit, dashArray, dashOffset);
+					bs = new BasicStroke(width, cap, join, miterLimit,
+							dashArray, dashOffset);
 				}
 				g.setStroke(bs);
 

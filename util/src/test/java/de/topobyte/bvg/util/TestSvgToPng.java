@@ -91,17 +91,21 @@ public class TestSvgToPng implements ShapeSink
 		g2d.setColor(color);
 
 		BasicStroke stroke = null;
+		float width = lineStyle.getWidth();
+		if (width < 0) {
+			width = 0;
+		}
 		float miterLimit = lineStyle.getMiterLimit();
 		if (miterLimit < 1) {
 			miterLimit = 1;
 		}
 
 		if (lineStyle.getDashArray() == null) {
-			stroke = new BasicStroke(lineStyle.getWidth(),
+			stroke = new BasicStroke(width,
 					ToSwingUtil.getCap(lineStyle.getCap()),
 					ToSwingUtil.getJoin(lineStyle.getJoin()), miterLimit);
 		} else {
-			stroke = new BasicStroke(lineStyle.getWidth(),
+			stroke = new BasicStroke(width,
 					ToSwingUtil.getCap(lineStyle.getCap()),
 					ToSwingUtil.getJoin(lineStyle.getJoin()), miterLimit,
 					lineStyle.getDashArray(), lineStyle.getDashOffset());
