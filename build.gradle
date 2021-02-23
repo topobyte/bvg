@@ -9,7 +9,6 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven'
     apply plugin: 'eclipse'
 
     repositories {
@@ -26,16 +25,17 @@ subprojects {
     targetCompatibility = 1.8
 }
 
-configure([project(':bvg'), project(':bvg-awt'),
-    project(':bvg-android'), project(':bvg-util'),
-    project(':bvg-inkscape4j')]) {
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                repository(url: maven_url_topobyte)
-            }
-        }
-    }
+ext.libraries = [
+    project(':bvg'),
+    project(':bvg-awt'),
+    project(':bvg-android'),
+    project(':bvg-util'),
+    project(':bvg-inkscape4j')
+]
+
+configure(libraries) {
+
+    apply plugin: 'maven'
 
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
@@ -44,6 +44,51 @@ configure([project(':bvg'), project(':bvg-awt'),
 
     artifacts {
         archives sourcesJar
+    }
+
+    def runForArtifactPublication = project.hasProperty("topobyte")
+
+    if (runForArtifactPublication) {
+        apply from: 'file:///' + System.getProperty("user.home") \
+            + '/.gradle/topobyte.gradle'
+    }
+
+    def global = new File(rootProject.projectDir, 'info.pom');
+    def local = new File(project.projectDir, 'info.pom');
+
+    def pomInfo = new XmlSlurper().parse(global);
+    def projName = pomInfo.name
+    def projDesc = pomInfo.description
+    if (local.exists()) {
+        def pomInfoL = new XmlSlurper().parse(local);
+        projName = pomInfoL.name
+        projDesc = pomInfoL.description
+    }
+
+    afterEvaluate { project ->
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    pom.project {
+                        name projName
+                        description projDesc
+                        url pomInfo.url
+                        licenses {
+                            license {
+                                name pomInfo.licenseName
+                                url pomInfo.licenseUrl
+                                distribution pomInfo.licenseDistribution
+                            }
+                        }
+                    }
+                    pom.whenConfigured {
+                        p -> p.dependencies = p.dependencies.findAll {
+                            dep -> dep.scope != "test"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
