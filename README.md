@@ -18,8 +18,10 @@ We provide access to the artifacts via our own Maven repository:
 
 The packages are available at these coordinates:
 
-    de.topobyte:bvg:0.1.0
-    de.topobyte:bvg-awt:0.1.0
-    de.topobyte:bvg-android:0.1.0
-    de.topobyte:bvg-inkscape4j:0.1.0
-    de.topobyte:bvg-util:0.1.0
+<pre>
+<a href="https://mvn.topobyte.de/de/topobyte/bvg/0.1.0/">de.topobyte:bvg:0.1.0</a>
+<a href="https://mvn.topobyte.de/de/topobyte/bvg-awt/0.1.0/">de.topobyte:bvg-awt:0.1.0</a>
+<a href="https://mvn.topobyte.de/de/topobyte/bvg-android/0.1.0/">de.topobyte:bvg-android:0.1.0</a>
+<a href="https://mvn.topobyte.de/de/topobyte/bvg-inkscape4j/0.1.0/">de.topobyte:bvg-inkscape4j:0.1.0</a>
+<a href="https://mvn.topobyte.de/de/topobyte/bvg-util/0.1.0/">de.topobyte:bvg-util:0.1.0</a>
+</pre>
