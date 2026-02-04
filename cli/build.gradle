@@ -5,9 +5,9 @@ task copyJars(type: Copy) {
 
 task copyDeps(type: Copy) {
     into "$buildDir/lib-run"
-    from configurations.runtime
+    from configurations.runtimeClasspath
 }
 
 task createRuntime(dependsOn: [copyJars, copyDeps]) {
-    description 'Setup the execution environment for the main scripts'
+    description = 'Setup the execution environment for the main scripts'
 }
